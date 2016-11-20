@@ -9,13 +9,21 @@
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
-    "Microsoft.Extensions.Configuration.FileExtensions": "1.1.0",
+    "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
-    "Microsoft.AspNetCore.StaticFiles": "1.0.0"
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+    "Microsoft.AspNetCore.Razor.Tools": {
+      "version": "1.0.0-preview3-final",
+      "type": "build"
+    },
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
+    "Microsoft.EntityFrameworkCore.Tools":  "1.0.0-preview3-final" 
   },
 
   "tools": {
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final",
+    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview3-final",
+    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview3-final"
   },
 
   "frameworks": {

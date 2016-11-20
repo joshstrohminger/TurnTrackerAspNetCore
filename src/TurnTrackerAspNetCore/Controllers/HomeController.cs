@@ -2,6 +2,7 @@
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
+using System.Linq;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
@@ -16,8 +17,17 @@ namespace TurnTrackerAspNetCore.Controllers
 
         public IActionResult Index()
         {
-            var model = new HomePageViewModel {Tasks = _taskData.GetAll()};
-            return View(model);
+            return View(new HomePageViewModel { Tasks = _taskData.GetAll() });
+        }
+
+        public IActionResult Details(long id)
+        {
+            var task = _taskData.Get(id);
+            if (null == task)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(task);
         }
     }
 }

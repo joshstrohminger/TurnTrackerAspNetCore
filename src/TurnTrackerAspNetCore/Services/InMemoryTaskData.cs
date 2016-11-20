@@ -22,5 +22,10 @@ namespace TurnTrackerAspNetCore.Services
         {
             return Tasks;
         }
+
+        public Task Get(long id)
+        {
+            return Tasks.FirstOrDefault(task => task.Id == id);
+        }
     }
 }
