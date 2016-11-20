@@ -29,6 +29,7 @@ namespace TurnTrackerAspNetCore
         {
             services.AddMvc();
             services.AddSingleton(Configuration);
+            services.AddScoped<ITaskData, InMemoryTaskData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

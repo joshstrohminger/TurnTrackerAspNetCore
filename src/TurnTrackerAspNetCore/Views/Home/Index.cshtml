@@ -1,10 +1,19 @@
-﻿@model TurnTrackerAspNetCore.Entities.Task
+﻿@model TurnTrackerAspNetCore.ViewModels.HomePageViewModel
 <!DOCTYPE html>
 <html>
 <head>
     <title>Turn Tracker</title>
 </head>
 <body>
-<h1>@Model.Name</h1>
+<table>
+    @foreach (var task in Model.Tasks)
+    {
+        <tr>
+            <td>@task.Id</td>
+            <td>@task.Name</td>
+            <td>@task.TeamBased</td>
+        </tr>
+    }
+</table>
 </body>
 </html>
