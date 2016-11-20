@@ -5,7 +5,9 @@ namespace TurnTrackerAspNetCore.Services
 {
     public interface ITaskData
     {
-        IEnumerable<Task> GetAll();
-        Task Get(long id);
+        IEnumerable<TrackedTask> GetAll();
+        TrackedTask Get(long id);
+        TrackedTask Add(TrackedTask newTask);
+        void Commit();
     }
 }

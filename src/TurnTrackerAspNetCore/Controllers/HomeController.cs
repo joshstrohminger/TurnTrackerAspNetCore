@@ -2,7 +2,6 @@
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
-using System.Linq;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
@@ -28,6 +27,26 @@ namespace TurnTrackerAspNetCore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(task);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(TrackedTaskEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var task = new TrackedTask {Name = model.Name, TeamBased = model.TeamBased};
+            var newTask = _taskData.Add(task);
+            _taskData.Commit();
+            return RedirectToAction(nameof(Details), new {id = newTask.Id});
         }
     }
 }
