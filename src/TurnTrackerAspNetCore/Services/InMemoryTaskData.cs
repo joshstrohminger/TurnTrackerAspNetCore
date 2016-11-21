@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
 
 namespace TurnTrackerAspNetCore.Services
@@ -13,13 +12,13 @@ namespace TurnTrackerAspNetCore.Services
 
         static InMemoryTaskData()
         {
-            var modified = DateTime.UtcNow;
+            var modified = DateTimeOffset.UtcNow;
             var created = modified.AddDays(-5);
             Tasks = new List<TrackedTask>
             {
-                new TrackedTask {Id = 1, Name = "Clean Litter Box", Unit = PeriodUnit.Days, Period = 2m, CreatedUtc = created, ModifiedUtc = modified},
-                new TrackedTask {Id = 2, Name = "Take Out Trash", Unit = PeriodUnit.Weeks, Period = 1m, CreatedUtc = created, ModifiedUtc = modified},
-                new TrackedTask {Id = 3, Name = "Feed Snake", Unit = PeriodUnit.Days, Period = 20m, CreatedUtc = created, ModifiedUtc = modified}
+                new TrackedTask {Id = 1, Name = "Clean Litter Box", Unit = PeriodUnit.Days, Period = 2m, Created = created, Modified = modified},
+                new TrackedTask {Id = 2, Name = "Take Out Trash", Unit = PeriodUnit.Weeks, Period = 1m, Created = created, Modified = modified},
+                new TrackedTask {Id = 3, Name = "Feed Snake", Unit = PeriodUnit.Days, Period = 20m, Created = created, Modified = modified}
             };
 
             var turnId = 1;
@@ -29,10 +28,10 @@ namespace TurnTrackerAspNetCore.Services
                 for (var i = 0; i < task.Id; i++)
                 {
                     var date = created.AddHours(i);
-                    task.Turns.Add(new Turn {Id = turnId++, TakenUtc = date, CreatedUtc = date, ModifiedUtc = date});
+                    task.Turns.Add(new Turn {Id = turnId++, Taken = date, Created = date, Modified = date});
                 }
                 Turns.AddRange(task.Turns);
-                Turns = Turns.OrderByDescending(x => x.TakenUtc).ToList();
+                Turns = Turns.OrderByDescending(x => x.Taken).ToList();
             }
         }
 
@@ -70,8 +69,8 @@ namespace TurnTrackerAspNetCore.Services
             {
                 return false;
             }
-            var date = DateTime.UtcNow;
-            task.Turns.Add(new Turn {Id = Turns.Max(x => x.Id) + 1, CreatedUtc = date, TakenUtc = date, ModifiedUtc = date, TrackedTaskId = taskId});
+            var date = DateTimeOffset.UtcNow;
+            task.Turns.Add(new Turn {Id = Turns.Max(x => x.Id) + 1, Created = date, Taken = date, Modified = date, TrackedTaskId = taskId});
             return true;
         }
     }

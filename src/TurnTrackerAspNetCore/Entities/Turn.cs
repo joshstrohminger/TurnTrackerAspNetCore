@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TurnTrackerAspNetCore.Entities
 {
@@ -10,8 +8,14 @@ namespace TurnTrackerAspNetCore.Entities
         public long Id { get; set; }
         public long TrackedTaskId { get; set; }
         public TrackedTask Task { get; set; }
-        public DateTime TakenUtc { get; set; }
-        public DateTime CreatedUtc { get; set; }
-        public DateTime ModifiedUtc { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset Taken { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset Created { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTimeOffset Modified { get; set; }
     }
 }

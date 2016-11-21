@@ -14,10 +14,10 @@
 </div>
 <div>
     <span>Modified </span>
-    <span>@Model.ModifiedUtc.ToLocalTime()</span>
+    <span>@Model.Modified.ToLocalTime()</span>
     <span> - </span>
     <span>Created </span>
-    <span>@Model.CreatedUtc.ToLocalTime()</span>
+    <span>@Model.Created.ToLocalTime()</span>
 </div>
 <h4>Turns</h4>
 <table>
@@ -25,9 +25,9 @@
     {
         <tr>
             <td>@turn.Id</td>
-            <td>@turn.TakenUtc</td>
-            <td>@turn.ModifiedUtc</td>
-            <td>@turn.CreatedUtc</td>
+            <td>@turn.Taken.ToLocalTime()</td>
+            <td>@turn.Modified.ToLocalTime()</td>
+            <td>@turn.Created.ToLocalTime()</td>
         </tr>
     }
 </table>

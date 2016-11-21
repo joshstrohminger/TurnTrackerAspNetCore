@@ -15,8 +15,8 @@ namespace TurnTrackerAspNetCore.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedUtc = table.Column<DateTime>(nullable: false),
-                    ModifiedUtc = table.Column<DateTime>(nullable: false),
+                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Period = table.Column<decimal>(nullable: false),
                     TeamBased = table.Column<bool>(nullable: false),
@@ -33,9 +33,9 @@ namespace TurnTrackerAspNetCore.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedUtc = table.Column<DateTime>(nullable: false),
-                    ModifiedUtc = table.Column<DateTime>(nullable: false),
-                    TakenUtc = table.Column<DateTime>(nullable: false),
+                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 271, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Taken = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
                     TrackedTaskId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>

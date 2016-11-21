@@ -8,7 +8,7 @@ using TurnTrackerAspNetCore.Entities;
 namespace TurnTrackerAspNetCore.Migrations
 {
     [DbContext(typeof(TurnTrackerDbContext))]
-    [Migration("20161121081240_InitialCreate")]
+    [Migration("20161121093001_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,9 +22,13 @@ namespace TurnTrackerAspNetCore.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedUtc");
+                    b.Property<DateTimeOffset>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
-                    b.Property<DateTime>("ModifiedUtc");
+                    b.Property<DateTimeOffset>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -46,11 +50,17 @@ namespace TurnTrackerAspNetCore.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedUtc");
+                    b.Property<DateTimeOffset>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 271, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
-                    b.Property<DateTime>("ModifiedUtc");
+                    b.Property<DateTimeOffset>("Modified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
-                    b.Property<DateTime>("TakenUtc");
+                    b.Property<DateTimeOffset>("Taken")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<long>("TrackedTaskId");
 

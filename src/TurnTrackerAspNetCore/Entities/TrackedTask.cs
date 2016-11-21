@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TurnTrackerAspNetCore.Entities
 {
@@ -13,6 +14,7 @@ namespace TurnTrackerAspNetCore.Entities
         Months,
         Years
     }
+
     public class TrackedTask
     {
         public long Id { get; set; }
@@ -29,9 +31,11 @@ namespace TurnTrackerAspNetCore.Entities
         [Display(Name="Team Based")]
         public bool TeamBased { get; set; }
 
-        public DateTime CreatedUtc { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTimeOffset Created { get; set; }
 
-        public DateTime ModifiedUtc { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTimeOffset Modified { get; set; }
 
         public List<Turn> Turns { get; set; }
     }
