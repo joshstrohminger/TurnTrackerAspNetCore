@@ -9,6 +9,7 @@ namespace TurnTrackerAspNetCore.Entities
     {
         public long Id { get; set; }
         public long TrackedTaskId { get; set; }
+        public TrackedTask Task { get; set; }
         public DateTime TakenUtc { get; set; }
         public DateTime CreatedUtc { get; set; }
         public DateTime ModifiedUtc { get; set; }

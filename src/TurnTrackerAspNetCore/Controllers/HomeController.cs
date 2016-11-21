@@ -21,7 +21,7 @@ namespace TurnTrackerAspNetCore.Controllers
 
         public IActionResult Details(long id)
         {
-            var task = _taskData.Get(id);
+            var task = _taskData.GetDetails(id);
             if (null == task)
             {
                 return RedirectToAction(nameof(Index));

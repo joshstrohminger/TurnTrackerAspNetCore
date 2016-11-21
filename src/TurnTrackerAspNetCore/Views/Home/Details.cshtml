@@ -21,7 +21,7 @@
 </div>
 <h4>Turns</h4>
 <table>
-    @foreach (var turn in Model.Turns)
+    @foreach (var turn in Model.Turns ?? new List<Turn>())
     {
         <tr>
             <td>@turn.Id</td>

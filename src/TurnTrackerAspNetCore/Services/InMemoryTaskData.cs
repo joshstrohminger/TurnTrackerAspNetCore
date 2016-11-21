@@ -46,6 +46,11 @@ namespace TurnTrackerAspNetCore.Services
             return Tasks.FirstOrDefault(task => task.Id == id);
         }
 
+        public TrackedTask GetDetails(long id)
+        {
+            return Get(id);
+        }
+
         public TrackedTask Add(TrackedTask newTask)
         {
             newTask.Id = Tasks.Max(x => x.Id) + 1;

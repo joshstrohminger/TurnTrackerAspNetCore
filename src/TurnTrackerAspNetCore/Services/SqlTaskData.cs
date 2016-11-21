@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TurnTrackerAspNetCore.Entities;
 
 namespace TurnTrackerAspNetCore.Services
 {
     public class SqlTaskData : ITaskData
     {
-        private TurnTrackerDbContext _context;
+        private readonly TurnTrackerDbContext _context;
 
         public SqlTaskData(TurnTrackerDbContext context)
         {
@@ -23,6 +22,11 @@ namespace TurnTrackerAspNetCore.Services
         public TrackedTask Get(long id)
         {
             return _context.Tasks.FirstOrDefault(task => task.Id == id);
+        }
+
+        public TrackedTask GetDetails(long id)
+        {
+            return _context.Tasks.Include(x => x.Turns).FirstOrDefault(task => task.Id == id);
         }
 
         public TrackedTask Add(TrackedTask newTask)
