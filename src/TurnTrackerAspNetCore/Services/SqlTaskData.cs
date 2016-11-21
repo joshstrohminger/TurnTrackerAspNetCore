@@ -61,5 +61,16 @@ namespace TurnTrackerAspNetCore.Services
             }
             return false;
         }
+
+        public long DeleteTurn(long id)
+        {
+            var turn = _context.Turns.Include(x => x.Task).FirstOrDefault(x => x.Id == id);
+            if (null == turn)
+            {
+                return 0;
+            }
+            _context.Remove(turn);
+            return turn.TrackedTaskId;
+        }
     }
 }

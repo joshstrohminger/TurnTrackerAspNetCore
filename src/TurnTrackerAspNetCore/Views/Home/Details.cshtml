@@ -23,12 +23,7 @@
 <table>
     @foreach (var turn in Model.Turns ?? new List<Turn>())
     {
-        <tr>
-            <td>@turn.Id</td>
-            <td>@turn.Taken.ToLocalTime()</td>
-            <td>@turn.Modified.ToLocalTime()</td>
-            <td>@turn.Created.ToLocalTime()</td>
-        </tr>
+        @Html.Partial("_Turn", turn)
     }
 </table>
 <form asp-antiforgery="true" asp-action="TakeTurn" method="post">

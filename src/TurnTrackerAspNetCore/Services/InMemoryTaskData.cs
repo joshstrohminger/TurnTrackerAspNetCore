@@ -28,7 +28,7 @@ namespace TurnTrackerAspNetCore.Services
                 for (var i = 0; i < task.Id; i++)
                 {
                     var date = created.AddHours(i);
-                    task.Turns.Add(new Turn {Id = turnId++, Taken = date, Created = date, Modified = date});
+                    task.Turns.Add(new Turn {Id = turnId++, Taken = date, Created = date, Modified = date, TrackedTaskId = task.Id, Task = task});
                 }
                 Turns.AddRange(task.Turns);
                 Turns = Turns.OrderByDescending(x => x.Taken).ToList();
@@ -83,6 +83,18 @@ namespace TurnTrackerAspNetCore.Services
                 return true;
             }
             return false;
+        }
+
+        public long DeleteTurn(long id)
+        {
+            var turn = Turns.FirstOrDefault(x => x.Id == id);
+            if (null != turn)
+            {
+                Turns.Remove(turn);
+                turn.Task.Turns.Remove(turn);
+                return turn.Task.Id;
+            }
+            return 0;
         }
     }
 }
