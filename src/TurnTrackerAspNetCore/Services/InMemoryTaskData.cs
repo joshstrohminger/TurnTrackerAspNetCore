@@ -66,7 +66,7 @@ namespace TurnTrackerAspNetCore.Services
                 return false;
             }
             var date = DateTime.UtcNow;
-            task.Turns.Add(new Turn {Id = Turns.Max(x => x.Id) + 1, CreatedUtc = date, TakenUtc = date, ModifiedUtc = date});
+            task.Turns.Add(new Turn {Id = Turns.Max(x => x.Id) + 1, CreatedUtc = date, TakenUtc = date, ModifiedUtc = date, TrackedTaskId = taskId});
             return true;
         }
     }

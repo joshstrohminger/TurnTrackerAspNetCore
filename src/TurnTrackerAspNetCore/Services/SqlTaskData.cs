@@ -17,27 +17,30 @@ namespace TurnTrackerAspNetCore.Services
 
         public IEnumerable<TrackedTask> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Tasks;
         }
 
         public TrackedTask Get(long id)
         {
-            throw new NotImplementedException();
+            return _context.Tasks.FirstOrDefault(task => task.Id == id);
         }
 
         public TrackedTask Add(TrackedTask newTask)
         {
-            throw new NotImplementedException();
+            _context.Add(newTask);
+            _context.SaveChanges();
+            return newTask;
         }
 
         public void Commit()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public bool TakeTurn(long taskId)
         {
-            throw new NotImplementedException();
+            _context.Add(new Turn {TrackedTaskId = taskId});
+            return _context.SaveChanges() > 0;
         }
     }
 }

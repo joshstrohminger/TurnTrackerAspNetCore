@@ -90,6 +90,7 @@ namespace TurnTrackerAspNetCore.Controllers
         public IActionResult TakeTurn(long id)
         {
             var success = _taskData.TakeTurn(id);
+            _taskData.Commit();
             return success ? RedirectToAction(nameof(Details), new {id}) : RedirectToAction(nameof(Index));
         }
     }

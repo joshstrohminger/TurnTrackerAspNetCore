@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 
 namespace TurnTrackerAspNetCore
@@ -29,7 +31,9 @@ namespace TurnTrackerAspNetCore
         {
             services.AddMvc();
             services.AddSingleton(Configuration);
-            services.AddScoped<ITaskData, InMemoryTaskData>();
+            services.AddScoped<ITaskData, SqlTaskData>();
+            services.AddDbContext<TurnTrackerDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("TurnTracker")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
