@@ -87,11 +87,22 @@ namespace TurnTrackerAspNetCore.Controllers
             return RedirectToAction(nameof(Details), new {id = task.Id});
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult TakeTurn(long id)
         {
             var success = _taskData.TakeTurn(id);
             _taskData.Commit();
             return success ? RedirectToAction(nameof(Details), new {id}) : RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteTask(long id)
+        {
+            var success = _taskData.DeleteTask(id);
+            _taskData.Commit();
+            return success ? RedirectToAction(nameof(Index)) : RedirectToAction(nameof(Details), new {id});
         }
     }
 }

@@ -73,5 +73,16 @@ namespace TurnTrackerAspNetCore.Services
             task.Turns.Add(new Turn {Id = Turns.Max(x => x.Id) + 1, Created = date, Taken = date, Modified = date, TrackedTaskId = taskId});
             return true;
         }
+
+        public bool DeleteTask(long id)
+        {
+            var task = Get(id);
+            if (null != task)
+            {
+                Tasks.Remove(task);
+                return true;
+            }
+            return false;
+        }
     }
 }

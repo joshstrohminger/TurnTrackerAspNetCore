@@ -32,7 +32,6 @@ namespace TurnTrackerAspNetCore.Services
         public TrackedTask Add(TrackedTask newTask)
         {
             _context.Add(newTask);
-            _context.SaveChanges();
             return newTask;
         }
 
@@ -43,8 +42,24 @@ namespace TurnTrackerAspNetCore.Services
 
         public bool TakeTurn(long taskId)
         {
-            _context.Add(new Turn {TrackedTaskId = taskId});
-            return _context.SaveChanges() > 0;
+            var task = GetDetails(taskId);
+            if (null != task)
+            {
+                task.Turns.Add(new Turn());
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteTask(long id)
+        {
+            var task = _context.Tasks.FirstOrDefault(x => x.Id == id);
+            if (null != task)
+            {
+                _context.Remove(task);
+                return true;
+            }
+            return false;
         }
     }
 }

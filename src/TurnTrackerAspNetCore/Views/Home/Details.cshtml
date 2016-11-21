@@ -31,11 +31,15 @@
         </tr>
     }
 </table>
+<form asp-antiforgery="true" asp-action="TakeTurn" method="post">
+    <input asp-for="Id" type="hidden"/>
+    <input type="submit" value="Take Turn"/>
+</form>
 <div>
-    <a asp-action="TakeTurn" asp-route-id="@Model.Id">Take Turn</a>
-</div>
-<p>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <span> - </span>
+    <form asp-antiforgery="true" asp-action="DeleteTask" method="post">
+        <input asp-for="Id" type="hidden"/>
+        <input type="submit" value="Delete"/>
+    </form>
     <a asp-action="Index">Home</a>
-</p>
+</div>
