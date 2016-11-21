@@ -1,5 +1,5 @@
 ﻿@model TrackedTask
-
+@{ViewBag.Title = "Details";}
 <h1>@Model.Name</h1>
 <div>@(Model.TeamBased ? "Team" : "Individual") Based</div>
 <div>
@@ -20,21 +20,21 @@
     <span>@Model.Created.ToLocalTime()</span>
 </div>
 <h4>Turns</h4>
-<table>
+<table class="table table-condensed table-hover table-striped">
     @foreach (var turn in Model.Turns ?? new List<Turn>())
     {
         @Html.Partial("_Turn", turn)
     }
 </table>
-<form asp-antiforgery="true" asp-action="TakeTurn" method="post">
-    <input asp-for="Id" type="hidden"/>
-    <input type="submit" value="Take Turn"/>
-</form>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <form asp-antiforgery="true" asp-action="DeleteTask" method="post">
-        <input asp-for="Id" type="hidden"/>
-        <input type="submit" value="Delete"/>
+<div class="clearfix">
+    <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
+        <input asp-for="Id" type="hidden" />
+        <input class="btn btn-primary" type="submit" value="Take Turn" />
     </form>
-    <a asp-action="Index">Home</a>
+    <a class="btn btn-success pull-left" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
+        <input asp-for="Id" type="hidden" />
+        <input class="btn btn-danger" type="submit" value="Delete" />
+    </form>
+    <a class="btn btn-default pull-left" asp-action="Index">Home</a>
 </div>

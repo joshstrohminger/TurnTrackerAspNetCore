@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
+using TurnTrackerAspNetCore.Middleware;
 using TurnTrackerAspNetCore.Services;
 
 namespace TurnTrackerAspNetCore
@@ -54,8 +55,7 @@ namespace TurnTrackerAspNetCore
             }
 
             app.UseFileServer();
-
-            //app.UseMvcWithDefaultRoute();
+            app.UseNodeModules(env.ContentRootPath);
             app.UseMvc(ConfigureRoutes);
         }
 

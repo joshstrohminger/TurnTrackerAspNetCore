@@ -1,11 +1,7 @@
 ﻿@model HomePageViewModel
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Turn Tracker</title>
-</head>
-<body>
-<table>
+@{ViewBag.Title = "Turn Tracker";}
+<h4>Tasks</h4>
+<table class="table table-striped table-condensed table-hover">
     @foreach (var task in Model.Tasks)
     {
         <tr>
@@ -13,13 +9,10 @@
             <td>@task.Name</td>
             <td>@task.TeamBased</td>
             <td>@(task.Period == 0m ? $"Non-Periodic" : $"{task.Period} {task.Unit}")</td>
-            <td><a asp-action="Details" asp-route-id="@task.Id">Details</a></td>
-            <td><a asp-action="Edit" asp-route-id="@task.Id"></a></td>
+            <td><a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
         </tr>
     }
 </table>
 <p>
-    <a asp-action="Create">Create</a>
+    <a class="btn btn-primary" asp-action="Create">Create</a>
 </p>
-</body>
-</html>

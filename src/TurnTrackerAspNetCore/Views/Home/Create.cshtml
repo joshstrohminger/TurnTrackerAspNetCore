@@ -1,4 +1,5 @@
 ﻿@model TrackedTaskEditViewModel
+@{ViewBag.Title = "Create";}
 <div>
     <h1>Create Task</h1>
     <form method="post" asp-action="Create" asp-antiforgery="true">
@@ -24,8 +25,8 @@
             <span asp-validation-for="Unit"></span>
         </div>
         <div>
-            <input type="submit" value="Save"/>
-            <a asp-action="Index">Cancel</a>
+            <input class="btn btn-primary" type="submit" value="Save"/>
+            <a class="btn btn-danger" asp-action="Index">Cancel</a>
         </div>
     </form>
 </div>
