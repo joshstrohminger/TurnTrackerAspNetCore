@@ -1,7 +1,36 @@
 ﻿@model TrackedTask
 
 <h1>@Model.Name</h1>
-<p>details</p>
+<div>@(Model.TeamBased ? "Team" : "Individual") Based</div>
+<div>
+    @if (Model.Period == 0m)
+    {
+        <span>Non-Periodic</span>
+    }
+    else
+    {
+        <span>@Model.Period @Model.Unit</span>
+    }
+</div>
+<div>
+    <span>Modified </span>
+    <span>@Model.ModifiedUtc.ToLocalTime()</span>
+    <span> - </span>
+    <span>Created </span>
+    <span>@Model.CreatedUtc.ToLocalTime()</span>
+</div>
+<h4>Turns</h4>
+<table>
+    @foreach (var turn in Model.Turns)
+    {
+        <tr>
+            <td>@turn.Id</td>
+            <td>@turn.TakenUtc</td>
+            <td>@turn.ModifiedUtc</td>
+            <td>@turn.CreatedUtc</td>
+        </tr>
+    }
+</table>
 <p>
     <a asp-action="Index">Home</a>
 </p>

@@ -43,7 +43,13 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return View(model);
             }
-            var task = new TrackedTask {Name = model.Name, TeamBased = model.TeamBased};
+            var task = new TrackedTask
+            {
+                Name = model.Name,
+                Period = model.Period,
+                Unit = model.Unit,
+                TeamBased = model.TeamBased
+            };
             var newTask = _taskData.Add(task);
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new {id = newTask.Id});

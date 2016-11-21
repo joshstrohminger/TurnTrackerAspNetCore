@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using TurnTrackerAspNetCore.Entities;
 
 namespace TurnTrackerAspNetCore.ViewModels
 {
@@ -7,7 +9,13 @@ namespace TurnTrackerAspNetCore.ViewModels
         [Required, MaxLength(100)]
         public string Name { get; set; }
 
-        [Display(Name="Team Based")]
+        [Required]
+        public decimal Period { get; set; }
+
+        [Required]
+        public PeriodUnit Unit { get; set; }
+
+        [Display(Name = "Team Based")]
         public bool TeamBased { get; set; }
     }
 }
