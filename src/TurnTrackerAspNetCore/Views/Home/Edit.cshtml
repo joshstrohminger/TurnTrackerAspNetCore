@@ -1,8 +1,8 @@
 ﻿@model TrackedTask
 <div>
     <h1>Edit Task</h1>
-    <form asp-action="Edit" asp-antiforgery="true">
-        <div></div>
+    <form method="post" asp-action="Edit" asp-antiforgery="true">
+        <div asp-validation-summary="ModelOnly"></div>
         <div>
             <label asp-for="Name"></label>
             <input asp-for="Name"/>
