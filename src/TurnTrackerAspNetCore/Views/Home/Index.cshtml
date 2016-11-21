@@ -12,7 +12,9 @@
             <td>@task.Id</td>
             <td>@task.Name</td>
             <td>@task.TeamBased</td>
+            <td>@(task.Period == 0m ? $"Non-Periodic" : $"{task.Period} {task.Unit}")</td>
             <td><a asp-action="Details" asp-route-id="@task.Id">Details</a></td>
+            <td><a asp-action="Edit" asp-route-id="@task.Id"></a></td>
         </tr>
     }
 </table>

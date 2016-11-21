@@ -54,5 +54,37 @@ namespace TurnTrackerAspNetCore.Controllers
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new {id = newTask.Id});
         }
+
+        [HttpGet]
+        public IActionResult Edit(long id)
+        {
+            var model = _taskData.Get(id);
+            if (null == model)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(long id, TrackedTaskEditViewModel model)
+        {
+            var task = _taskData.Get(id);
+            if (null == task)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(task);
+            }
+            task.Period = model.Period;
+            task.TeamBased = model.TeamBased;
+            task.Unit = model.Unit;
+            task.Name = model.Name;
+            _taskData.Commit();
+            return RedirectToAction(nameof(Details), new {id = task.Id});
+        }
     }
 }

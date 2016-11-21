@@ -1,0 +1,30 @@
+﻿@model TrackedTask
+<div>
+    <h1>Create Task</h1>
+    <form asp-action="Edit" asp-antiforgery="true">
+        <div></div>
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name"/>
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div>
+            <label asp-for="TeamBased"></label>
+            <input asp-for="TeamBased" />
+            <span asp-validation-for="TeamBased"></span>
+        </div>
+        <div>
+            <label asp-for="Period"></label>
+            <input asp-for="Period" />
+            <span asp-validation-for="Period"></span>
+        </div>
+        <div>
+            <label asp-for="Unit"></label>
+            <select asp-for="Unit" asp-items="@Html.GetEnumSelectList(typeof(PeriodUnit))"></select>
+            <span asp-validation-for="Unit"></span>
+        </div>
+        <div>
+            <input type="submit" value="Save"/>
+        </div>
+    </form>
+</div>
