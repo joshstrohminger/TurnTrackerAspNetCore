@@ -1,6 +1,6 @@
 ﻿@model TrackedTask
 <div>
-    <h1>Create Task</h1>
+    <h1>Edit Task</h1>
     <form asp-action="Edit" asp-antiforgery="true">
         <div></div>
         <div>
@@ -25,6 +25,7 @@
         </div>
         <div>
             <input type="submit" value="Save"/>
+            <a asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
         </div>
     </form>
 </div>
