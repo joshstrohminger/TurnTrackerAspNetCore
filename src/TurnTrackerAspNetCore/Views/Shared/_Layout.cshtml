@@ -22,5 +22,13 @@
 <div class="container">
     @RenderBody()
 </div>
+<environment Names="Development">
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+</environment>
+<environment Names="Staging,Production">
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+</environment>
+<script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </body>
 </html>
