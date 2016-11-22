@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
@@ -19,7 +20,7 @@ namespace TurnTrackerAspNetCore.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return View(new HomePageViewModel { Tasks = _taskData.GetAll() });
+            return View(new HomePageViewModel { Tasks = _taskData.GetAll().ToList() });
         }
 
         [AllowAnonymous]

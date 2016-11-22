@@ -5,6 +5,6 @@ namespace TurnTrackerAspNetCore.ViewModels
 {
     public class HomePageViewModel
     {
-        public IEnumerable<TrackedTask> Tasks { get; set; }
+        public List<TrackedTask> Tasks { get; set; }
     }
 }

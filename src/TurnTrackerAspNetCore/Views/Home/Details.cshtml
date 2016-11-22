@@ -20,12 +20,26 @@
     <span>@Model.Created.ToLocalTime()</span>
 </div>
 <h4>Turns</h4>
-<table class="table table-condensed table-hover table-striped">
-    @foreach (var turn in Model.Turns ?? new List<Turn>())
-    {
-        @Html.Partial("_Turn", turn)
-    }
-</table>
+@if (Model.Turns.Count == 0)
+{
+    <p>No turns</p>
+}
+else
+{
+    <table class="table table-condensed table-hover table-striped">
+        <tr>
+            <th>Id</th>
+            <th>Taken</th>
+            <th>Modified</th>
+            <th>Created</th>
+            <th>Delete</th>
+        </tr>
+        @foreach (var turn in Model.Turns ?? new List<Turn>())
+        {
+            @Html.Partial("_Turn", turn)
+        }
+    </table>
+}
 @if (User.Identity.IsAuthenticated)
 {
     <div class="clearfix">

@@ -1,21 +1,35 @@
 ﻿@model HomePageViewModel
 @{ViewBag.Title = "Turn Tracker";}
 <h4>Tasks</h4>
-<table class="table table-striped table-condensed table-hover">
-    @foreach (var task in Model.Tasks)
-    {
+@if (Model.Tasks.Count == 0)
+{
+    <p>No tasks</p>
+}
+else
+{
+    <table class="table table-striped table-condensed table-hover">
         <tr>
-            <td>@task.Id</td>
-            <td>@task.Name</td>
-            <td>@task.TeamBased</td>
-            <td>@(task.Period == 0m ? $"Non-Periodic" : $"{task.Period} {task.Unit}")</td>
-            <td><a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
+            <th>Id</th>
+            <th>Name</th>
+            <th>TeamBased</th>
+            <th>Period</th>
+            <th></th>
         </tr>
-    }
-</table>
+        @foreach (var task in Model.Tasks)
+        {
+            <tr>
+                <td>@task.Id</td>
+                <td>@task.Name</td>
+                <td>@task.TeamBased</td>
+                <td>@(task.Period == 0m ? $"Non-Periodic" : $"{task.Period} {task.Unit}")</td>
+                <td><a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
+            </tr>
+        }
+    </table>
+}
 @if (User.Identity.IsAuthenticated)
 {
     <p>
-        <a class="btn btn-primary" asp-action="Create">Create</a>
+        <a class="btn btn-primary" asp-action="Create">Create Task</a>
     </p>
 }
