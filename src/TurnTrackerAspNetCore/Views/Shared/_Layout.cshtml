@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <environment Names="Development">
-        <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="/lib/bootstrap.css" rel="stylesheet" />
     </environment>
     <environment Names="Staging,Production">
-        <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/lib/bootstrap.min.css" rel="stylesheet" />
     </environment>
 </head>
 <body>
@@ -24,12 +24,12 @@
     @RenderBody()
 </div>
 <environment Names="Development">
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/lib/jquery.js"></script>
 </environment>
 <environment Names="Staging,Production">
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery.min.js"></script>
 </environment>
-<script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
-<script src="/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="/lib/jquery.validate.js"></script>
+<script src="/lib/jquery.validate.unobtrusive.js"></script>
 </body>
 </html>

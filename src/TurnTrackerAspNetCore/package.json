@@ -5,6 +5,8 @@
   "devDependencies": {
   },
   "dependencies": {
+    "gulp": "3.9.1",
+    "rimraf": "2.5.4",  
     "bootstrap": "3.3.7",
     "jquery": "3.1.1",
     "jquery-validation": "1.15.1",

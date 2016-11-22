@@ -21,7 +21,7 @@ namespace TurnTrackerAspNetCore
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -59,7 +59,7 @@ namespace TurnTrackerAspNetCore
             }
 
             app.UseFileServer();
-            app.UseNodeModules(env.ContentRootPath);
+            //app.UseNodeModules(env.ContentRootPath);
             app.UseIdentity();
             app.UseMvc(ConfigureRoutes);
         }

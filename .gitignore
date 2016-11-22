@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 src/TurnTrackerAspNetCore/Properties/PublishProfiles/
+src/TurnTrackerAspNetCore/wwwroot/lib/
