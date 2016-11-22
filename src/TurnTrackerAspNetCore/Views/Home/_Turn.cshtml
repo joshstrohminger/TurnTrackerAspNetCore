@@ -4,10 +4,13 @@
     <td>@Model.Taken.ToLocalTime()</td>
     <td>@Model.Modified.ToLocalTime()</td>
     <td>@Model.Created.ToLocalTime()</td>
-    <td>
-        <form asp-action="DeleteTurn" asp-antiforgery="true" method="post">
-            <input name="id" type="hidden" value="@Model.Id"/>
-            <input class="btn btn-xs btn-danger" type="submit" value="&times;"/>
-        </form>
-    </td>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <td>
+            <form asp-action="DeleteTurn" asp-antiforgery="true" method="post">
+                <input name="id" type="hidden" value="@Model.Id"/>
+                <input class="btn btn-xs btn-danger" type="submit" value="&times;"/>
+            </form>
+        </td>
+    }
 </tr>
