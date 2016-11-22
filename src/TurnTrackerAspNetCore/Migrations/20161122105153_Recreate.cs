@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TurnTrackerAspNetCore.Migrations
 {
-    public partial class Identity : Migration
+    public partial class Recreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,6 +35,24 @@ namespace TurnTrackerAspNetCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Period = table.Column<decimal>(nullable: false),
+                    TeamBased = table.Column<bool>(nullable: false),
+                    Unit = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,6 +98,28 @@ namespace TurnTrackerAspNetCore.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Turns",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 936, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Taken = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    TrackedTaskId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Turns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Turns_Tasks_TrackedTaskId",
+                        column: x => x.TrackedTaskId,
+                        principalTable: "Tasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -149,40 +189,11 @@ namespace TurnTrackerAspNetCore.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Taken",
-                table: "Turns",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Modified",
-                table: "Turns",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Created",
-                table: "Turns",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 569, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Modified",
-                table: "Tasks",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Created",
-                table: "Tasks",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
-                column: "NormalizedName");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -205,9 +216,9 @@ namespace TurnTrackerAspNetCore.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId");
+                name: "IX_Turns_TrackedTaskId",
+                table: "Turns",
+                column: "TrackedTaskId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -239,40 +250,16 @@ namespace TurnTrackerAspNetCore.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Turns");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Taken",
-                table: "Turns",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Modified",
-                table: "Turns",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Created",
-                table: "Turns",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 271, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Modified",
-                table: "Tasks",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
-
-            migrationBuilder.AlterColumn<DateTimeOffset>(
-                name: "Created",
-                table: "Tasks",
-                nullable: false,
-                defaultValue: new DateTimeOffset(new DateTime(2016, 11, 21, 9, 30, 1, 283, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+            migrationBuilder.DropTable(
+                name: "Tasks");
         }
     }
 }

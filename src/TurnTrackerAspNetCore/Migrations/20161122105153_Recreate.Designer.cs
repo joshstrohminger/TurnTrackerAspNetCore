@@ -8,18 +8,19 @@ using TurnTrackerAspNetCore.Entities;
 namespace TurnTrackerAspNetCore.Migrations
 {
     [DbContext(typeof(TurnTrackerDbContext))]
-    [Migration("20161122070045_Identity")]
-    partial class Identity
+    [Migration("20161122105153_Recreate")]
+    partial class Recreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.1")
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -33,6 +34,7 @@ namespace TurnTrackerAspNetCore.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -104,8 +106,6 @@ namespace TurnTrackerAspNetCore.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -131,11 +131,11 @@ namespace TurnTrackerAspNetCore.Migrations
 
                     b.Property<DateTimeOffset>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<DateTimeOffset>("Modified")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -159,15 +159,15 @@ namespace TurnTrackerAspNetCore.Migrations
 
                     b.Property<DateTimeOffset>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 569, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 936, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<DateTimeOffset>("Modified")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<DateTimeOffset>("Taken")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 7, 0, 45, 577, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
                     b.Property<long>("TrackedTaskId");
 
@@ -180,7 +180,8 @@ namespace TurnTrackerAspNetCore.Migrations
 
             modelBuilder.Entity("TurnTrackerAspNetCore.Entities.User", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 

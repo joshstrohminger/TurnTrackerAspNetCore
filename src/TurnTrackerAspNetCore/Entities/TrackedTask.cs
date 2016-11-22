@@ -17,6 +17,7 @@ namespace TurnTrackerAspNetCore.Entities
 
     public class TrackedTask
     {
+        [Key]
         public long Id { get; set; }
 
         [Required, MaxLength(100)]
@@ -30,11 +31,9 @@ namespace TurnTrackerAspNetCore.Entities
 
         [Display(Name="Team Based")]
         public bool TeamBased { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public DateTimeOffset Created { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        
         public DateTimeOffset Modified { get; set; }
 
         public List<Turn> Turns { get; set; }
