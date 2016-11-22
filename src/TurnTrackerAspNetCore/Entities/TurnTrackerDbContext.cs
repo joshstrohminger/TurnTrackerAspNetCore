@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace TurnTrackerAspNetCore.Entities
 {
-    public class TurnTrackerDbContext : DbContext
+    public class TurnTrackerDbContext : IdentityDbContext<User>
     {
         public DbSet<TrackedTask> Tasks { get; set; }
 
@@ -15,6 +16,8 @@ namespace TurnTrackerAspNetCore.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             var turns = modelBuilder.Entity<Turn>();
             turns.Property(x => x.Created).HasDefaultValue(DateTimeOffset.UtcNow);
             turns.Property(x => x.Modified).HasDefaultValue(DateTimeOffset.UtcNow);

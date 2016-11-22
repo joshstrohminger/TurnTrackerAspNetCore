@@ -26,15 +26,18 @@
         @Html.Partial("_Turn", turn)
     }
 </table>
-<div class="clearfix">
-    <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
-        <input asp-for="Id" type="hidden" />
-        <input class="btn btn-primary" type="submit" value="Take Turn" />
-    </form>
-    <a class="btn btn-success pull-left" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
-        <input asp-for="Id" type="hidden" />
-        <input class="btn btn-danger" type="submit" value="Delete" />
-    </form>
-    <a class="btn btn-default pull-left" asp-action="Index">Home</a>
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="clearfix">
+        <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
+            <input asp-for="Id" type="hidden" />
+            <input class="btn btn-primary" type="submit" value="Take Turn" />
+        </form>
+        <a class="btn btn-success pull-left" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
+            <input asp-for="Id" type="hidden" />
+            <input class="btn btn-danger" type="submit" value="Delete" />
+        </form>
+    </div>
+}
+<a class="btn btn-default" asp-action="Index">Tasks</a>

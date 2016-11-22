@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ITaskData _taskData;
@@ -14,11 +16,13 @@ namespace TurnTrackerAspNetCore.Controllers
             _taskData = taskData;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(new HomePageViewModel { Tasks = _taskData.GetAll() });
         }
 
+        [AllowAnonymous]
         public IActionResult Details(long id)
         {
             var task = _taskData.GetDetails(id);
@@ -35,8 +39,7 @@ namespace TurnTrackerAspNetCore.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Create(TrackedTaskEditViewModel model)
         {
             if (!ModelState.IsValid)
@@ -66,8 +69,7 @@ namespace TurnTrackerAspNetCore.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Edit(long id, TrackedTaskEditViewModel model)
         {
             var task = _taskData.Get(id);
@@ -87,8 +89,7 @@ namespace TurnTrackerAspNetCore.Controllers
             return RedirectToAction(nameof(Details), new {id = task.Id});
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult TakeTurn(long id)
         {
             var success = _taskData.TakeTurn(id);
@@ -96,8 +97,7 @@ namespace TurnTrackerAspNetCore.Controllers
             return success ? RedirectToAction(nameof(Details), new {id}) : RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult DeleteTask(long id)
         {
             var success = _taskData.DeleteTask(id);
@@ -105,8 +105,7 @@ namespace TurnTrackerAspNetCore.Controllers
             return success ? RedirectToAction(nameof(Index)) : RedirectToAction(nameof(Details), new {id});
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult DeleteTurn(long id)
         {
             var taskId = _taskData.DeleteTurn(id);

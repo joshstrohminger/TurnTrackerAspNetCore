@@ -1,0 +1,14 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <form class="navbar-form navbar-right" method="post" asp-antiforgery="true" asp-controller="Account" asp-action="Logout">
+        <input class="btn btn-danger" type="submit" value="Logout"/>
+    </form>
+    <p class="navbar-text navbar-right"><span class="glyphicon glyphicon-user"></span> @User.Identity.Name</p>
+}
+else
+{
+    <div class="pull-right">
+        <a class="navbar-btn btn btn-primary" asp-route-returnurl="@($"{Context.Request.Path}{Context.Request.QueryString}")" asp-controller="Account" asp-action="Login">Login</a>
+        <a class="navbar-btn btn btn-primary" asp-route-returnurl="@($"{Context.Request.Path}{Context.Request.QueryString}")" asp-controller="Account" asp-action="Register">Register</a>
+    </div>
+}

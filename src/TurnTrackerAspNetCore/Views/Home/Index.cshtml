@@ -13,6 +13,9 @@
         </tr>
     }
 </table>
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create</a>
-</p>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create</a>
+    </p>
+}

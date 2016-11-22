@@ -8,9 +8,10 @@ using TurnTrackerAspNetCore.Entities;
 namespace TurnTrackerAspNetCore.Migrations
 {
     [DbContext(typeof(TurnTrackerDbContext))]
-    partial class TurnTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161122070045_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
