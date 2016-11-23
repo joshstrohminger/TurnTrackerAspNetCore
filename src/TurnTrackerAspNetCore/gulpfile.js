@@ -15,7 +15,7 @@ gulp.task("clean", function(cb) {
     return rimraf(paths.lib, cb);
 });
 
-gulp.task('default', function () {
+gulp.task('default', ['clean'], function () {
     var js = gulp.src([
             paths.node + 'jquery/dist/**/*',
             paths.node + 'jquery-validation/dist/jquery.validate.js',

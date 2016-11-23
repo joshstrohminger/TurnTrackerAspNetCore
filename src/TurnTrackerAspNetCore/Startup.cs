@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
-using TurnTrackerAspNetCore.Middleware;
 using TurnTrackerAspNetCore.Services;
 
 namespace TurnTrackerAspNetCore
@@ -21,8 +20,8 @@ namespace TurnTrackerAspNetCore
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", true)
-                .AddJsonFile("appsettings.Production.json", true)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -45,12 +44,15 @@ namespace TurnTrackerAspNetCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db)
         {
-            loggerFactory.AddConsole();
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
             db.Database.Migrate();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+                app.UseBrowserLink();
             }
             else
             {
@@ -60,14 +62,14 @@ namespace TurnTrackerAspNetCore
                 });
             }
 
-            app.UseFileServer();
+            app.UseStaticFiles();
             app.UseIdentity();
             app.UseMvc(ConfigureRoutes);
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
-            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }

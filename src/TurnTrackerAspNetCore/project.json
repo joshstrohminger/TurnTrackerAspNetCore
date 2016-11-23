@@ -15,7 +15,10 @@
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
     "Microsoft.EntityFrameworkCore.Tools": "1.1.0-preview4-final",
-    "Microsoft.EntityFrameworkCore.Design": "1.1.0"
+    "Microsoft.EntityFrameworkCore.Design": "1.1.0",
+    "Microsoft.Extensions.Logging.Debug": "1.1.0",
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0"
   },
 
   "tools": {
@@ -27,12 +30,14 @@
     "netcoreapp1.1": {
       "imports": [
         "dotnet5.6",
+        "dnxcore50",
         "portable-net45+win8"
       ]
     }
   },
 
   "buildOptions": {
+    "debugType": "portable",
     "emitEntryPoint": true,
     "preserveCompilationContext": true
   },
@@ -46,11 +51,14 @@
   "publishOptions": {
     "include": [
       "wwwroot",
+      "**/*.cshtml",
+      "appsettings.json",
       "web.config"
     ]
   },
 
   "scripts": {
+    "prepublish": [ "npm install", "gulp" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
