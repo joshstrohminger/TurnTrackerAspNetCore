@@ -40,12 +40,12 @@ namespace TurnTrackerAspNetCore.Services
             _context.SaveChanges();
         }
 
-        public bool TakeTurn(long taskId)
+        public bool TakeTurn(long taskId, string userId)
         {
             var task = GetDetails(taskId);
             if (null != task)
             {
-                task.Turns.Add(new Turn());
+                task.Turns.Add(new Turn {UserId = userId});
                 return true;
             }
             return false;

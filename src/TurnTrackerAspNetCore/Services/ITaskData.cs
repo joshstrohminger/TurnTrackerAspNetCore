@@ -10,7 +10,7 @@ namespace TurnTrackerAspNetCore.Services
         TrackedTask GetDetails(long id);
         TrackedTask Add(TrackedTask newTask);
         void Commit();
-        bool TakeTurn(long taskId);
+        bool TakeTurn(long taskId, string userId);
         bool DeleteTask(long id);
         long DeleteTurn(long id);
     }

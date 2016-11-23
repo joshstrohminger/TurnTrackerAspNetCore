@@ -1,9 +1,11 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
@@ -11,10 +13,12 @@ namespace TurnTrackerAspNetCore.Controllers
     public class HomeController : Controller
     {
         private readonly ITaskData _taskData;
+        private readonly UserManager<User> _userManager;
 
-        public HomeController(ITaskData taskData)
+        public HomeController(ITaskData taskData, UserManager<User> userManager)
         {
             _taskData = taskData;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -93,7 +97,7 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult TakeTurn(long id)
         {
-            var success = _taskData.TakeTurn(id);
+            var success = _taskData.TakeTurn(id, _userManager.GetUserId(ClaimsPrincipal.Current));
             _taskData.Commit();
             return success ? RedirectToAction(nameof(Details), new {id}) : RedirectToAction(nameof(Index));
         }
