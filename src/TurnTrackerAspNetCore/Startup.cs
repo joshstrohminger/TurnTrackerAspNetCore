@@ -22,6 +22,7 @@ namespace TurnTrackerAspNetCore
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", true)
+                .AddJsonFile("appsettings.Production.json", true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -42,9 +43,10 @@ namespace TurnTrackerAspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db)
         {
             loggerFactory.AddConsole();
+            db.Database.Migrate();
 
             if (env.IsDevelopment())
             {
@@ -59,7 +61,6 @@ namespace TurnTrackerAspNetCore
             }
 
             app.UseFileServer();
-            //app.UseNodeModules(env.ContentRootPath);
             app.UseIdentity();
             app.UseMvc(ConfigureRoutes);
         }
