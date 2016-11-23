@@ -19,13 +19,13 @@ namespace TurnTrackerAspNetCore.Entities
             base.OnModelCreating(modelBuilder);
 
             var turns = modelBuilder.Entity<Turn>();
-            turns.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("GETDATE()");
-            turns.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETDATE()");
-            turns.Property(x => x.Taken).ValueGeneratedOnAdd().HasDefaultValueSql("GETDATE()");
+            turns.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
+            turns.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("SYSDATETIMEOFFSET()");
+            turns.Property(x => x.Taken).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
 
             var tasks = modelBuilder.Entity<TrackedTask>();
-            tasks.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("GETDATE()");
-            tasks.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETDATE()");
+            tasks.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
+            tasks.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("SYSDATETIMEOFFSET()");
         }
     }
 }
