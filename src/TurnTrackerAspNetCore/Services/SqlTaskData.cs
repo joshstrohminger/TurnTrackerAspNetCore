@@ -26,7 +26,7 @@ namespace TurnTrackerAspNetCore.Services
 
         public TrackedTask GetDetails(long id)
         {
-            return _context.Tasks.Include(x => x.Turns).FirstOrDefault(task => task.Id == id);
+            return _context.Tasks.Include(task => task.Turns).ThenInclude(turn => turn.User).FirstOrDefault(task => task.Id == id);
         }
 
         public TrackedTask Add(TrackedTask newTask)

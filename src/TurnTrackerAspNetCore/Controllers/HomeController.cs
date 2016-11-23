@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
@@ -97,7 +98,7 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult TakeTurn(long id)
         {
-            var success = _taskData.TakeTurn(id, _userManager.GetUserId(ClaimsPrincipal.Current));
+            var success = _taskData.TakeTurn(id, _userManager.GetUserId(HttpContext.User));
             _taskData.Commit();
             return success ? RedirectToAction(nameof(Details), new {id}) : RedirectToAction(nameof(Index));
         }

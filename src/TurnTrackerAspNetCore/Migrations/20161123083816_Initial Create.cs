@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TurnTrackerAspNetCore.Migrations
 {
-    public partial class Recreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,8 +43,8 @@ namespace TurnTrackerAspNetCore.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
+                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "GETDATE()"),
+                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "GETDATE()"),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Period = table.Column<decimal>(nullable: false),
                     TeamBased = table.Column<bool>(nullable: false),
@@ -98,28 +98,6 @@ namespace TurnTrackerAspNetCore.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Turns",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 936, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    Taken = table.Column<DateTimeOffset>(nullable: false, defaultValue: new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))),
-                    TrackedTaskId = table.Column<long>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Turns", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Turns_Tasks_TrackedTaskId",
-                        column: x => x.TrackedTaskId,
-                        principalTable: "Tasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -189,6 +167,35 @@ namespace TurnTrackerAspNetCore.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Turns",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "GETDATE()"),
+                    Modified = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "GETDATE()"),
+                    Taken = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "GETDATE()"),
+                    TrackedTaskId = table.Column<long>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Turns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Turns_Tasks_TrackedTaskId",
+                        column: x => x.TrackedTaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Turns_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
@@ -219,6 +226,11 @@ namespace TurnTrackerAspNetCore.Migrations
                 name: "IX_Turns_TrackedTaskId",
                 table: "Turns",
                 column: "TrackedTaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Turns_UserId",
+                table: "Turns",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -256,10 +268,10 @@ namespace TurnTrackerAspNetCore.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Tasks");
 
             migrationBuilder.DropTable(
-                name: "Tasks");
+                name: "AspNetUsers");
         }
     }
 }

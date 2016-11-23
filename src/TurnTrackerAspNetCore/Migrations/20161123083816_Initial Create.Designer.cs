@@ -8,8 +8,8 @@ using TurnTrackerAspNetCore.Entities;
 namespace TurnTrackerAspNetCore.Migrations
 {
     [DbContext(typeof(TurnTrackerDbContext))]
-    [Migration("20161122105153_Recreate")]
-    partial class Recreate
+    [Migration("20161123083816_Initial Create")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,11 +131,11 @@ namespace TurnTrackerAspNetCore.Migrations
 
                     b.Property<DateTimeOffset>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTimeOffset>("Modified")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -159,21 +159,25 @@ namespace TurnTrackerAspNetCore.Migrations
 
                     b.Property<DateTimeOffset>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 936, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTimeOffset>("Modified")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTimeOffset>("Taken")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2016, 11, 22, 10, 51, 52, 946, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long>("TrackedTaskId");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TrackedTaskId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Turns");
                 });
@@ -273,6 +277,10 @@ namespace TurnTrackerAspNetCore.Migrations
                         .WithMany("Turns")
                         .HasForeignKey("TrackedTaskId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TurnTrackerAspNetCore.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
         }
     }

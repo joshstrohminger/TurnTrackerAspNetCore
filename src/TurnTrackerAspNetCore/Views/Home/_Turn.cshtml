@@ -1,6 +1,7 @@
 ﻿@model Turn
 <tr>
     <td>@Model.Id</td>
+    <td>@Model.User.UserName</td>
     <td>@Model.Taken.ToLocalTime()</td>
     <td>@Model.Modified.ToLocalTime()</td>
     <td>@Model.Created.ToLocalTime()</td>

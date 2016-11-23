@@ -19,13 +19,13 @@ namespace TurnTrackerAspNetCore.Entities
             base.OnModelCreating(modelBuilder);
 
             var turns = modelBuilder.Entity<Turn>();
-            turns.Property(x => x.Created).HasDefaultValue(DateTimeOffset.UtcNow).ValueGeneratedOnAdd();
-            turns.Property(x => x.Modified).HasDefaultValue(DateTimeOffset.UtcNow).ValueGeneratedOnAddOrUpdate();
-            turns.Property(x => x.Taken).HasDefaultValue(DateTimeOffset.UtcNow).ValueGeneratedOnAdd();
+            turns.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("GETDATE()");
+            turns.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETDATE()");
+            turns.Property(x => x.Taken).ValueGeneratedOnAdd().HasDefaultValueSql("GETDATE()");
 
             var tasks = modelBuilder.Entity<TrackedTask>();
-            tasks.Property(x => x.Created).HasDefaultValue(DateTimeOffset.UtcNow).ValueGeneratedOnAdd();
-            tasks.Property(x => x.Modified).HasDefaultValue(DateTimeOffset.UtcNow).ValueGeneratedOnAddOrUpdate();
+            tasks.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("GETDATE()");
+            tasks.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GETDATE()");
         }
     }
 }
