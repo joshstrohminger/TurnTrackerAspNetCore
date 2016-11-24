@@ -1,5 +1,19 @@
-﻿@model TrackedTask
-@{ViewBag.Title = "Details";}
+﻿@using System.Threading.Tasks
+@using TurnTrackerAspNetCore.Middleware
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model TrackedTask
+@{
+    ViewBag.Title = "Details";
+    string cookie;
+    if (!HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue(TimezoneOffsetReader.CookieKey, out cookie))
+    {
+        cookie = "0";
+    }
+    int minutes;
+    int.TryParse(cookie, out minutes);
+    var timezoneOffset = TimeSpan.FromMinutes(-minutes);
+    ViewBag.TimezoneOffset = timezoneOffset;
+}
 <h1>@Model.Name</h1>
 <div>@(Model.TeamBased ? "Team" : "Individual") Based</div>
 <div>
@@ -14,10 +28,10 @@
 </div>
 <div>
     <span>Modified </span>
-    <span>@Model.Modified.ToLocalTime()</span>
+    <span>@Model.Modified.ToOffset(timezoneOffset)</span>
     <span> - </span>
     <span>Created </span>
-    <span>@Model.Created.ToLocalTime()</span>
+    <span>@Model.Created.ToOffset(timezoneOffset)</span>
 </div>
 <h4>Turns</h4>
 @if (Model.Turns.Count == 0)
@@ -59,3 +73,7 @@ else
     </div>
 }
 <a class="btn btn-default" asp-action="Index">Tasks</a>
+
+@section footer {
+    <span class="timezone">UTC Offset: @timezoneOffset</span>
+}

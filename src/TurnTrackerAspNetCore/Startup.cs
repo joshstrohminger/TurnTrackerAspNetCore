@@ -64,6 +64,7 @@ namespace TurnTrackerAspNetCore
 
             app.UseStaticFiles();
             app.UseIdentity();
+            //app.UseTimezoneOffsetReader();
             app.UseMvc(ConfigureRoutes);
         }
 

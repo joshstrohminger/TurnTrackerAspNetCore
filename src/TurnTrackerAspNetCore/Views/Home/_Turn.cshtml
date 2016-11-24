@@ -2,9 +2,9 @@
 <tr>
     <td>@Model.Id</td>
     <td>@Model.User.UserName</td>
-    <td>@Model.Taken.ToLocalTime()</td>
-    <td>@Model.Modified.ToLocalTime()</td>
-    <td>@Model.Created.ToLocalTime()</td>
+    <td>@Model.Taken.ToOffset(ViewBag.TimezoneOffset)</td>
+    <td>@Model.Modified.ToOffset(ViewBag.TimezoneOffset)</td>
+    <td>@Model.Created.ToOffset(ViewBag.TimezoneOffset)</td>
     @if (User.Identity.IsAuthenticated)
     {
         <td>
