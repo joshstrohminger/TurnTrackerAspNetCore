@@ -1,0 +1,48 @@
+﻿@model User
+@{
+    ViewBag.Title = Model.UserName;
+}
+<h1>Profile</h1>
+<table class="table table-striped">
+    <tr><td><label>User</label></td><td>@Model.UserName</td></tr>
+    <tr><td><label asp-for="DisplayName"></label></td><td>@Model.DisplayName</td></tr>
+    <tr>
+        <td><label asp-for="Email"></label></td>
+        <td>@Model.Email</td>
+        @if (!string.IsNullOrWhiteSpace(Model.Email))
+        {
+            <td>
+                @if (Model.EmailConfirmed)
+                {
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span> Confirmed</span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <span> Unconfirmed</span>
+                }
+            </td>
+        }
+    </tr>
+    <tr>
+        <td><label>Phone</label></td>
+        <td>@Model.PhoneNumber</td>
+        @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
+        {
+            <td>
+                @if (Model.PhoneNumberConfirmed)
+                {
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span> Confirmed</span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <span> Unconfirmed</span>
+                }
+            </td>
+        }
+    </tr>
+    <tr><td><label>Two Factor</label></td><td>@(Model.TwoFactorEnabled ? "Enabled" : "Disabled")</td></tr>
+</table>

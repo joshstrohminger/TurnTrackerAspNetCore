@@ -20,12 +20,12 @@ namespace TurnTrackerAspNetCore.Entities
 
             var turns = modelBuilder.Entity<Turn>();
             turns.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
-            turns.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("SYSDATETIMEOFFSET()");
+            turns.Property(x => x.Modified).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
             turns.Property(x => x.Taken).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
 
             var tasks = modelBuilder.Entity<TrackedTask>();
             tasks.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
-            tasks.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("SYSDATETIMEOFFSET()");
+            tasks.Property(x => x.Modified).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
         }
     }
 }

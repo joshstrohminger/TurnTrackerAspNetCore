@@ -2,15 +2,30 @@
 <tr>
     <td>@Model.Id</td>
     <td>@Model.User.UserName</td>
-    <td>@Model.Taken.ToOffset(ViewBag.TimezoneOffset)</td>
-    <td>@Model.Modified.ToOffset(ViewBag.TimezoneOffset)</td>
+    <td>
+        <span>@Model.Taken.ToOffset(ViewBag.TimezoneOffset)</span>
+        @if (Math.Abs((Model.Taken - Model.Created).TotalHours) > 2)
+        {
+            <span class="glyphicon glyphicon-alert"></span>
+        }
+    </td>
+    <td>
+        <span>@Model.Modified.ToOffset(ViewBag.TimezoneOffset)</span>
+        @if (Model.Modified != Model.Created)
+        {
+            <span class="glyphicon glyphicon-alert"></span>
+        }
+    </td>
     <td>@Model.Created.ToOffset(ViewBag.TimezoneOffset)</td>
     @if (User.Identity.IsAuthenticated)
     {
-        <td>
-            <form asp-action="DeleteTurn" asp-antiforgery="true" method="post">
+        <td class="clearfix">
+            <a asp-action="EditTurn" asp-route-id="@Model.Id" class="pull-left btn btn-xs btn-success">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <form asp-action="DeleteTurn" asp-antiforgery="true" method="post" class="pull-left">
                 <input name="id" type="hidden" value="@Model.Id"/>
-                <input class="btn btn-xs btn-danger" type="submit" value="&times;"/>
+                <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
             </form>
         </td>
     }

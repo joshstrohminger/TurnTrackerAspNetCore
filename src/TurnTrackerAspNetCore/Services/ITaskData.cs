@@ -6,12 +6,13 @@ namespace TurnTrackerAspNetCore.Services
     public interface ITaskData
     {
         IEnumerable<TrackedTask> GetAll();
-        TrackedTask Get(long id);
-        TrackedTask GetDetails(long id);
+        TrackedTask GetTask(long id);
+        TrackedTask GetTaskDetails(long id);
         TrackedTask Add(TrackedTask newTask);
         void Commit();
         bool TakeTurn(long taskId, string userId);
         bool DeleteTask(long id);
         long DeleteTurn(long id);
+        Turn GetTurn(long id);
     }
 }

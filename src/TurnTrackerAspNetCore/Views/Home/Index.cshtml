@@ -1,5 +1,11 @@
 ﻿@model HomePageViewModel
 @{ViewBag.Title = "Turn Tracker";}
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create Task</a>
+    </p>
+}
 <h4>Tasks</h4>
 @if (Model.Tasks.Count == 0)
 {
@@ -26,10 +32,4 @@ else
             </tr>
         }
     </table>
-}
-@if (User.Identity.IsAuthenticated)
-{
-    <p>
-        <a class="btn btn-primary" asp-action="Create">Create Task</a>
-    </p>
 }

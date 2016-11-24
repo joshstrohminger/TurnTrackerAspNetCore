@@ -3,7 +3,7 @@ using TurnTrackerAspNetCore.Entities;
 
 namespace TurnTrackerAspNetCore.ViewModels
 {
-    public class TrackedTaskEditViewModel
+    public class EditTaskViewModel
     {
         [Required, MaxLength(100)]
         public string Name { get; set; }

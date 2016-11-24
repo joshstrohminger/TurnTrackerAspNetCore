@@ -19,14 +19,24 @@ namespace TurnTrackerAspNetCore.Services
             return _context.Tasks;
         }
 
-        public TrackedTask Get(long id)
+        public TrackedTask GetTask(long id)
         {
-            return _context.Tasks.FirstOrDefault(task => task.Id == id);
+            return _context.Tasks.Find(id);
         }
 
-        public TrackedTask GetDetails(long id)
+        public TrackedTask GetTaskDetails(long id)
         {
-            return _context.Tasks.Include(task => task.Turns).ThenInclude(turn => turn.User).FirstOrDefault(task => task.Id == id);
+            //return _context.Tasks.Include(task => task.Turns).ThenInclude(turn => turn.User).FirstOrDefault(task => task.Id == id);
+            var task = _context.Tasks.Find(id);
+            if (null != task)
+            {
+                task.Turns = _context.Turns
+                    .Include(turn => turn.User)
+                    .Where(turn => turn.TrackedTaskId == id)
+                    .OrderByDescending(turn => turn.Taken)
+                    .ToList();
+            }
+            return task;
         }
 
         public TrackedTask Add(TrackedTask newTask)
@@ -42,7 +52,7 @@ namespace TurnTrackerAspNetCore.Services
 
         public bool TakeTurn(long taskId, string userId)
         {
-            var task = GetDetails(taskId);
+            var task = GetTaskDetails(taskId);
             if (null != task)
             {
                 task.Turns.Add(new Turn {UserId = userId});
@@ -53,7 +63,7 @@ namespace TurnTrackerAspNetCore.Services
 
         public bool DeleteTask(long id)
         {
-            var task = _context.Tasks.FirstOrDefault(x => x.Id == id);
+            var task = _context.Tasks.Find(id);
             if (null != task)
             {
                 _context.Remove(task);
@@ -71,6 +81,11 @@ namespace TurnTrackerAspNetCore.Services
             }
             _context.Remove(turn);
             return turn.TrackedTaskId;
+        }
+
+        public Turn GetTurn(long id)
+        {
+            return _context.Turns.Find(id);
         }
     }
 }

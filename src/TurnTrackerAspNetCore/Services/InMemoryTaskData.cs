@@ -40,14 +40,14 @@ namespace TurnTrackerAspNetCore.Services
             return Tasks;
         }
 
-        public TrackedTask Get(long id)
+        public TrackedTask GetTask(long id)
         {
             return Tasks.FirstOrDefault(task => task.Id == id);
         }
 
-        public TrackedTask GetDetails(long id)
+        public TrackedTask GetTaskDetails(long id)
         {
-            return Get(id);
+            return GetTask(id);
         }
 
         public TrackedTask Add(TrackedTask newTask)
@@ -64,7 +64,7 @@ namespace TurnTrackerAspNetCore.Services
 
         public bool TakeTurn(long taskId, string userId)
         {
-            var task = Get(taskId);
+            var task = GetTask(taskId);
             if (null == task)
             {
                 return false;
@@ -76,7 +76,7 @@ namespace TurnTrackerAspNetCore.Services
 
         public bool DeleteTask(long id)
         {
-            var task = Get(id);
+            var task = GetTask(id);
             if (null != task)
             {
                 Tasks.Remove(task);
@@ -95,6 +95,11 @@ namespace TurnTrackerAspNetCore.Services
                 return turn.Task.Id;
             }
             return 0;
+        }
+
+        public Turn GetTurn(long id)
+        {
+            return Turns.FirstOrDefault(x => x.Id == id);
         }
     }
 }

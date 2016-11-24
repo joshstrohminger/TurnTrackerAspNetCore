@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +32,7 @@ namespace TurnTrackerAspNetCore.Controllers
         [AllowAnonymous]
         public IActionResult Details(long id)
         {
-            var task = _taskData.GetDetails(id);
+            var task = _taskData.GetTaskDetails(id);
             if (null == task)
             {
                 return RedirectToAction(nameof(Index));
@@ -46,7 +47,7 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Create(TrackedTaskEditViewModel model)
+        public IActionResult Create(EditTaskViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -65,9 +66,9 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(long id)
+        public IActionResult EditTask(long id)
         {
-            var model = _taskData.Get(id);
+            var model = _taskData.GetTask(id);
             if (null == model)
             {
                 return RedirectToAction(nameof(Index));
@@ -76,9 +77,9 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, TrackedTaskEditViewModel model)
+        public IActionResult EditTask(long id, EditTaskViewModel model)
         {
-            var task = _taskData.Get(id);
+            var task = _taskData.GetTask(id);
             if (null == task)
             {
                 return RedirectToAction(nameof(Index));
@@ -91,6 +92,7 @@ namespace TurnTrackerAspNetCore.Controllers
             task.TeamBased = model.TeamBased;
             task.Unit = model.Unit;
             task.Name = model.Name;
+            task.Modified = DateTimeOffset.UtcNow;
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new {id = task.Id});
         }
@@ -117,6 +119,31 @@ namespace TurnTrackerAspNetCore.Controllers
             var taskId = _taskData.DeleteTurn(id);
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new {id = taskId});
+        }
+
+        [HttpGet]
+        public IActionResult EditTurn(long id)
+        {
+            var turn = _taskData.GetTurn(id);
+            return View(turn);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult EditTurn(long id, long taskId, EditTurnViewModel model)
+        {
+            var turn = _taskData.GetTurn(id);
+            if (null == turn)
+            {
+                return RedirectToAction(nameof(Details), new {id = taskId});
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(turn);
+            }
+            turn.Taken = model.Taken;
+            turn.Modified = DateTimeOffset.UtcNow;
+            _taskData.Commit();
+            return RedirectToAction(nameof(Details), new { id = taskId });
         }
     }
 }

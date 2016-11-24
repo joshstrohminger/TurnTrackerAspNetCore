@@ -26,13 +26,22 @@
         <span>@Model.Period @Model.Unit</span>
     }
 </div>
-<div>
-    <span>Modified </span>
-    <span>@Model.Modified.ToOffset(timezoneOffset)</span>
-    <span> - </span>
-    <span>Created </span>
-    <span>@Model.Created.ToOffset(timezoneOffset)</span>
-</div>
+<div><label>Modified</label><span> @Model.Modified.ToOffset(timezoneOffset)</span></div>
+<div><label>Created</label><span> @Model.Created.ToOffset(timezoneOffset)</span></div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="clearfix">
+        <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
+            <input asp-for="Id" type="hidden" />
+            <input class="btn btn-primary" type="submit" value="Take Turn" />
+        </form>
+        <a class="btn btn-success pull-left" asp-action="EditTask" asp-route-id="@Model.Id">Edit</a>
+        <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
+            <input asp-for="Id" type="hidden" />
+            <input class="btn btn-danger" type="submit" value="Delete" />
+        </form>
+    </div>
+}
 <h4>Turns</h4>
 @if (Model.Turns.Count == 0)
 {
@@ -49,7 +58,7 @@ else
             <th>Created</th>
             @if (User.Identity.IsAuthenticated)
             {
-                <th>Delete</th>
+                <th>Actions</th>
             }
         </tr>
         @foreach (var turn in Model.Turns ?? new List<Turn>())
@@ -58,21 +67,6 @@ else
         }
     </table>
 }
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="clearfix">
-        <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
-            <input asp-for="Id" type="hidden" />
-            <input class="btn btn-primary" type="submit" value="Take Turn" />
-        </form>
-        <a class="btn btn-success pull-left" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-        <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
-            <input asp-for="Id" type="hidden" />
-            <input class="btn btn-danger" type="submit" value="Delete" />
-        </form>
-    </div>
-}
-<a class="btn btn-default" asp-action="Index">Tasks</a>
 
 @section footer {
     <span class="timezone">UTC Offset: @timezoneOffset</span>

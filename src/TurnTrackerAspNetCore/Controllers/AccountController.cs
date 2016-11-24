@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
@@ -91,6 +92,13 @@ namespace TurnTrackerAspNetCore.Controllers
                 ModelState.AddModelError("", "Login Failed");
             }
             return View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return View(user);
         }
     }
 }

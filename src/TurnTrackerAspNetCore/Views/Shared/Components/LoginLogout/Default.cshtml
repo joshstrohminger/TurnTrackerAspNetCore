@@ -3,7 +3,9 @@
     <form class="navbar-form navbar-right" method="post" asp-antiforgery="true" asp-controller="Account" asp-action="Logout">
         <input class="btn btn-danger" type="submit" value="Logout"/>
     </form>
-    <p class="navbar-text navbar-right"><span class="glyphicon glyphicon-user"></span> @User.Identity.Name</p>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-controller="Account" asp-action="Profile"><span class="glyphicon glyphicon-user"></span> @User.Identity.Name</a></li>
+    </ul>
 }
 else
 {

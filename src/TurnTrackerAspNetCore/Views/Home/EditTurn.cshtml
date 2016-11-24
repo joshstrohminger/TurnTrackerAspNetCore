@@ -1,0 +1,18 @@
+﻿@model Turn
+@{ViewBag.Title = "Edit Turn";}
+<div>
+    <h1>Edit Turn</h1>
+    <form method="post" asp-action="EditTurn" asp-antiforgery="true">
+        <div asp-validation-summary="ModelOnly"></div>
+        <input type="hidden" name="taskId" value="@Model.TrackedTaskId"/>
+        <div>
+            <label asp-for="Taken"></label>
+            <input asp-for="Taken" />
+            <span asp-validation-for="Taken"></span>
+        </div>
+        <div>
+            <input class="btn btn-primary" type="submit" value="Save" />
+            <a class="btn btn-danger" asp-action="Details" asp-route-id="@Model.TrackedTaskId">Cancel</a>
+        </div>
+    </form>
+</div>
