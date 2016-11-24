@@ -1,7 +1,7 @@
 ﻿@model Turn
 <tr>
     <td>@Model.Id</td>
-    <td>@Model.User.UserName</td>
+    <td>@(Model.User.DisplayName ?? Model.User.UserName)</td>
     <td>
         <span>@Model.Taken.ToOffset(ViewBag.TimezoneOffset)</span>
         @if (Math.Abs((Model.Taken - Model.Created).TotalHours) > 2)

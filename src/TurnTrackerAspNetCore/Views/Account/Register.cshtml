@@ -7,22 +7,30 @@
 <form method="post" asp-antiforgery="true">
     <input asp-for="ReturnUrl" type="hidden"/>
     <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName"/>
-        <span asp-validation-for="UserName"></span>
-    </div>
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password"/>
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword"/>
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-    <div>
-        <input class="btn btn-primary" type="submit" value="Register"/>
-    </div>
+    <table>
+        <tr>
+            <td><label asp-for="UserName"></label></td>
+            <td><input asp-for="UserName" /></td>
+            <td><span asp-validation-for="UserName"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="DisplayName"></label></td>
+            <td><input asp-for="DisplayName" /></td>
+            <td>
+                <span>Optional</span>
+                <span asp-validation-for="DisplayName"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><label asp-for="Password"></label></td>
+            <td><input asp-for="Password" /></td>
+            <td><span asp-validation-for="Password"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="ConfirmPassword"></label></td>
+            <td><input asp-for="ConfirmPassword" /></td>
+            <td><span asp-validation-for="ConfirmPassword"></span></td>
+        </tr>
+    </table>
+    <input class="btn btn-primary" type="submit" value="Register"/>
 </form>

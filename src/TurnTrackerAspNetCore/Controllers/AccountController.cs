@@ -29,9 +29,16 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             if (ModelState.IsValid)
             {
+                // ensure empty or whitespace is converted to null
+                var displayName = model.DisplayName;
+                if (string.IsNullOrWhiteSpace(displayName))
+                {
+                    displayName = null;
+                }
                 var user = new User
                 {
                     UserName = model.UserName,
+                    DisplayName = displayName
                 };
 
                 var createResult = await _userManager.CreateAsync(user, model.Password);
