@@ -37,7 +37,22 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            return View(task);
+
+            var counts = task.Turns
+                .GroupBy(turn => turn.User)
+                .Select(group => new UserCountViewModel(group.Key, group.Count(), 0)) // TODO add turns offset here
+                .OrderBy(x => x.TotalTurns)
+                .ThenBy(x => x.User.UserName)
+                .ToList();
+
+            var model = new TaskDetailsViewModel
+            {
+                Task = task,
+                ActiveUsers = counts,
+                MaxTurns = counts.Max(x => x.TotalTurns)
+            };
+
+            return View(model);
         }
 
         [HttpGet]

@@ -1,7 +1,7 @@
 ﻿@using System.Threading.Tasks
 @using TurnTrackerAspNetCore.Middleware
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model TrackedTask
+@model TaskDetailsViewModel
 @{
     ViewBag.Title = "Details";
     string cookie;
@@ -14,54 +14,87 @@
     var timezoneOffset = TimeSpan.FromMinutes(-minutes);
     ViewBag.TimezoneOffset = timezoneOffset;
 }
-<h1>@Model.Name</h1>
-<div>@(Model.TeamBased ? "Team" : "Individual") Based</div>
-<div>
-    @if (Model.Period == 0m)
-    {
-        <span>Non-Periodic</span>
-    }
-    else
-    {
-        <span>@Model.Period @Model.Unit</span>
-    }
-</div>
-<div><label>Modified</label><span> @Model.Modified.ToOffset(timezoneOffset)</span></div>
-<div><label>Created</label><span> @Model.Created.ToOffset(timezoneOffset)</span></div>
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="clearfix">
-        <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
-            <input asp-for="Id" type="hidden" />
-            <input class="btn btn-primary" type="submit" value="Take Turn" />
-        </form>
-        <a class="btn btn-success pull-left" asp-action="EditTask" asp-route-id="@Model.Id">Edit</a>
-        <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
-            <input asp-for="Id" type="hidden" />
-            <input class="btn btn-danger" type="submit" value="Delete" />
-        </form>
+<h1>@Model.Task.Name</h1>
+<div class="row">
+    <div class="col-sm-6">
+        <div>@(Model.Task.TeamBased ? "Team" : "Individual") Based</div>
+        <div>
+            @if (Model.Task.Period == 0m)
+            {
+                <span>Non-Periodic</span>
+            }
+            else
+            {
+                <span>@Model.Task.Period @Model.Task.Unit</span>
+            }
+        </div>
+        <div><label>Modified</label><span> @Model.Task.Modified.ToOffset(timezoneOffset)</span></div>
+        <div><label>Created</label><span> @Model.Task.Created.ToOffset(timezoneOffset)</span></div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="clearfix">
+                <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
+                    @*<input asp-for="Id" type="hidden" />*@
+                    <input class="btn btn-primary" type="submit" value="Take Turn" />
+                </form>
+                <a class="btn btn-success pull-left" asp-action="EditTask" asp-route-id="@Model.Task.Id">Edit</a>
+                <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
+                    @*<input asp-for="Id" type="hidden" />*@
+                    <input class="btn btn-danger" type="submit" value="Delete" />
+                </form>
+            </div>
+        }
     </div>
-}
+    <div class="col-sm-6">
+        <h4>Active Users</h4>
+        @if (Model.ActiveUsers.Count == 0)
+        {
+            <p>No active users</p>
+        }
+        else
+        {
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Turns</th>
+                        <th>Todo</th>
+                    </tr>
+                </thead>
+                @foreach (var row in Model.ActiveUsers)
+                {
+                    <tr>
+                        <td>@(row.User.DisplayName ?? row.User.UserName)</td>
+                        <td>@row.TotalTurns</td>
+                        <td>@(Model.MaxTurns - row.TotalTurns)</td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
 <h4>Turns</h4>
-@if (Model.Turns.Count == 0)
+@if (Model.Task.Turns.Count == 0)
 {
     <p>No turns</p>
 }
 else
 {
     <table class="table table-condensed table-hover table-striped">
-        <tr>
-            <th>Id</th>
-            <th>User</th>
-            <th>Taken</th>
-            <th>Modified</th>
-            <th>Created</th>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <th>Actions</th>
-            }
-        </tr>
-        @foreach (var turn in Model.Turns ?? new List<Turn>())
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User</th>
+                <th>Taken</th>
+                <th>Modified</th>
+                <th>Created</th>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th>Actions</th>
+                }
+            </tr>
+        </thead>
+        @foreach (var turn in Model.Task.Turns ?? new List<Turn>())
         {
             @Html.Partial("_Turn", turn)
         }
