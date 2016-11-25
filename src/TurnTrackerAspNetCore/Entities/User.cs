@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TurnTrackerAspNetCore.Entities
@@ -7,5 +8,6 @@ namespace TurnTrackerAspNetCore.Entities
     {
         [Display(Name = "Display Name")]
         public string DisplayName { get; set; }
+        public List<Participant> Participations { get; set; }
     }
 }

@@ -37,5 +37,7 @@ namespace TurnTrackerAspNetCore.Entities
         public DateTimeOffset Modified { get; set; }
 
         public List<Turn> Turns { get; set; }
+
+        public List<Participant> Participants { get; set; }
     }
 }
