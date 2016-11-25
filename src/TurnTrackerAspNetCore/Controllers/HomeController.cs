@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
@@ -26,7 +24,7 @@ namespace TurnTrackerAspNetCore.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return View(new HomePageViewModel { Tasks = _taskData.GetAll().ToList() });
+            return View(new HomePageViewModel { Tasks = _taskData.GetAllTasks().ToList() });
         }
 
         [AllowAnonymous]
@@ -40,7 +38,11 @@ namespace TurnTrackerAspNetCore.Controllers
 
             var counts = task.Turns
                 .GroupBy(turn => turn.User)
-                .Select(group => new UserCountViewModel(group.Key, group.Count(), 0)) // TODO add turns offset here
+                .Select(group => new UserCountViewModel(
+                    group.Key,
+                    group.Count(),
+                    0, // TODO add turns offset here
+                    task.Participants.Any(x => x.UserId == group.Key.Id)))
                 .OrderBy(x => x.TotalTurns)
                 .ThenBy(x => x.User.UserName)
                 .ToList();

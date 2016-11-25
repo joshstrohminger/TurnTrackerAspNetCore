@@ -12,13 +12,15 @@ namespace TurnTrackerAspNetCore.ViewModels
         public int TurnsTaken { get; set; }
         public int TurnsOffset { get; set; }
         public int TotalTurns { get; set; }
+        public bool Active { get; set; }
 
-        public UserCountViewModel(User user, int taken, int offset)
+        public UserCountViewModel(User user, int taken, int offset, bool active)
         {
             User = user;
             TurnsTaken = taken;
             TurnsOffset = offset;
             TotalTurns = TurnsTaken + TurnsOffset;
+            Active = active;
         }
     }
 }

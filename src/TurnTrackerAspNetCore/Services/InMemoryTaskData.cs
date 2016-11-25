@@ -9,6 +9,7 @@ namespace TurnTrackerAspNetCore.Services
     {
         private static readonly List<TrackedTask> Tasks;
         private static readonly List<Turn> Turns = new List<Turn>();
+        private static readonly List<User> Users = new List<User>();
 
         static InMemoryTaskData()
         {
@@ -35,9 +36,14 @@ namespace TurnTrackerAspNetCore.Services
             }
         }
 
-        public IEnumerable<TrackedTask> GetAll()
+        public IEnumerable<TrackedTask> GetAllTasks()
         {
             return Tasks;
+        }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            return Users;
         }
 
         public TrackedTask GetTask(long id)

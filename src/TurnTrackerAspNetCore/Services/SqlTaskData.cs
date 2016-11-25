@@ -14,9 +14,14 @@ namespace TurnTrackerAspNetCore.Services
             _context = context;
         }
 
-        public IEnumerable<TrackedTask> GetAll()
+        public IEnumerable<TrackedTask> GetAllTasks()
         {
             return _context.Tasks;
+        }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            return _context.Users;
         }
 
         public TrackedTask GetTask(long id)
@@ -26,8 +31,11 @@ namespace TurnTrackerAspNetCore.Services
 
         public TrackedTask GetTaskDetails(long id)
         {
-            //return _context.Tasks.Include(task => task.Turns).ThenInclude(turn => turn.User).FirstOrDefault(task => task.Id == id);
-            var task = _context.Tasks.Find(id);
+            var task = _context.Tasks
+                .Include(x => x.Participants)
+                .ThenInclude(x => x.User)
+                .FirstOrDefault(x => x.Id == id);
+
             if (null != task)
             {
                 task.Turns = _context.Turns
@@ -36,6 +44,7 @@ namespace TurnTrackerAspNetCore.Services
                     .OrderByDescending(turn => turn.Taken)
                     .ToList();
             }
+
             return task;
         }
 
