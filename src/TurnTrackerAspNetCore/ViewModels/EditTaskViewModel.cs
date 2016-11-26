@@ -24,5 +24,8 @@ namespace TurnTrackerAspNetCore.ViewModels
         public List<SelectListItem> Users { get; set; }
 
         public long Id { get; set; }
+
+        [Required]
+        public string Owner { get; set; }
     }
 }

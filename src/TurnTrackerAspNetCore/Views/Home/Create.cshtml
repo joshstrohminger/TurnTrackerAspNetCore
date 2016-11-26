@@ -4,6 +4,7 @@
     <h1>Create Task</h1>
     <form method="post" asp-action="Create" asp-antiforgery="true">
         <div asp-validation-summary="ModelOnly"></div>
+        <input type="hidden" asp-for="Owner"/>
         <div>
             <label asp-for="Name"></label>
             <input asp-for="Name"/>

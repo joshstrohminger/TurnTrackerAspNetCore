@@ -24,6 +24,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div>@(Model.Task.TeamBased ? "Team" : "Individual") Based</div>
+        <div><label>Owner</label><span> @(Model.Task.User.DisplayName ?? Model.Task.User.UserName)</span></div>
         <div>
             @if (Model.Task.Period == 0m)
             {

@@ -39,5 +39,8 @@ namespace TurnTrackerAspNetCore.Entities
         public List<Turn> Turns { get; set; }
 
         public List<Participant> Participants { get; set; }
+
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

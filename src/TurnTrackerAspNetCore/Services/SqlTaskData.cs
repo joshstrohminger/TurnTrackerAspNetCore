@@ -32,6 +32,7 @@ namespace TurnTrackerAspNetCore.Services
         public TrackedTask GetTaskDetails(long id)
         {
             var task = _context.Tasks
+                .Include(x => x.User)
                 .Include(x => x.Participants)
                 .ThenInclude(x => x.User)
                 .FirstOrDefault(x => x.Id == id);
@@ -75,6 +76,11 @@ namespace TurnTrackerAspNetCore.Services
             return false;
         }
 
+        public void DeleteTask(TrackedTask task)
+        {
+            _context.Remove(task);
+        }
+
         public long DeleteTurn(long id)
         {
             var turn = _context.Turns.Include(x => x.Task).FirstOrDefault(x => x.Id == id);
@@ -84,6 +90,11 @@ namespace TurnTrackerAspNetCore.Services
             }
             _context.Remove(turn);
             return turn.TrackedTaskId;
+        }
+
+        public void DeleteTurn(Turn turn)
+        {
+            _context.Remove(turn);
         }
 
         public Turn GetTurn(long id)

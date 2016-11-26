@@ -84,6 +84,11 @@ namespace TurnTrackerAspNetCore.Services
             return false;
         }
 
+        public void DeleteTask(TrackedTask task)
+        {
+            Tasks.Remove(task);
+        }
+
         public long DeleteTurn(long id)
         {
             var turn = Turns.FirstOrDefault(x => x.Id == id);
@@ -94,6 +99,15 @@ namespace TurnTrackerAspNetCore.Services
                 return turn.Task.Id;
             }
             return 0;
+        }
+
+        public void DeleteTurn(Turn turn)
+        {
+            foreach (var task in Tasks)
+            {
+                task.Turns.Remove(turn);
+            }
+            Turns.Remove(turn);
         }
 
         public Turn GetTurn(long id)

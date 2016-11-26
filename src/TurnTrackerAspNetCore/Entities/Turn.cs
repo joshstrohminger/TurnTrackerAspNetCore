@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TurnTrackerAspNetCore.Entities
 {
@@ -9,9 +8,11 @@ namespace TurnTrackerAspNetCore.Entities
         [Key]
         public long Id { get; set; }
 
+        [Required]
         public long TrackedTaskId { get; set; }
         public TrackedTask Task { get; set; }
 
+        [Required]
         public string UserId { get; set; }
         public User User { get; set; }
         
