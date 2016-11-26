@@ -47,9 +47,9 @@
     </div>
     <div class="col-sm-6">
         <h4>Participants</h4>
-        @if (Model.ActiveUsers.Count == 0)
+        @if (Model.Counts.Count == 0)
         {
-            <p>No active users</p>
+            <p>No participants</p>
         }
         else
         {
@@ -62,7 +62,7 @@
                         <th>Active</th>
                     </tr>
                 </thead>
-                @foreach (var row in Model.ActiveUsers)
+                @foreach (var row in Model.Counts)
                 {
                     <tr>
                         <td>@(row.User.DisplayName ?? row.User.UserName)</td>

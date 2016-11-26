@@ -9,6 +9,8 @@ namespace TurnTrackerAspNetCore.Entities
 
         public DbSet<Turn> Turns { get; set; }
 
+        public DbSet<Participant> Participants { get; set; }
+
         public TurnTrackerDbContext(DbContextOptions options) : base(options)
         {
         }

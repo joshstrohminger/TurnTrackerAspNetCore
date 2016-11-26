@@ -7,6 +7,7 @@ using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
@@ -43,16 +44,33 @@ namespace TurnTrackerAspNetCore.Controllers
                     group.Key,
                     group.Count(),
                     0, // TODO add turns offset here
-                    task.Participants.Any(x => x.UserId == group.Key.Id)))
+                    false))
+                .ToDictionary(x => x.User, x => x);
+
+            foreach (var user in task.Participants.Select(x => x.User))
+            {
+                UserCountViewModel count;
+                if (counts.TryGetValue(user, out count))
+                {
+                    count.Active = true;
+                }
+                else
+                {
+                    counts.Add(user, new UserCountViewModel(user, 0, 0, true));
+                }
+            }
+
+            var orderedCounts = counts.Values
                 .OrderBy(x => x.TotalTurns)
                 .ThenBy(x => x.User.UserName)
                 .ToList();
 
+
             var model = new TaskDetailsViewModel
             {
                 Task = task,
-                ActiveUsers = counts,
-                MaxTurns = counts.Max(x => x.TotalTurns)
+                Counts = orderedCounts,
+                MaxTurns = orderedCounts.Count > 0 ? orderedCounts.Max(x => x.TotalTurns) : 0
             };
 
             return View(model);
@@ -86,20 +104,25 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpGet]
         public IActionResult EditTask(long id)
         {
-            var task = _taskData.GetTask(id);
+            var task = _taskData.GetTaskDetails(id);
             if (null == task)
             {
                 return RedirectToAction(nameof(Index));
             }
+            var participantIds = task.Participants?.Select(x => x.UserId).ToList() ?? new List<string>();
             var model = new EditTaskViewModel
             {
                 Id = task.Id,
                 Name = task.Name,
                 Period = task.Period,
-                Participants = task.Participants?.Select(x => x.User).ToList() ?? new List<User>(),
                 Unit = task.Unit,
                 TeamBased = task.TeamBased,
-                Users = _taskData.GetAllUsers().ToList()
+                Users = _taskData.GetAllUsers().Select(x => new SelectListItem
+                {
+                    Value = x.Id,
+                    Text = x.DisplayName == null ? $"{x.UserName}" : $"{x.DisplayName} ({x.UserName})",
+                    Selected = participantIds.Contains(x.Id)
+                }).ToList()
             };
             return View(model);
         }
@@ -107,7 +130,7 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult EditTask(long id, EditTaskViewModel model)
         {
-            var task = _taskData.GetTask(id);
+            var task = _taskData.GetTaskDetails(id);
             if (null == task)
             {
                 return RedirectToAction(nameof(Index));
@@ -120,6 +143,12 @@ namespace TurnTrackerAspNetCore.Controllers
             task.TeamBased = model.TeamBased;
             task.Unit = model.Unit;
             task.Name = model.Name;
+
+            task.Participants.RemoveAll(x => !model.Participants.Contains(x.UserId));
+            foreach (var newId in model.Participants.Except(task.Participants.Select(x => x.UserId)))
+            {
+                task.Participants.Add(new Participant { TaskId = id, UserId = newId });
+            }
             task.Modified = DateTimeOffset.UtcNow;
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new {id = task.Id});

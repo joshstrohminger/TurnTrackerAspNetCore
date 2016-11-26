@@ -8,7 +8,7 @@ using TurnTrackerAspNetCore.Entities;
 namespace TurnTrackerAspNetCore.Migrations
 {
     [DbContext(typeof(TurnTrackerDbContext))]
-    [Migration("20161125213544_Add Participants")]
+    [Migration("20161126051143_Add Participants")]
     partial class AddParticipants
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,7 +134,7 @@ namespace TurnTrackerAspNetCore.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Participant");
+                    b.ToTable("Participants");
                 });
 
             modelBuilder.Entity("TurnTrackerAspNetCore.Entities.TrackedTask", b =>

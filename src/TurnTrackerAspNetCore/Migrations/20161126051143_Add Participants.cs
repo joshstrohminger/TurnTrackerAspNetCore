@@ -9,7 +9,7 @@ namespace TurnTrackerAspNetCore.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Participant",
+                name: "Participants",
                 columns: table => new
                 {
                     TaskId = table.Column<long>(nullable: false),
@@ -17,15 +17,15 @@ namespace TurnTrackerAspNetCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participant", x => new { x.TaskId, x.UserId });
+                    table.PrimaryKey("PK_Participants", x => new { x.TaskId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_Participant_Tasks_TaskId",
+                        name: "FK_Participants_Tasks_TaskId",
                         column: x => x.TaskId,
                         principalTable: "Tasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Participant_AspNetUsers_UserId",
+                        name: "FK_Participants_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -33,15 +33,15 @@ namespace TurnTrackerAspNetCore.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_UserId",
-                table: "Participant",
+                name: "IX_Participants_UserId",
+                table: "Participants",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Participant");
+                name: "Participants");
         }
     }
 }

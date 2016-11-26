@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TurnTrackerAspNetCore.Entities;
 
 namespace TurnTrackerAspNetCore.ViewModels
@@ -18,9 +19,9 @@ namespace TurnTrackerAspNetCore.ViewModels
         [Display(Name = "Team Based")]
         public bool TeamBased { get; set; }
 
-        public List<User> Participants { get; set; }
+        public IEnumerable<string> Participants { get; set; } = new List<string>();
 
-        public List<User> Users { get; set; }
+        public List<SelectListItem> Users { get; set; }
 
         public long Id { get; set; }
     }

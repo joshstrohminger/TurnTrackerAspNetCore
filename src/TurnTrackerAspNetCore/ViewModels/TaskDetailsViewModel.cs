@@ -6,7 +6,7 @@ namespace TurnTrackerAspNetCore.ViewModels
     public class TaskDetailsViewModel
     {
         public TrackedTask Task { get; set; }
-        public List<UserCountViewModel> ActiveUsers { get; set; }
+        public List<UserCountViewModel> Counts { get; set; }
         public int MaxTurns { get; set; }
     }
 }

@@ -133,7 +133,7 @@ namespace TurnTrackerAspNetCore.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Participant");
+                    b.ToTable("Participants");
                 });
 
             modelBuilder.Entity("TurnTrackerAspNetCore.Entities.TrackedTask", b =>

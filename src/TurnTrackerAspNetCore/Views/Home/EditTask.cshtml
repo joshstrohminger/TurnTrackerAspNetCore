@@ -3,6 +3,7 @@
     ViewBag.Title = "Edit Task";
     var label = "contro-label col-sm-2";
     var submit = "col-sm-offset-2";
+    var doit = true;
 }
 <div>
     <h1>Edit Task</h1>
@@ -38,17 +39,8 @@
         </div>
         <div class="form-group">
             <label asp-for="Participants" class="@label"></label>
-            <label class="col-sm-4">Participants (@Model.Participants.Count)</label>
-            <label class="col-sm-offset-2 col-sm-4">Users (@Model.Users.Count)</label>
-            <div class="col-sm-offset-2 col-sm-4">
-                <select asp-for="Participants" multiple class="form-control"></select>
-            </div>
-            <div class="col-sm-2" style="text-align: center;">
-                <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-right"></span></button>
-            </div>
             <div class="col-sm-4">
-                <select asp-for="Users" multiple class="form-control"></select>
+                <select asp-for="Participants" multiple class="form-control" asp-items="@Model.Users"></select>
             </div>
         </div>
         <div class="form-group">
