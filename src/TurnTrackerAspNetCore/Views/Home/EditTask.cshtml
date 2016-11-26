@@ -1,32 +1,61 @@
-﻿@model TrackedTask
-@{ViewBag.Title = "Edit Task";}
+﻿@model EditTaskViewModel
+@{
+    ViewBag.Title = "Edit Task";
+    var label = "contro-label col-sm-2";
+    var submit = "col-sm-offset-2";
+}
 <div>
     <h1>Edit Task</h1>
-    <form method="post" asp-action="EditTask" asp-antiforgery="true">
+    <form method="post" asp-action="EditTask" asp-antiforgery="true" class="form-horizontal">
         <div asp-validation-summary="ModelOnly"></div>
-        <div>
-            <label asp-for="Name"></label>
-            <input asp-for="Name"/>
-            <span asp-validation-for="Name"></span>
+        <div class="form-group">
+            <label asp-for="Name" class="@label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name"></span>
+            </div>
         </div>
-        <div>
-            <label asp-for="TeamBased"></label>
-            <input asp-for="TeamBased" />
-            <span asp-validation-for="TeamBased"></span>
+        <div class="form-group">
+            <label asp-for="TeamBased" class="@label"></label>
+            <div class="col-sm-1">
+                <input asp-for="TeamBased" class="form-control pull-left"/>
+                <span asp-validation-for="TeamBased"></span>
+            </div>
         </div>
-        <div>
-            <label asp-for="Period"></label>
-            <input asp-for="Period" />
-            <span asp-validation-for="Period"></span>
+        <div class="form-group">
+            <label asp-for="Period" class="@label"></label>
+            <div class="col-sm-2">
+                <input asp-for="Period" class="form-control"/>
+                <span asp-validation-for="Period"></span>
+            </div>
         </div>
-        <div>
-            <label asp-for="Unit"></label>
-            <select asp-for="Unit" asp-items="@Html.GetEnumSelectList(typeof(PeriodUnit))"></select>
-            <span asp-validation-for="Unit"></span>
+        <div class="form-group">
+            <label asp-for="Unit" class="@label"></label>
+            <div class="col-sm-2">
+                <select asp-for="Unit" asp-items="@Html.GetEnumSelectList(typeof(PeriodUnit))" class="form-control"></select>
+                <span asp-validation-for="Unit"></span>
+            </div>
         </div>
-        <div>
-            <input class="btn btn-primary" type="submit" value="Save"/>
-            <a class="btn btn-danger" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+        <div class="form-group">
+            <label asp-for="Participants" class="@label"></label>
+            <label class="col-sm-4">Participants (@Model.Participants.Count)</label>
+            <label class="col-sm-offset-2 col-sm-4">Users (@Model.Users.Count)</label>
+            <div class="col-sm-offset-2 col-sm-4">
+                <select asp-for="Participants" multiple class="form-control"></select>
+            </div>
+            <div class="col-sm-2" style="text-align: center;">
+                <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="Users" multiple class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10 @submit">
+                <input class="btn btn-primary" type="submit" value="Save"/>
+                <a class="btn btn-danger" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+            </div>
         </div>
     </form>
 </div>

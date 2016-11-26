@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -85,11 +86,21 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpGet]
         public IActionResult EditTask(long id)
         {
-            var model = _taskData.GetTask(id);
-            if (null == model)
+            var task = _taskData.GetTask(id);
+            if (null == task)
             {
                 return RedirectToAction(nameof(Index));
             }
+            var model = new EditTaskViewModel
+            {
+                Id = task.Id,
+                Name = task.Name,
+                Period = task.Period,
+                Participants = task.Participants?.Select(x => x.User).ToList() ?? new List<User>(),
+                Unit = task.Unit,
+                TeamBased = task.TeamBased,
+                Users = _taskData.GetAllUsers().ToList()
+            };
             return View(model);
         }
 
