@@ -19,7 +19,7 @@ namespace TurnTrackerAspNetCore.ViewModels
         [Display(Name = "Team Based")]
         public bool TeamBased { get; set; }
 
-        public IEnumerable<string> Participants { get; set; } = new List<string>();
+        public IEnumerable<string> Participants { get; set; }
 
         public List<SelectListItem> Users { get; set; }
 

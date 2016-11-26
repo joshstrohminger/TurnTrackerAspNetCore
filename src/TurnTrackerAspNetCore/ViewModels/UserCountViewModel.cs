@@ -19,8 +19,15 @@ namespace TurnTrackerAspNetCore.ViewModels
             User = user;
             TurnsTaken = taken;
             TurnsOffset = offset;
-            TotalTurns = TurnsTaken + TurnsOffset;
+            TotalTurns = TurnsOffset + TurnsTaken;
             Active = active;
+        }
+
+        public void Activate(int offset)
+        {
+            Active = true;
+            TurnsOffset = offset;
+            TotalTurns = TurnsOffset + TurnsTaken;
         }
     }
 }

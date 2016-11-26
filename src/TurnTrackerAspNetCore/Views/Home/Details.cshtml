@@ -14,6 +14,12 @@
     var timezoneOffset = TimeSpan.FromMinutes(-minutes);
     ViewBag.TimezoneOffset = timezoneOffset;
 }
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>@Model.Error
+    </div>
+}
 <h1>@Model.Task.Name</h1>
 <div class="row">
     <div class="col-sm-6">
@@ -35,7 +41,10 @@
             <div class="clearfix">
                 <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
                     <input name="id" value="@Model.Task.Id" type="hidden" />
-                    <input class="btn btn-primary" type="submit" value="Take Turn" />
+                    @if (Model.CanTakeTurn)
+                    {
+                        <input class="btn btn-primary" type="submit" value="Take Turn"/>
+                    }
                 </form>
                 <a class="btn btn-success pull-left" asp-action="EditTask" asp-route-id="@Model.Task.Id">Edit</a>
                 <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">

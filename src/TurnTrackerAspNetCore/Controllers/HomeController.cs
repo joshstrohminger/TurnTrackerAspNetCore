@@ -24,18 +24,18 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public IActionResult Index(string error = null)
         {
-            return View(new HomePageViewModel { Tasks = _taskData.GetAllTasks().ToList() });
+            return View(new HomePageViewModel { Tasks = _taskData.GetAllTasks().ToList(), Error = error});
         }
 
         [AllowAnonymous]
-        public IActionResult Details(long id)
+        public IActionResult Details(long id, string error = null)
         {
             var task = _taskData.GetTaskDetails(id);
             if (null == task)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new {error = "Invalid task"});
             }
 
             var counts = task.Turns
@@ -43,34 +43,42 @@ namespace TurnTrackerAspNetCore.Controllers
                 .Select(group => new UserCountViewModel(
                     group.Key,
                     group.Count(),
-                    0, // TODO add turns offset here
+                    0,
                     false))
                 .ToDictionary(x => x.User, x => x);
 
-            foreach (var user in task.Participants.Select(x => x.User))
+            var newParticipants = new List<User>();
+            var maxTurns = 0;
+
+            foreach (var part in task.Participants)
             {
                 UserCountViewModel count;
-                if (counts.TryGetValue(user, out count))
+                if (counts.TryGetValue(part.User, out count))
                 {
-                    count.Active = true;
+                    count.Activate(part.Offset);
+                    maxTurns = Math.Max(count.TotalTurns, maxTurns);
                 }
                 else
                 {
-                    counts.Add(user, new UserCountViewModel(user, 0, 0, true));
+                    newParticipants.Add(part.User);
                 }
             }
 
             var orderedCounts = counts.Values
+                .Union(newParticipants.Select(x => new UserCountViewModel(x, 0, maxTurns, true)))
                 .OrderBy(x => x.TotalTurns)
                 .ThenBy(x => x.User.UserName)
                 .ToList();
 
+            var userId = _userManager.GetUserId(HttpContext.User);
 
             var model = new TaskDetailsViewModel
             {
                 Task = task,
                 Counts = orderedCounts,
-                MaxTurns = orderedCounts.Count > 0 ? orderedCounts.Max(x => x.TotalTurns) : 0
+                MaxTurns = maxTurns,
+                CanTakeTurn = task.Participants.Any(x => x.UserId == userId),
+                Error = error
             };
 
             return View(model);
@@ -107,7 +115,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var task = _taskData.GetTaskDetails(id);
             if (null == task)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { error = "Invalid task" });
             }
             var participantIds = task.Participants?.Select(x => x.UserId).ToList() ?? new List<string>();
             var model = new EditTaskViewModel
@@ -133,7 +141,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var task = _taskData.GetTaskDetails(id);
             if (null == task)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { error = "Invalid task" });
             }
             if (!ModelState.IsValid)
             {
@@ -143,6 +151,7 @@ namespace TurnTrackerAspNetCore.Controllers
             task.TeamBased = model.TeamBased;
             task.Unit = model.Unit;
             task.Name = model.Name;
+            model.Participants = model.Participants ?? new List<string>();
 
             task.Participants.RemoveAll(x => !model.Participants.Contains(x.UserId));
             foreach (var newId in model.Participants.Except(task.Participants.Select(x => x.UserId)))
@@ -157,9 +166,20 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult TakeTurn(long id)
         {
-            var success = _taskData.TakeTurn(id, _userManager.GetUserId(HttpContext.User));
-            _taskData.Commit();
-            return success ? RedirectToAction(nameof(Details), new {id}) : RedirectToAction(nameof(Index));
+            var task = _taskData.GetTaskDetails(id);
+            if (null == task)
+            {
+                return RedirectToAction(nameof(Index), new { error = "Invalid task" });
+            }
+            var userId = _userManager.GetUserId(HttpContext.User);
+
+            if (task.Participants.Any(x => x.UserId == userId))
+            {
+                task.Turns.Add(new Turn {UserId = userId});
+                _taskData.Commit();
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            return RedirectToAction(nameof(Details), new {id, error = "Must be an active user to take a turn"});
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -167,7 +187,7 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             var success = _taskData.DeleteTask(id);
             _taskData.Commit();
-            return success ? RedirectToAction(nameof(Index)) : RedirectToAction(nameof(Details), new {id});
+            return RedirectToAction(nameof(Index), new { error = success ? "Invalid task" : null });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -175,7 +195,7 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             var taskId = _taskData.DeleteTurn(id);
             _taskData.Commit();
-            return RedirectToAction(nameof(Details), new {id = taskId});
+            return RedirectToAction(nameof(Details), new {id = taskId, error = taskId == 0 ? "Invalid turn" : ""});
         }
 
         [HttpGet]
@@ -191,7 +211,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var turn = _taskData.GetTurn(id);
             if (null == turn)
             {
-                return RedirectToAction(nameof(Details), new {id = taskId});
+                return RedirectToAction(nameof(Details), new {id = taskId, error = "Invalid turn"});
             }
             if (!ModelState.IsValid)
             {

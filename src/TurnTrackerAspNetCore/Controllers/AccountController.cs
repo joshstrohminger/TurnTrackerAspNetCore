@@ -49,17 +49,12 @@ namespace TurnTrackerAspNetCore.Controllers
                     {
                         return Redirect(model.ReturnUrl);
                     }
-                    else
-                    {
-                        return RedirectToAction(nameof(HomeController.Index), "Home");
-                    }
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
-                else
+
+                foreach (var error in createResult.Errors)
                 {
-                    foreach (var error in createResult.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
+                    ModelState.AddModelError("", error.Description);
                 }
             }
             return View(model);

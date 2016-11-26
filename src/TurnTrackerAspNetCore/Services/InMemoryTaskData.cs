@@ -68,18 +68,6 @@ namespace TurnTrackerAspNetCore.Services
             // do nothing in memory
         }
 
-        public bool TakeTurn(long taskId, string userId)
-        {
-            var task = GetTask(taskId);
-            if (null == task)
-            {
-                return false;
-            }
-            var date = DateTimeOffset.UtcNow;
-            task.Turns.Add(new Turn {Id = Turns.Max(x => x.Id) + 1, Created = date, Taken = date, Modified = date, TrackedTaskId = taskId, UserId = userId});
-            return true;
-        }
-
         public bool DeleteTask(long id)
         {
             var task = GetTask(id);

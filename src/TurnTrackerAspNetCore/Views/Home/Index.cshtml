@@ -1,5 +1,11 @@
 ﻿@model HomePageViewModel
 @{ViewBag.Title = "Turn Tracker";}
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>@Model.Error
+    </div>
+}
 @if (User.Identity.IsAuthenticated)
 {
     <p>
