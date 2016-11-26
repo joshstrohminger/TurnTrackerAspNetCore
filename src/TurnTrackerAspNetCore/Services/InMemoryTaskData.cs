@@ -56,6 +56,11 @@ namespace TurnTrackerAspNetCore.Services
             return GetTask(id);
         }
 
+        public IEnumerable<TrackedTask> GetParticipations(string userId)
+        {
+            return Users.Where(x => x.Id == userId).SelectMany(x => x.Participations).Select(x => x.Task).ToList();
+        }
+
         public TrackedTask Add(TrackedTask newTask)
         {
             newTask.Id = Tasks.Max(x => x.Id) + 1;

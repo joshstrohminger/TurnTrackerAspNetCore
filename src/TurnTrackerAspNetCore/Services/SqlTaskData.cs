@@ -48,6 +48,11 @@ namespace TurnTrackerAspNetCore.Services
             return task;
         }
 
+        public IEnumerable<TrackedTask> GetParticipations(string userId)
+        {
+            return _context.Participants.Include(x => x.Task).Where(x => x.UserId == userId).Select(x => x.Task);
+        }
+
         public TrackedTask Add(TrackedTask newTask)
         {
             _context.Add(newTask);

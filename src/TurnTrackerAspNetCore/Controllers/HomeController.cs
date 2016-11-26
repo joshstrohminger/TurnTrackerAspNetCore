@@ -26,7 +26,17 @@ namespace TurnTrackerAspNetCore.Controllers
         [AllowAnonymous]
         public IActionResult Index(string error = null)
         {
-            return View(new HomePageViewModel { Tasks = _taskData.GetAllTasks().ToList(), Error = error});
+            List<TrackedTask> tasks;
+            if (!User.Identity.IsAuthenticated)
+            {
+                tasks = _taskData.GetAllTasks().ToList();
+            }
+            else
+            {
+                var userId = _userManager.GetUserId(HttpContext.User);
+                tasks = _taskData.GetParticipations(userId).ToList();
+            }
+            return View(new HomePageViewModel { Tasks = tasks, Error = error });
         }
 
         [AllowAnonymous]
@@ -104,7 +114,9 @@ namespace TurnTrackerAspNetCore.Controllers
                 Unit = model.Unit,
                 TeamBased = model.TeamBased
             };
+            var userId = _userManager.GetUserId(HttpContext.User);
             var newTask = _taskData.Add(task);
+            newTask.Participants = new List<Participant> {new Participant {UserId = userId, TaskId = newTask.Id} };
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new {id = newTask.Id});
         }

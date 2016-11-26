@@ -8,6 +8,7 @@ namespace TurnTrackerAspNetCore.Services
         IEnumerable<TrackedTask> GetAllTasks();
         TrackedTask GetTask(long id);
         TrackedTask GetTaskDetails(long id);
+        IEnumerable<TrackedTask> GetParticipations(string userId);
         TrackedTask Add(TrackedTask newTask);
         void Commit();
         bool DeleteTask(long id);
