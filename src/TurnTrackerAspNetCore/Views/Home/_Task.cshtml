@@ -1,0 +1,50 @@
+﻿@model KeyValuePair<TrackedTask,TurnCount>
+@{
+    var task = Model.Key;
+    var count = Model.Value;
+    var elapsed = task.LastTaken.HasValue ? DateTimeOffset.UtcNow - task.LastTaken.Value : TimeSpan.Zero;
+    TimeSpan period;
+    switch (task.Unit)
+    {
+        case PeriodUnit.Minutes:
+            period = TimeSpan.FromMinutes((double)task.Period);
+            break;
+        case PeriodUnit.Hours:
+            period = TimeSpan.FromHours((double)task.Period);
+            break;
+        case PeriodUnit.Days:
+            period = TimeSpan.FromDays((double)task.Period);
+            break;
+        case PeriodUnit.Weeks:
+            period = TimeSpan.FromDays(7 * (double)task.Period);
+            break;
+        case PeriodUnit.Months:
+            period = TimeSpan.FromDays(365.0/12 * (double)task.Period);
+            break;
+        case PeriodUnit.Years:
+            period = TimeSpan.FromDays(365 * (double)task.Period);
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
+    var overdue = elapsed - period;
+}
+
+<tr>
+    <td>@task.Id</td>
+    <td>@task.Name</td>
+    <td>@task.TeamBased</td>
+    <td>@(task.Period == 0m ? "Non-Periodic" : $"{task.Period} {task.Unit}")</td>
+    <td>@(count?.DisplayName ?? count?.UserName ?? "")</td>
+    <td>
+        @if (overdue > TimeSpan.Zero)
+        {
+            <strong>@overdue.ToString(@"hh\:mm\:ss") overdue</strong>
+        }
+        else
+        {
+            <span>@((-overdue).ToString(@"hh\:mm\:ss")) remaining</span>
+        }
+    </td>
+    <td><a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
+</tr>

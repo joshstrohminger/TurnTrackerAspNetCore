@@ -42,5 +42,8 @@ namespace TurnTrackerAspNetCore.Entities
 
         public string UserId { get; set; }
         public User User { get; set; }
+
+        [NotMapped]
+        public DateTimeOffset? LastTaken { get; set; }
     }
 }

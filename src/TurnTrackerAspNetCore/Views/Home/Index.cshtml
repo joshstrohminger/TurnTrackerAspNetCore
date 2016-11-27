@@ -1,4 +1,5 @@
-﻿@model HomePageViewModel
+﻿@using System.Threading.Tasks
+@model HomePageViewModel
 @{ViewBag.Title = "Turn Tracker";}
 @if (!string.IsNullOrWhiteSpace(Model.Error))
 {
@@ -13,7 +14,7 @@
     </p>
 }
 <h4>Tasks</h4>
-@if (Model.Tasks.Count == 0)
+@if (Model.TaskCounts.Count == 0)
 {
     <p>No tasks</p>
 }
@@ -26,18 +27,14 @@ else
                 <th>Name</th>
                 <th>Team Based</th>
                 <th>Period</th>
+                <th>Next Turn</th>
+                <th>Overdue</th>
                 <th></th>
             </tr>
         </thead>
-        @foreach (var task in Model.Tasks)
+        @foreach (var kvp in Model.TaskCounts)
         {
-            <tr>
-                <td>@task.Id</td>
-                <td>@task.Name</td>
-                <td>@task.TeamBased</td>
-                <td>@(task.Period == 0m ? $"Non-Periodic" : $"{task.Period} {task.Unit}")</td>
-                <td><a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
-            </tr>
+            @Html.Partial("_Task", kvp)
         }
     </table>
 }

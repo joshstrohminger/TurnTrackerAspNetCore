@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using TurnTrackerAspNetCore.Entities;
 
@@ -24,6 +25,27 @@ namespace TurnTrackerAspNetCore.Services
             return _context.Users;
         }
 
+        public IEnumerable<Turn> GetLatestTurns(params long[] taskIds)
+        {
+            var sb = new StringBuilder("with o as (select *, ROW_NUMBER() OVER (PARTITION BY TaskId ORDER BY Taken DESC) AS rn FROM Turns where TaskId in (");
+            sb.Append(string.Join(",", Enumerable.Range(0, taskIds.Length).Select(i => $"{{{i}}}")));
+            sb.Append(")) select * from o where rn = 1;");
+            var sql = sb.ToString();
+            return _context.Turns
+                .FromSql(
+                    //"with o as (select *, ROW_NUMBER() OVER (PARTITION BY TaskId ORDER BY Taken DESC) AS rn FROM Turns where TaskId in ({0})) select * from o where rn = 1;",
+                    sql,
+                    taskIds.Cast<object>().ToArray());
+        }
+
+        public IEnumerable<TurnCount> GetTurnCounts(string userId)
+        {
+            return _context.TurnCounts
+                .FromSql(
+                    "SELECT u.UserName, u.DisplayName, t.Name as TaskName, t.Id as TaskId, count(r.Taken) + p.Offset as TotalTurns, p.UserId from Participants p inner join Tasks t on p.TaskId = t.Id inner join AspNetUsers u on p.UserId = u.Id left join Turns r on r.TaskId = p.TaskId and r.UserId = p.UserId where p.TaskId in (select p.TaskId from Participants p where p.UserId = {0}) or t.UserId = {0} group by p.TaskId, p.UserId, u.UserName, u.DisplayName, t.Name, t.Id, p.Offset order by t.Id, TotalTurns, u.UserName;",
+                    userId);
+        }
+
         public TrackedTask GetTask(long id)
         {
             return _context.Tasks.Find(id);
@@ -41,7 +63,7 @@ namespace TurnTrackerAspNetCore.Services
             {
                 task.Turns = _context.Turns
                     .Include(turn => turn.User)
-                    .Where(turn => turn.TrackedTaskId == id)
+                    .Where(turn => turn.TaskId == id)
                     .OrderByDescending(turn => turn.Taken)
                     .ToList();
             }
@@ -89,7 +111,7 @@ namespace TurnTrackerAspNetCore.Services
                 return 0;
             }
             _context.Remove(turn);
-            return turn.TrackedTaskId;
+            return turn.TaskId;
         }
 
         public void DeleteTurn(Turn turn)

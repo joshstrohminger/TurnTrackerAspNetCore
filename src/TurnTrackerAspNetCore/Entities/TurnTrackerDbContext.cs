@@ -11,6 +11,8 @@ namespace TurnTrackerAspNetCore.Entities
 
         public DbSet<Participant> Participants { get; set; }
 
+        public DbSet<TurnCount> TurnCounts { get; set; }
+
         public TurnTrackerDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -32,6 +34,9 @@ namespace TurnTrackerAspNetCore.Entities
             participants.HasKey(x => new {x.TaskId, x.UserId});
             participants.HasOne(x => x.Task).WithMany(x => x.Participants).HasForeignKey(x => x.TaskId);
             participants.HasOne(x => x.User).WithMany(x => x.Participations).HasForeignKey(x => x.UserId);
+
+            var turnCounts = modelBuilder.Entity<TurnCount>();
+            turnCounts.HasKey(x => new { x.TaskId, x.UserId });
         }
     }
 }

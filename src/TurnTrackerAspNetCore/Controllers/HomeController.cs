@@ -26,17 +26,30 @@ namespace TurnTrackerAspNetCore.Controllers
         [AllowAnonymous]
         public IActionResult Index(string error = null)
         {
-            List<TrackedTask> tasks;
+            Dictionary<TrackedTask, TurnCount> taskCounts;
             if (!User.Identity.IsAuthenticated)
             {
-                tasks = _taskData.GetAllTasks().ToList();
+                var tasks = _taskData.GetAllTasks().ToList();
+                taskCounts = tasks.ToDictionary(x => x, x => (TurnCount)null);
             }
             else
             {
                 var userId = _userManager.GetUserId(HttpContext.User);
-                tasks = _taskData.GetParticipations(userId).Union(_taskData.GetAllTasks().Where(x => x.UserId == userId)).ToList();
+                var counts = _taskData.GetTurnCounts(userId)
+                    .GroupBy(x => x.TaskId)
+                    .ToDictionary(x => x.Key, x => x.ToList());
+                var tasks = _taskData.GetParticipations(userId).Union(_taskData.GetAllTasks().Where(x => x.UserId == userId)).ToList();
+                var latest = _taskData.GetLatestTurns(tasks.Select(x => x.Id).ToArray()).ToList();
+                taskCounts = new Dictionary<TrackedTask, TurnCount>();
+                foreach (var task in tasks)
+                {
+                    List<TurnCount> count;
+                    counts.TryGetValue(task.Id, out count);
+                    task.LastTaken = latest.FirstOrDefault(x => x.TaskId == task.Id)?.Taken;
+                    taskCounts.Add(task, count?.FirstOrDefault());
+                }
             }
-            return View(new HomePageViewModel { Tasks = tasks, Error = error });
+            return View(new HomePageViewModel { TaskCounts = taskCounts, Error = error });
         }
 
         [AllowAnonymous]
@@ -44,7 +57,7 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             var task = _taskData.GetTaskDetails(id);
             var userId = _userManager.GetUserId(HttpContext.User);
-            if (null == task || (task.UserId != userId && task.Participants.All(x => x.UserId != userId)))
+            if (null == task || (User.Identity.IsAuthenticated && task.UserId != userId && task.Participants.All(x => x.UserId != userId)))
             {
                 return RedirectToAction(nameof(Index), new {error = "Invalid task"});
             }
@@ -76,7 +89,7 @@ namespace TurnTrackerAspNetCore.Controllers
             }
 
             var orderedCounts = counts.Values
-                .Union(newParticipants.Select(x => new UserCountViewModel(x, 0, maxTurns, true)))
+                .Union(newParticipants.Select(x => new UserCountViewModel(x, 0, 0, true)))
                 .OrderBy(x => x.TotalTurns)
                 .ThenBy(x => x.User.UserName)
                 .ToList();
@@ -172,7 +185,7 @@ namespace TurnTrackerAspNetCore.Controllers
             task.Participants.RemoveAll(x => !model.Participants.Contains(x.UserId));
             foreach (var newId in model.Participants.Except(task.Participants.Select(x => x.UserId)))
             {
-                task.Participants.Add(new Participant { TaskId = id, UserId = newId });
+                task.Participants.Add(new Participant { TaskId = id, UserId = newId, Offset = 0});
             }
             task.Modified = DateTimeOffset.UtcNow;
             _taskData.Commit();
@@ -223,7 +236,7 @@ namespace TurnTrackerAspNetCore.Controllers
                 return RedirectToAction(nameof(Details), new { id, error = "Invalid turn" });
             }
 
-            var task = _taskData.GetTaskDetails(turn.TrackedTaskId);
+            var task = _taskData.GetTaskDetails(turn.TaskId);
             var userId = _userManager.GetUserId(HttpContext.User);
             if (null == task || (task.UserId != userId && task.Participants.All(x => x.UserId != userId)))
             {

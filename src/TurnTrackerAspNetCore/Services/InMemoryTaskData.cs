@@ -29,7 +29,7 @@ namespace TurnTrackerAspNetCore.Services
                 for (var i = 0; i < task.Id; i++)
                 {
                     var date = created.AddHours(i);
-                    task.Turns.Add(new Turn {Id = turnId++, Taken = date, Created = date, Modified = date, TrackedTaskId = task.Id, Task = task});
+                    task.Turns.Add(new Turn {Id = turnId++, Taken = date, Created = date, Modified = date, TaskId = task.Id, Task = task});
                 }
                 Turns.AddRange(task.Turns);
                 Turns = Turns.OrderByDescending(x => x.Taken).ToList();
@@ -44,6 +44,16 @@ namespace TurnTrackerAspNetCore.Services
         public IEnumerable<User> GetAllUsers()
         {
             return Users;
+        }
+
+        public IEnumerable<TurnCount> GetTurnCounts(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Turn> GetLatestTurns(params long[] taskIds)
+        {
+            throw new NotImplementedException();
         }
 
         public TrackedTask GetTask(long id)

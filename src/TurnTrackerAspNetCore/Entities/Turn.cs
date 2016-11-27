@@ -9,7 +9,7 @@ namespace TurnTrackerAspNetCore.Entities
         public long Id { get; set; }
 
         [Required]
-        public long TrackedTaskId { get; set; }
+        public long TaskId { get; set; }
         public TrackedTask Task { get; set; }
 
         [Required]

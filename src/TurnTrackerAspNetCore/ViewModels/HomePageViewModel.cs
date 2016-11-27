@@ -5,7 +5,7 @@ namespace TurnTrackerAspNetCore.ViewModels
 {
     public class HomePageViewModel
     {
-        public List<TrackedTask> Tasks { get; set; }
+        public Dictionary<TrackedTask,TurnCount> TaskCounts { get; set; }
         public string Error { get; set; }
     }
 }
