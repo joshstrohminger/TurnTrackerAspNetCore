@@ -7,13 +7,13 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>@Model.Error
     </div>
 }
-@if (User.Identity.IsAuthenticated)
-{
-    <p>
-        <a class="btn btn-primary" asp-action="Create">Create Task</a>
-    </p>
-}
-<h4>Tasks</h4>
+<h1>
+    <span>Tasks</span>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span> <a class="btn btn-sm btn-primary" asp-action="Create">Create</a></span>
+    }
+</h1>
 @if (Model.TaskCounts.Count == 0)
 {
     <p>No tasks</p>
