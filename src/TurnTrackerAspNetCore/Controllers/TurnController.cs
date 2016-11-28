@@ -29,17 +29,17 @@ namespace TurnTrackerAspNetCore.Controllers
 
             if (null == task)
             {
-                return RedirectToAction(nameof(TaskController.Index), nameof(TaskController), new { error = "Invalid task" });
+                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid task" });
             }
 
             if (task.Participants.All(x => x.UserId != userId))
             {
-                return RedirectToAction(nameof(TaskController.Details), nameof(TaskController), new { id, error = "Must be an active user to take a turn" });
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Must be an active user to take a turn" });
             }
 
             task.Turns.Add(new Turn { UserId = userId });
             _taskData.Commit();
-            return RedirectToAction(nameof(TaskController.Details), nameof(TaskController), new { id });
+            return RedirectToAction(nameof(TaskController.Details), "Task", new { id });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -48,23 +48,34 @@ namespace TurnTrackerAspNetCore.Controllers
             var turn = _taskData.GetTurn(id);
             if (null == turn)
             {
-                return RedirectToAction(nameof(TaskController.Details), nameof(TaskController), new { id, error = "Invalid turn" });
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid turn" });
             }
 
             var task = _taskData.GetTaskDetails(turn.TaskId);
             var userId = _userManager.GetUserId(HttpContext.User);
-            if (null == task || (task.UserId != userId && task.Participants.All(x => x.UserId != userId)))
+            if (task.AccessDenied(userId))
             {
-                return RedirectToAction(nameof(TaskController.Details), nameof(TaskController), new { id, error = "Invalid task" });
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid task" });
             }
             _taskData.Commit();
-            return RedirectToAction(nameof(TaskController.Details), nameof(TaskController), new { id = task.Id });
+            return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id });
         }
 
         [HttpGet]
         public IActionResult Edit(long id)
         {
             var turn = _taskData.GetTurn(id);
+            if (null == turn)
+            {
+                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid turn" });
+            }
+            var task = _taskData.GetTaskDetails(turn.TaskId);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            if (task.AccessDenied(userId))
+            {
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid task" });
+            }
+
             return View(turn);
         }
 
@@ -74,8 +85,15 @@ namespace TurnTrackerAspNetCore.Controllers
             var turn = _taskData.GetTurn(id);
             if (null == turn)
             {
-                return RedirectToAction(nameof(TaskController.Details), nameof(TaskController), new { id = taskId, error = "Invalid turn" });
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = taskId, error = "Invalid turn" });
             }
+            var task = _taskData.GetTaskDetails(turn.TaskId);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            if (task.AccessDenied(userId))
+            {
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid task" });
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(turn);
@@ -83,7 +101,7 @@ namespace TurnTrackerAspNetCore.Controllers
             turn.Taken = model.Taken;
             turn.Modified = DateTimeOffset.UtcNow;
             _taskData.Commit();
-            return RedirectToAction(nameof(TaskController.Details), nameof(TaskController), new { id = taskId });
+            return RedirectToAction(nameof(TaskController.Details), "Task", new { id = taskId });
         }
     }
 }

@@ -46,12 +46,17 @@ namespace TurnTrackerAspNetCore.Services
             return Users;
         }
 
-        public IEnumerable<TurnCount> GetTurnCounts(string userId)
+        public Dictionary<long, List<TurnCount>> GetTurnCounts(string userId)
         {
             throw new NotImplementedException();
         }
 
         public IEnumerable<Turn> GetLatestTurns(params long[] taskIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<TurnCount> GetTurnCounts(long taskId)
         {
             throw new NotImplementedException();
         }

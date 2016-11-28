@@ -1,21 +1,27 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
+using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly ITaskData _taskData;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<User> _roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, RoleManager<User> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _taskData = taskData;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -40,6 +46,8 @@ namespace TurnTrackerAspNetCore.Controllers
                     UserName = model.UserName,
                     DisplayName = displayName
                 };
+
+                var numberExistingUsers = _taskData.GetAllUsers().Count();
 
                 var createResult = await _userManager.CreateAsync(user, model.Password);
                 if (createResult.Succeeded)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace TurnTrackerAspNetCore.Entities
 {
@@ -13,6 +14,55 @@ namespace TurnTrackerAspNetCore.Entities
         Weeks,
         Months,
         Years
+    }
+
+    public static class TrackedTaskExtensions
+    {
+        public static TimeSpan GetPeriod(this TrackedTask task)
+        {
+            switch (task.Unit)
+            {
+                case PeriodUnit.Minutes:
+                    return TimeSpan.FromMinutes((double)task.Period);
+                case PeriodUnit.Hours:
+                    return TimeSpan.FromHours((double)task.Period);
+                case PeriodUnit.Days:
+                    return TimeSpan.FromDays((double)task.Period);
+                case PeriodUnit.Weeks:
+                    return TimeSpan.FromDays(7 * (double)task.Period);
+                case PeriodUnit.Months:
+                    return TimeSpan.FromDays(365.0 / 12 * (double)task.Period);
+                case PeriodUnit.Years:
+                    return TimeSpan.FromDays(365 * (double)task.Period);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public static bool AccessDenied(this TrackedTask task, string userId)
+        {
+            return task == null || (task.UserId != userId && (task.Participants?.All(x => x.UserId != userId) ?? true));
+        }
+
+        public static void PopulateLatestTurnInfo(this TrackedTask task, Dictionary<long, List<TurnCount>> counts, Dictionary<TrackedTask, TurnCount> taskCounts, List<Turn> latest )
+        {
+            List<TurnCount> count;
+            counts.TryGetValue(task.Id, out count);
+            task.LastTaken = latest.FirstOrDefault(x => x.TaskId == task.Id)?.Taken;
+            taskCounts.Add(task, count?.FirstOrDefault());
+
+            if (null == task.LastTaken)
+            {
+                task.Overdue = true;
+            }
+            else
+            {
+                var period = task.GetPeriod();
+                var elapsed = DateTimeOffset.UtcNow - task.LastTaken.Value;
+                task.Overdue = elapsed > period;
+                task.DueTimeSpan = elapsed - period;
+            }
+        }
     }
 
     public class TrackedTask
@@ -45,5 +95,11 @@ namespace TurnTrackerAspNetCore.Entities
 
         [NotMapped]
         public DateTimeOffset? LastTaken { get; set; }
+
+        [NotMapped]
+        public bool Overdue { get; set; }
+
+        [NotMapped]
+        public TimeSpan DueTimeSpan { get; set; }
     }
 }

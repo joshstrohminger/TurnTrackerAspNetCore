@@ -2,9 +2,9 @@
 @{ViewBag.Title = "Edit Turn";}
 <div>
     <h1>Edit Turn</h1>
-    <form method="post" asp-action="EditTurn" asp-antiforgery="true">
+    <form method="post" asp-action="Edit" asp-antiforgery="true">
         <div asp-validation-summary="ModelOnly"></div>
-        <input type="hidden" name="taskId" value="@Model.TrackedTaskId"/>
+        <input type="hidden" name="taskId" value="@Model.TaskId"/>
         <div>
             <label asp-for="Taken"></label>
             <input asp-for="Taken" />
@@ -12,7 +12,7 @@
         </div>
         <div>
             <input class="btn btn-primary" type="submit" value="Save" />
-            <a class="btn btn-danger" asp-action="Details" asp-route-id="@Model.TrackedTaskId">Cancel</a>
+            <a class="btn btn-danger" asp-controller="Task" asp-action="Details" asp-route-id="@Model.TaskId">Cancel</a>
         </div>
     </form>
 </div>

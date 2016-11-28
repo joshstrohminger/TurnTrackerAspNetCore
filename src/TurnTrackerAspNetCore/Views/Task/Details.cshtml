@@ -23,7 +23,7 @@
 <h1>@Model.Task.Name</h1>
 <div class="row">
     <div class="col-sm-6">
-        <div>@(Model.Task.TeamBased ? "Team" : "Individual") Based</div>
+        @*<div>@(Model.Task.TeamBased ? "Team" : "Individual") Based</div>*@
         <div><label>Owner</label><span> @(Model.Task.User.DisplayName ?? Model.Task.User.UserName)</span></div>
         <div>
             @if (Model.Task.Period == 0m)
@@ -40,15 +40,15 @@
         @if (User.Identity.IsAuthenticated)
         {
             <div class="clearfix">
-                <form class="pull-left" asp-antiforgery="true" asp-action="TakeTurn" method="post">
+                <form class="pull-left" asp-antiforgery="true" asp-controller="Turn" asp-action="Take" method="post">
                     <input name="id" value="@Model.Task.Id" type="hidden" />
                     @if (Model.CanTakeTurn)
                     {
                         <input class="btn btn-primary" type="submit" value="Take Turn"/>
                     }
                 </form>
-                <a class="btn btn-success pull-left" asp-action="EditTask" asp-route-id="@Model.Task.Id">Edit</a>
-                <form class="pull-left" asp-antiforgery="true" asp-action="DeleteTask" method="post">
+                <a class="btn btn-success pull-left" asp-action="Edit" asp-route-id="@Model.Task.Id">Edit</a>
+                <form class="pull-left" asp-antiforgery="true" asp-action="Delete" method="post">
                     <input name="id" value="@Model.Task.Id" type="hidden" />
                     <input class="btn btn-danger" type="submit" value="Delete" />
                 </form>
@@ -69,16 +69,14 @@
                         <th>User</th>
                         <th>Turns</th>
                         <th>Todo</th>
-                        <th>Active</th>
                     </tr>
                 </thead>
                 @foreach (var row in Model.Counts)
                 {
                     <tr>
-                        <td>@(row.User.DisplayName ?? row.User.UserName)</td>
+                        <td>@row.Name</td>
                         <td>@row.TotalTurns</td>
                         <td>@(Model.MaxTurns - row.TotalTurns)</td>
-                        <td><span class="glyphicon glyphicon-@(row.Active ? "ok" : "remove")"></span></td>
                     </tr>
                 }
             </table>
