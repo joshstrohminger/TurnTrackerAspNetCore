@@ -64,13 +64,12 @@ namespace TurnTrackerAspNetCore
 
             app.UseStaticFiles();
             app.UseIdentity();
-            //app.UseTimezoneOffsetReader();
             app.UseMvc(ConfigureRoutes);
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
-            routeBuilder.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("default", "{controller=task}/{action=Index}/{id?}");
         }
     }
 }

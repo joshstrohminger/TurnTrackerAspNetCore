@@ -49,7 +49,7 @@ namespace TurnTrackerAspNetCore.Controllers
                     {
                         return Redirect(model.ReturnUrl);
                     }
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    return RedirectToAction(nameof(TaskController.Index), nameof(TaskController));
                 }
 
                 foreach (var error in createResult.Errors)
@@ -64,7 +64,7 @@ namespace TurnTrackerAspNetCore.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(TaskController.Index), nameof(TaskController));
         }
 
         [HttpGet]
@@ -88,7 +88,7 @@ namespace TurnTrackerAspNetCore.Controllers
                     }
                     else
                     {
-                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                        return RedirectToAction(nameof(TaskController.Index), nameof(TaskController));
                     }
                 }
                 ModelState.AddModelError("", "Login Failed");

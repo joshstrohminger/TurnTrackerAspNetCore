@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class TaskController : Controller
     {
         private readonly ITaskData _taskData;
         private readonly UserManager<User> _userManager;
 
-        public HomeController(ITaskData taskData, UserManager<User> userManager)
+        public TaskController(UserManager<User> userManager, ITaskData taskData)
         {
-            _taskData = taskData;
             _userManager = userManager;
+            _taskData = taskData;
         }
-
-        [AllowAnonymous]
+        
+        [Route("")]
         public IActionResult Index(string error = null)
         {
             Dictionary<TrackedTask, TurnCount> taskCounts;
@@ -59,7 +59,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var userId = _userManager.GetUserId(HttpContext.User);
             if (null == task || (User.Identity.IsAuthenticated && task.UserId != userId && task.Participants.All(x => x.UserId != userId)))
             {
-                return RedirectToAction(nameof(Index), new {error = "Invalid task"});
+                return RedirectToAction(nameof(Index), new { error = "Invalid task" });
             }
 
             var counts = task.Turns
@@ -109,7 +109,7 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new EditTaskViewModel {Owner = _userManager.GetUserId(HttpContext.User)});
+            return View(new EditTaskViewModel { Owner = _userManager.GetUserId(HttpContext.User) });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -129,13 +129,14 @@ namespace TurnTrackerAspNetCore.Controllers
                 UserId = userId
             };
             var newTask = _taskData.Add(task);
-            newTask.Participants = new List<Participant> {new Participant {UserId = userId, TaskId = newTask.Id} };
+            newTask.Participants = new List<Participant> { new Participant { UserId = userId, TaskId = newTask.Id } };
             _taskData.Commit();
-            return RedirectToAction(nameof(Details), new {id = newTask.Id});
+            return RedirectToAction(nameof(Details), new { id = newTask.Id });
         }
 
+
         [HttpGet]
-        public IActionResult EditTask(long id)
+        public IActionResult Edit(long id)
         {
             var task = _taskData.GetTaskDetails(id);
             var userId = _userManager.GetUserId(HttpContext.User);
@@ -163,7 +164,7 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult EditTask(long id, EditTaskViewModel model)
+        public IActionResult Edit(long id, EditTaskViewModel model)
         {
             var task = _taskData.GetTaskDetails(id);
             var userId = _userManager.GetUserId(HttpContext.User);
@@ -185,36 +186,15 @@ namespace TurnTrackerAspNetCore.Controllers
             task.Participants.RemoveAll(x => !model.Participants.Contains(x.UserId));
             foreach (var newId in model.Participants.Except(task.Participants.Select(x => x.UserId)))
             {
-                task.Participants.Add(new Participant { TaskId = id, UserId = newId, Offset = 0});
+                task.Participants.Add(new Participant { TaskId = id, UserId = newId, Offset = 0 });
             }
             task.Modified = DateTimeOffset.UtcNow;
             _taskData.Commit();
-            return RedirectToAction(nameof(Details), new {id = task.Id});
+            return RedirectToAction(nameof(Details), new { id = task.Id });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult TakeTurn(long id)
-        {
-            var task = _taskData.GetTaskDetails(id);
-            var userId = _userManager.GetUserId(HttpContext.User);
-
-            if (null == task)
-            {
-                return RedirectToAction(nameof(Index), new { error = "Invalid task" });
-            }
-
-            if (task.Participants.All(x => x.UserId != userId))
-            {
-                return RedirectToAction(nameof(Details), new { id, error = "Must be an active user to take a turn" });
-            }
-
-            task.Turns.Add(new Turn {UserId = userId});
-            _taskData.Commit();
-            return RedirectToAction(nameof(Details), new { id });
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult DeleteTask(long id)
+        public IActionResult Delete(long id)
         {
             var task = _taskData.GetTaskDetails(id);
             var userId = _userManager.GetUserId(HttpContext.User);
@@ -225,50 +205,6 @@ namespace TurnTrackerAspNetCore.Controllers
             _taskData.DeleteTask(task);
             _taskData.Commit();
             return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult DeleteTurn(long id)
-        {
-            var turn = _taskData.GetTurn(id);
-            if (null == turn)
-            {
-                return RedirectToAction(nameof(Details), new { id, error = "Invalid turn" });
-            }
-
-            var task = _taskData.GetTaskDetails(turn.TaskId);
-            var userId = _userManager.GetUserId(HttpContext.User);
-            if (null == task || (task.UserId != userId && task.Participants.All(x => x.UserId != userId)))
-            {
-                return RedirectToAction(nameof(Details), new { id, error = "Invalid task" });
-            }
-            _taskData.Commit();
-            return RedirectToAction(nameof(Details), new {id = task.Id});
-        }
-
-        [HttpGet]
-        public IActionResult EditTurn(long id)
-        {
-            var turn = _taskData.GetTurn(id);
-            return View(turn);
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult EditTurn(long id, long taskId, EditTurnViewModel model)
-        {
-            var turn = _taskData.GetTurn(id);
-            if (null == turn)
-            {
-                return RedirectToAction(nameof(Details), new {id = taskId, error = "Invalid turn"});
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(turn);
-            }
-            turn.Taken = model.Taken;
-            turn.Modified = DateTimeOffset.UtcNow;
-            _taskData.Commit();
-            return RedirectToAction(nameof(Details), new { id = taskId });
         }
     }
 }
