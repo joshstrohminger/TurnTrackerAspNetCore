@@ -14,14 +14,12 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly ITaskData _taskData;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<User> _roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, RoleManager<User> roleManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _taskData = taskData;
-            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -57,7 +55,7 @@ namespace TurnTrackerAspNetCore.Controllers
                     {
                         return Redirect(model.ReturnUrl);
                     }
-                    return RedirectToAction(nameof(TaskController.Index), nameof(TaskController));
+                    return RedirectToAction(nameof(TaskController.Index), "Task");
                 }
 
                 foreach (var error in createResult.Errors)
@@ -72,7 +70,7 @@ namespace TurnTrackerAspNetCore.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(TaskController.Index), nameof(TaskController));
+            return RedirectToAction(nameof(TaskController.Index), "Task");
         }
 
         [HttpGet]
@@ -96,7 +94,7 @@ namespace TurnTrackerAspNetCore.Controllers
                     }
                     else
                     {
-                        return RedirectToAction(nameof(TaskController.Index), nameof(TaskController));
+                        return RedirectToAction(nameof(TaskController.Index), "Task");
                     }
                 }
                 ModelState.AddModelError("", "Login Failed");

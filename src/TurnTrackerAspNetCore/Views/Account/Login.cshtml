@@ -4,25 +4,40 @@
 
 <h2>Login</h2>
 
-<form method="post" asp-antiforgery="true">
+<form method="post" asp-antiforgery="true" class="form-horizontal">
     <input asp-for="ReturnUrl" type="hidden" />
     <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
+    <div class="form-group">
+        <label asp-for="UserName" class="col-sm-1"></label>
+        <div class="col-sm-4">
+            <input asp-for="UserName" class="form-control"/>
+            <span asp-validation-for="UserName"></span>
+        </div>
     </div>
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
+    <div class="form-group">
+        <label asp-for="Password" class="col-sm-1"></label>
+        <div class="col-sm-4">
+            <input asp-for="Password" class="form-control"/>
+            <span asp-validation-for="Password"></span>
+        </div>
     </div>
-    <div>
-        <label asp-for="RememberMe"></label>
-        <input asp-for="RememberMe" />
-        <span asp-validation-for="RememberMe"></span>
+    <div class="form-group">
+        <div class="col-sm-offset-1">
+            <label asp-for="RememberMe"></label>
+            <input asp-for="RememberMe" />
+            <span asp-validation-for="RememberMe"></span>
+        </div>
     </div>
-    <div>
-        <input class="btn btn-primary" type="submit" value="Login" />
+    <div class="form-group">
+        <div class="col-sm-offset-1">
+            <input class="btn btn-primary" type="submit" value="Login" />
+        </div>
     </div>
 </form>
+<div>
+    <br/>
+    <p>or...</p>
+    <p>
+        <a class="btn btn-success" asp-action="Register">Register</a>
+    </p>
+</div>
