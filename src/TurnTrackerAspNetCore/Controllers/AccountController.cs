@@ -42,10 +42,12 @@ namespace TurnTrackerAspNetCore.Controllers
                 var user = new User
                 {
                     UserName = model.UserName,
-                    DisplayName = displayName
+                    DisplayName = displayName,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber
                 };
 
-                var numberExistingUsers = _taskData.GetAllUsers().Count();
+                //var numberExistingUsers = _taskData.GetAllUsers().Count();
 
                 var createResult = await _userManager.CreateAsync(user, model.Password);
                 if (createResult.Succeeded)
@@ -107,6 +109,43 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             return View(user);
+        }
+
+        [Authorize, HttpGet]
+        public async Task<IActionResult> Edit()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var model = new EditAccountViewModel
+            {
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName
+            };
+            return View(model);
+        }
+
+        [Authorize, HttpPost]
+        public async Task<IActionResult> Edit(EditAccountViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                user.DisplayName = model.DisplayName;
+                user.Email = model.Email;
+                user.PhoneNumber = model.PhoneNumber;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Profile));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
         }
     }
 }

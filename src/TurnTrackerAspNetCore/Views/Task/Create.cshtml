@@ -20,14 +20,14 @@
         </div>
     </div>*@
         <div class="form-group">
-            <label asp-for="Period" class="col-sm-2"></label>
+            <label asp-for="Period" class="col-sm-2 control-label"></label>
             <div class="col-sm-2">
                 <input asp-for="Period" class="form-control"/>
                 <span asp-validation-for="Period"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Unit" class="col-sm-2"></label>
+            <label asp-for="Unit" class="col-sm-2 control-label"></label>
             <div class="col-sm-2">
                 <select asp-for="Unit" class="form-control" asp-items="@Html.GetEnumSelectList(typeof(PeriodUnit))"></select>
                 <span asp-validation-for="Unit"></span>

@@ -53,10 +53,15 @@ namespace TurnTrackerAspNetCore.Controllers
 
             var task = _taskData.GetTaskDetails(turn.TaskId);
             var userId = _userManager.GetUserId(HttpContext.User);
+            if (null == task)
+            {
+                return RedirectToAction(nameof(TaskController.Index), "Task", new {error = "Invalid task" });
+            }
             if (task.AccessDenied(userId))
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid task" });
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id, error = "Access Denied" });
             }
+            task.Turns.Remove(turn);
             _taskData.Commit();
             return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id });
         }
@@ -71,9 +76,13 @@ namespace TurnTrackerAspNetCore.Controllers
             }
             var task = _taskData.GetTaskDetails(turn.TaskId);
             var userId = _userManager.GetUserId(HttpContext.User);
+            if (null == task)
+            {
+                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid task" });
+            }
             if (task.AccessDenied(userId))
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid task" });
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id, error = "Access Denied" });
             }
 
             return View(turn);
@@ -89,9 +98,13 @@ namespace TurnTrackerAspNetCore.Controllers
             }
             var task = _taskData.GetTaskDetails(turn.TaskId);
             var userId = _userManager.GetUserId(HttpContext.User);
+            if (null == task)
+            {
+                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid task" });
+            }
             if (task.AccessDenied(userId))
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid task" });
+                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id, error = "Access Denied" });
             }
 
             if (!ModelState.IsValid)

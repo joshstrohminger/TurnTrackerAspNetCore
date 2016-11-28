@@ -20,11 +20,10 @@
     @if (User.Identity.IsAuthenticated)
     {
         <td class="clearfix">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="pull-left btn btn-xs btn-success">
+            <a asp-controller="Turn" asp-action="Edit" asp-route-id="@Model.Id" class="pull-left btn btn-xs btn-success">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
-            <form asp-action="Delete" asp-antiforgery="true" method="post" class="pull-left">
-                <input name="id" type="hidden" value="@Model.Id"/>
+            <form asp-controller="Turn" asp-action="Delete" asp-route-id="@Model.Id" asp-antiforgery="true" method="post" class="pull-left">
                 <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
             </form>
         </td>

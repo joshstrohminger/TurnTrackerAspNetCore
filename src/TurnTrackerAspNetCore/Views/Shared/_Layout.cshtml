@@ -27,6 +27,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
+                <li><a asp-controller="Task" asp-action="All">All</a></li>
                 <li><a asp-controller="About" asp-action="Index">About</a></li>
             </ul>
             @await Component.InvokeAsync("LoginLogout")

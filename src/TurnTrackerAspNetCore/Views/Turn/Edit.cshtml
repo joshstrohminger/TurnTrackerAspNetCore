@@ -2,17 +2,23 @@
 @{ViewBag.Title = "Edit Turn";}
 <div>
     <h1>Edit Turn</h1>
-    <form method="post" asp-action="Edit" asp-antiforgery="true">
+    <form method="post" asp-action="Edit" asp-antiforgery="true" class="form-horizontal">
         <div asp-validation-summary="ModelOnly"></div>
         <input type="hidden" name="taskId" value="@Model.TaskId"/>
-        <div>
-            <label asp-for="Taken"></label>
-            <input asp-for="Taken" />
-            <span asp-validation-for="Taken"></span>
+        <div class="form-group">
+            <label asp-for="Taken" class="control-label col-sm-1"></label>
+            <div class="col-sm-4">
+                <input asp-for="Taken" class="form-control"/>
+            </div>
+            <div class="col-sm-7">
+                <span asp-validation-for="Taken"></span>
+            </div>
         </div>
-        <div>
-            <input class="btn btn-primary" type="submit" value="Save" />
-            <a class="btn btn-danger" asp-controller="Task" asp-action="Details" asp-route-id="@Model.TaskId">Cancel</a>
+        <div class="form-group">
+            <div class="col-sm-offset-1">
+                <input class="btn btn-primary" type="submit" value="Save" />
+                <a class="btn btn-danger" asp-controller="Task" asp-action="Details" asp-route-id="@Model.TaskId">Cancel</a>
+            </div>
         </div>
     </form>
 </div>

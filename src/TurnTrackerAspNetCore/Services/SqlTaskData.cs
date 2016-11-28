@@ -27,6 +27,10 @@ namespace TurnTrackerAspNetCore.Services
 
         public IEnumerable<Turn> GetLatestTurns(params long[] taskIds)
         {
+            if (taskIds.Length == 0)
+            {
+                return new List<Turn>();
+            }
             var sb = new StringBuilder("with o as (select *, ROW_NUMBER() OVER (PARTITION BY TaskId ORDER BY Taken DESC) AS rn FROM Turns where TaskId in (");
             sb.Append(string.Join(",", Enumerable.Range(0, taskIds.Length).Select(i => $"{{{i}}}")));
             sb.Append(")) select * from o where rn = 1;");

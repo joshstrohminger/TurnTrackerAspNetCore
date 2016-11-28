@@ -2,47 +2,36 @@
 @{
     ViewBag.Title = Model.UserName;
 }
-<h1>Profile</h1>
-<table class="table table-striped">
-    <tr><td><label>User</label></td><td>@Model.UserName</td></tr>
-    <tr><td><label asp-for="DisplayName"></label></td><td>@Model.DisplayName</td></tr>
-    <tr>
-        <td><label asp-for="Email"></label></td>
-        <td>@Model.Email</td>
-        @if (!string.IsNullOrWhiteSpace(Model.Email))
-        {
-            <td>
-                @if (Model.EmailConfirmed)
-                {
-                    <span class="glyphicon glyphicon-ok"></span>
-                    <span> Confirmed</span>
-                }
-                else
-                {
-                    <span class="glyphicon glyphicon-remove"></span>
-                    <span> Unconfirmed</span>
-                }
-            </td>
-        }
-    </tr>
-    <tr>
-        <td><label>Phone</label></td>
-        <td>@Model.PhoneNumber</td>
-        @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
-        {
-            <td>
-                @if (Model.PhoneNumberConfirmed)
-                {
-                    <span class="glyphicon glyphicon-ok"></span>
-                    <span> Confirmed</span>
-                }
-                else
-                {
-                    <span class="glyphicon glyphicon-remove"></span>
-                    <span> Unconfirmed</span>
-                }
-            </td>
-        }
-    </tr>
-    <tr><td><label>Two Factor</label></td><td>@(Model.TwoFactorEnabled ? "Enabled" : "Disabled")</td></tr>
-</table>
+<h1>Profile <a class="btn btn-sm btn-warning" asp-action="Edit">Edit</a></h1>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label asp-for="UserName" class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">@Model.UserName</div>
+    </div>
+    <div class="form-group">
+        <label asp-for="DisplayName" class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">@Model.DisplayName</div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Phone</label>
+        <div class="col-sm-10">
+            <span>@Model.PhoneNumber</span>
+            @if (Model.PhoneNumberConfirmed)
+            {
+                <span class="glyphicon glyphicon-ok"></span>
+                <span> Confirmed</span>
+            }
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <span>@Model.Email</span>
+            @if (Model.EmailConfirmed)
+            {
+                <span class="glyphicon glyphicon-ok"></span>
+                <span> Confirmed</span>
+            }
+        </div>
+    </div>
+</div>
