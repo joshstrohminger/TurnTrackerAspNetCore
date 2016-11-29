@@ -11,6 +11,6 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li><a asp-route-returnurl="@($"{Context.Request.Path}{Context.Request.QueryString}")" asp-controller="Account" asp-action="Login">Login</a></li>
-        <li><a asp-route-returnurl="@($"{Context.Request.Path}{Context.Request.QueryString}")" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
     </ul>
 }

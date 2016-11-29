@@ -25,6 +25,11 @@ namespace TurnTrackerAspNetCore.Services
             return _context.Users;
         }
 
+        public IEnumerable<User> GetAllUsersWithRoles()
+        {
+            return _context.Users.Include(x => x.Roles);
+        }
+
         public IEnumerable<Turn> GetLatestTurns(params long[] taskIds)
         {
             if (taskIds.Length == 0)

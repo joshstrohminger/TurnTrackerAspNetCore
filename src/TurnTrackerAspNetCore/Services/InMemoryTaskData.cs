@@ -46,6 +46,11 @@ namespace TurnTrackerAspNetCore.Services
             return Users;
         }
 
+        public IEnumerable<User> GetAllUsersWithRoles()
+        {
+            throw new NotImplementedException();
+        }
+
         public Dictionary<long, List<TurnCount>> GetTurnCounts(string userId)
         {
             throw new NotImplementedException();

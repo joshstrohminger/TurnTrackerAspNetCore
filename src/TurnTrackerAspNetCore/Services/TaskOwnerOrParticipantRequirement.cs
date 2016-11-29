@@ -14,9 +14,12 @@ namespace TurnTrackerAspNetCore.Services
             TaskOwnerOrParticipantRequirement requirement,
             TrackedTask task)
         {
-            var id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            string id;
 
-            if (null != id && null != task && (task.UserId == id || task.Participants.Any(x => x.UserId == id)))
+            if (context.User.IsInRole(Roles.Admin) ||
+                (null != (id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value) &&
+                null != task &&
+                (task.UserId == id || task.Participants.Any(x => x.UserId == id))))
             {
                 context.Succeed(requirement);
             }

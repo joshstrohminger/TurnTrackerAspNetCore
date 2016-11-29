@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
@@ -14,18 +15,20 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly ITaskData _taskData;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _taskData = taskData;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
-        public IActionResult Register(string returnUrl)
+        public IActionResult Register()
         {
-            return View(new RegisterUserViewModel {ReturnUrl = returnUrl});
+            return View();
         }
 
         public IActionResult AccessDenied()
@@ -36,40 +39,56 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // ensure empty or whitespace is converted to null
-                var displayName = model.DisplayName;
-                if (string.IsNullOrWhiteSpace(displayName))
-                {
-                    displayName = null;
-                }
-                var user = new User
-                {
-                    UserName = model.UserName,
-                    DisplayName = displayName,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber
-                };
 
-                //var numberExistingUsers = _taskData.GetAllUsers().Count();
+                return View(model);
+            }
 
-                var createResult = await _userManager.CreateAsync(user, model.Password);
-                if (createResult.Succeeded)
+            // ensure empty or whitespace is converted to null
+            var displayName = model.DisplayName;
+            if (string.IsNullOrWhiteSpace(displayName))
+            {
+                displayName = null;
+            }
+            var user = new User
+            {
+                UserName = model.UserName,
+                DisplayName = displayName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber
+            };
+
+            var numberExistingUsers = _taskData.GetAllUsers().Count();
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                if (model.UserName.ToLower() == "admin" || 0 == numberExistingUsers)
                 {
-                    await _signInManager.SignInAsync(user, false);
-                    if (Url.IsLocalUrl(model.ReturnUrl))
+                    if (!await _roleManager.RoleExistsAsync(Roles.Admin))
                     {
-                        return Redirect(model.ReturnUrl);
+                        result = await _roleManager.CreateAsync(new IdentityRole(Roles.Admin));
                     }
-                    return RedirectToAction(nameof(TaskController.Index), "Task");
-                }
 
-                foreach (var error in createResult.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
+                    if (result.Succeeded)
+                    {
+                        result = await _userManager.AddToRoleAsync(user, Roles.Admin);
+                    }
                 }
             }
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+                return RedirectToAction(nameof(TaskController.Index), "Task");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
             return View(model);
         }
 
@@ -99,10 +118,7 @@ namespace TurnTrackerAspNetCore.Controllers
                     {
                         return Redirect(model.ReturnUrl);
                     }
-                    else
-                    {
-                        return RedirectToAction(nameof(TaskController.Index), "Task");
-                    }
+                    return RedirectToAction(nameof(TaskController.Index), "Task");
                 }
                 ModelState.AddModelError("", "Login Failed");
             }
@@ -113,7 +129,12 @@ namespace TurnTrackerAspNetCore.Controllers
         public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            return View(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            return View(new ProfileViewModel
+            {
+                User = user,
+                Roles = roles
+            });
         }
 
         [Authorize, HttpGet]
