@@ -9,7 +9,7 @@ using TurnTrackerAspNetCore.Services;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = nameof(Roles.Admin))]
     public class AdminController : Controller
     {
         private readonly ITaskData _taskData;
