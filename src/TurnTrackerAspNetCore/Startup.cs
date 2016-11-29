@@ -39,6 +39,11 @@ namespace TurnTrackerAspNetCore
                     Configuration.GetConnectionString("TurnTracker")));
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<TurnTrackerDbContext>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.CanAccessTask, policyBuilder => policyBuilder.AddRequirements(new TaskOwnerOrParticipantRequirement()));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +63,7 @@ namespace TurnTrackerAspNetCore
             {
                 app.UseExceptionHandler(new ExceptionHandlerOptions
                 {
-                    ExceptionHandler = context => context.Response.WriteAsync("I messed up!")
+                    ExceptionHandler = context => context.Response.WriteAsync(@"I messed up! ¯\_(ツ)_/¯")
                 });
             }
 

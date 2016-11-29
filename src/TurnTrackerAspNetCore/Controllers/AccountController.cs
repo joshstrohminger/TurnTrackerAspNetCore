@@ -28,6 +28,11 @@ namespace TurnTrackerAspNetCore.Controllers
             return View(new RegisterUserViewModel {ReturnUrl = returnUrl});
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,107 +14,109 @@ namespace TurnTrackerAspNetCore.Controllers
     {
         private readonly ITaskData _taskData;
         private readonly UserManager<User> _userManager;
+        private readonly IAuthorizationService _authorizationService;
 
-        public TurnController(ITaskData taskData, UserManager<User> userManager)
+        public TurnController(ITaskData taskData, UserManager<User> userManager, IAuthorizationService authorizationService)
         {
             _taskData = taskData;
             _userManager = userManager;
+            _authorizationService = authorizationService;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Take(long id)
+        public async Task<IActionResult> Take(long id)
         {
             var task = _taskData.GetTaskDetails(id);
-            var userId = _userManager.GetUserId(HttpContext.User);
 
             if (null == task)
             {
-                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid task" });
+                return new NotFoundResult();
             }
-
-            if (task.Participants.All(x => x.UserId != userId))
+            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Must be an active user to take a turn" });
+                return new ChallengeResult();
             }
 
+            var userId = _userManager.GetUserId(HttpContext.User);
             task.Turns.Add(new Turn { UserId = userId });
             _taskData.Commit();
             return RedirectToAction(nameof(TaskController.Details), "Task", new { id });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             var turn = _taskData.GetTurn(id);
             if (null == turn)
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id, error = "Invalid turn" });
+                return new NotFoundResult();
             }
 
             var task = _taskData.GetTaskDetails(turn.TaskId);
-            var userId = _userManager.GetUserId(HttpContext.User);
             if (null == task)
             {
-                return RedirectToAction(nameof(TaskController.Index), "Task", new {error = "Invalid task" });
+                return new NotFoundResult();
             }
-            if (task.AccessDenied(userId))
+            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id, error = "Access Denied" });
+                return new ChallengeResult();
             }
+
             task.Turns.Remove(turn);
             _taskData.Commit();
             return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id });
         }
 
         [HttpGet]
-        public IActionResult Edit(long id)
+        public async Task<IActionResult> Edit(long id)
         {
             var turn = _taskData.GetTurn(id);
             if (null == turn)
             {
-                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid turn" });
+                return new NotFoundResult();
             }
+
             var task = _taskData.GetTaskDetails(turn.TaskId);
-            var userId = _userManager.GetUserId(HttpContext.User);
             if (null == task)
             {
-                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid task" });
+                return new NotFoundResult();
             }
-            if (task.AccessDenied(userId))
+            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id, error = "Access Denied" });
+                return new ChallengeResult();
             }
 
             return View(turn);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, long taskId, EditTurnViewModel model)
+        public async Task<IActionResult> Edit(long id, EditTurnViewModel model)
         {
             var turn = _taskData.GetTurn(id);
             if (null == turn)
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = taskId, error = "Invalid turn" });
+                return new NotFoundResult();
             }
+
             var task = _taskData.GetTaskDetails(turn.TaskId);
-            var userId = _userManager.GetUserId(HttpContext.User);
             if (null == task)
             {
-                return RedirectToAction(nameof(TaskController.Index), "Task", new { error = "Invalid task" });
+                return new NotFoundResult();
             }
-            if (task.AccessDenied(userId))
+            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
             {
-                return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id, error = "Access Denied" });
+                return new ChallengeResult();
             }
 
             if (!ModelState.IsValid)
             {
                 return View(turn);
             }
+
             turn.Taken = model.Taken;
             turn.Modified = DateTimeOffset.UtcNow;
             _taskData.Commit();
-            return RedirectToAction(nameof(TaskController.Details), "Task", new { id = taskId });
+            return RedirectToAction(nameof(TaskController.Details), "Task", new { id = task.Id });
         }
     }
 }

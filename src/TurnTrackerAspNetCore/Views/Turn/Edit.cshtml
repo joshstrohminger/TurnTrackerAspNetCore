@@ -4,7 +4,6 @@
     <h1>Edit Turn</h1>
     <form method="post" asp-action="Edit" asp-antiforgery="true" class="form-horizontal">
         <div asp-validation-summary="ModelOnly"></div>
-        <input type="hidden" name="taskId" value="@Model.TaskId"/>
         <div class="form-group">
             <label asp-for="Taken" class="control-label col-sm-1"></label>
             <div class="col-sm-4">
