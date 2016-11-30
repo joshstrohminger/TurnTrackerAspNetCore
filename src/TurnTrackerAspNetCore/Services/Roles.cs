@@ -1,7 +1,7 @@
 ﻿namespace TurnTrackerAspNetCore.Services
 {
-    public static class Roles
+    public enum Roles
     {
-        public static string Admin => "Admin";
+        Admin
     }
 }

@@ -1,15 +1,19 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
+using TurnTrackerAspNetCore.ViewModels;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
-    [Authorize(Roles = nameof(Roles.Admin))]
+    [Authorize(Policy = nameof(Policies.CanAccessAdmin))]
     public class AdminController : Controller
     {
         private readonly ITaskData _taskData;
@@ -21,6 +25,13 @@ namespace TurnTrackerAspNetCore.Controllers
             _taskData = taskData;
             _roleManager = roleManager;
             _userManager = userManager;
+        }
+
+        public IActionResult Tasks(string error = null)
+        {
+            var tasks = _taskData.GetAllTasks().ToList();
+            var taskCounts = tasks.ToDictionary(x => x, x => (TurnCount)null);
+            return View("Tasks", new TasksViewModel { TaskCounts = taskCounts, Error = error });
         }
 
         public IActionResult Users()
@@ -47,6 +58,101 @@ namespace TurnTrackerAspNetCore.Controllers
             await _userManager.DeleteAsync(user);
             // todo show errors
             return RedirectToAction(nameof(Users));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (null == user)
+            {
+                return new NotFoundResult();
+            }
+
+            var myId = _userManager.GetUserId(User);
+            if (myId == id)
+            {
+                return new ChallengeResult();
+            }
+
+            var roles = new List<string>();
+            foreach (var role in Enum.GetNames(typeof(Roles)))
+            {
+                if (await _userManager.IsInRoleAsync(user, role))
+                {
+                    roles.Add(role);
+                }
+            }
+
+            var model = new EditAccountViewModel
+            {
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName,
+                Roles = roles,
+                AllRoles = Enum.GetNames(typeof(Roles)).Select(x => new SelectListItem {Value = x, Text = x, Selected = roles.Contains(x)}).ToList()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(string id, EditAccountViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (null == user)
+            {
+                return new NotFoundResult();
+            }
+
+            var myId = _userManager.GetUserId(User);
+            if (myId == id)
+            {
+                return new ChallengeResult();
+            }
+
+            user.DisplayName = model.DisplayName;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+
+            var results = new List<IdentityResult> {await _userManager.UpdateAsync(user)};
+
+            var rolesToAdd = new List<string>();
+            var rolesToRemove = new List<string>();
+            foreach (var role in Enum.GetNames(typeof(Roles)))
+            {
+                var isIn = await _userManager.IsInRoleAsync(user, role);
+                if ((model.Roles?.Contains(role) ?? false) != isIn)
+                {
+                    if (isIn)
+                    {
+                        rolesToRemove.Add(role);
+                    }
+                    else
+                    {
+                        rolesToAdd.Add(role);
+                    }
+                }
+            }
+            results.Add(await _userManager.AddToRolesAsync(user, rolesToAdd));
+            results.Add(await _userManager.RemoveFromRolesAsync(user, rolesToRemove));
+
+            if (results.All(x => x.Succeeded))
+            {
+                return RedirectToAction(nameof(Users));
+            }
+
+            foreach (var error in results.SelectMany(x => x.Errors))
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(model);
         }
     }
 }

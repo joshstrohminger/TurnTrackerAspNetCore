@@ -32,7 +32,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }
@@ -57,7 +57,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }
@@ -81,7 +81,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }
@@ -103,7 +103,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }

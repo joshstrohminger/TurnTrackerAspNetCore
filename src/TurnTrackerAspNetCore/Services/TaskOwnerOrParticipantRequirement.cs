@@ -16,7 +16,7 @@ namespace TurnTrackerAspNetCore.Services
         {
             string id;
 
-            if (context.User.IsInRole(Roles.Admin) ||
+            if (context.User.IsInRole(nameof(Roles.Admin)) ||
                 (null != (id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value) &&
                 null != task &&
                 (task.UserId == id || task.Participants.Any(x => x.UserId == id))))

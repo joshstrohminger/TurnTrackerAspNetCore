@@ -1,7 +1,8 @@
 ﻿namespace TurnTrackerAspNetCore.Services
 {
-    public static class Policies
+    public enum Policies
     {
-        public static string CanAccessTask => "CanAccessTask";
+        CanAccessTask,
+        CanAccessAdmin
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -43,16 +45,18 @@ namespace TurnTrackerAspNetCore
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(Policies.CanAccessTask, policyBuilder => policyBuilder.AddRequirements(new TaskOwnerOrParticipantRequirement()));
+                options.AddPolicy(nameof(Policies.CanAccessTask), policy => policy.AddRequirements(new TaskOwnerOrParticipantRequirement()));
+                options.AddPolicy(nameof(Policies.CanAccessAdmin), policy => policy.RequireRole(nameof(Roles.Admin)));
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             db.Database.Migrate();
+            ConfigureRoles(roleManager).Wait();
 
             if (env.IsDevelopment())
             {
@@ -69,6 +73,7 @@ namespace TurnTrackerAspNetCore
             }
 
             app.UseStaticFiles();
+            //app.UseStatusCodePages();
             app.UseIdentity();
             app.UseMvc(ConfigureRoutes);
         }
@@ -76,6 +81,17 @@ namespace TurnTrackerAspNetCore
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
             routeBuilder.MapRoute("default", "{controller=task}/{action=Index}/{id?}");
+        }
+
+        private async Task ConfigureRoles(RoleManager<IdentityRole> roleManager)
+        {
+            foreach (var role in Enum.GetNames(typeof(Roles)))
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
         }
     }
 }

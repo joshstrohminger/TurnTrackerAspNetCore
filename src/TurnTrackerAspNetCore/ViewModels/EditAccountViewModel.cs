@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TurnTrackerAspNetCore.ViewModels
 {
@@ -14,5 +16,9 @@ namespace TurnTrackerAspNetCore.ViewModels
 
         [MaxLength(256), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        public IEnumerable<string> Roles { get; set; }
+
+        public List<SelectListItem> AllRoles { get; set; }
     }
 }

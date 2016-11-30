@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
@@ -15,14 +14,14 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly ITaskData _taskData;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IAuthorizationService _authorizationService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, IAuthorizationService authorizationService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _taskData = taskData;
-            _roleManager = roleManager;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -41,7 +40,6 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             if (!ModelState.IsValid)
             {
-
                 return View(model);
             }
 
@@ -62,20 +60,9 @@ namespace TurnTrackerAspNetCore.Controllers
             var numberExistingUsers = _taskData.GetAllUsers().Count();
 
             var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
+            if (result.Succeeded && (model.UserName.ToLower() == "admin" || 0 == numberExistingUsers))
             {
-                if (model.UserName.ToLower() == "admin" || 0 == numberExistingUsers)
-                {
-                    if (!await _roleManager.RoleExistsAsync(Roles.Admin))
-                    {
-                        result = await _roleManager.CreateAsync(new IdentityRole(Roles.Admin));
-                    }
-
-                    if (result.Succeeded)
-                    {
-                        result = await _userManager.AddToRoleAsync(user, Roles.Admin);
-                    }
-                }
+                result = await _userManager.AddToRoleAsync(user, nameof(Roles.Admin));
             }
 
             if (result.Succeeded)
@@ -154,21 +141,25 @@ namespace TurnTrackerAspNetCore.Controllers
         [Authorize, HttpPost]
         public async Task<IActionResult> Edit(EditAccountViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = await _userManager.GetUserAsync(HttpContext.User);
-                user.DisplayName = model.DisplayName;
-                user.Email = model.Email;
-                user.PhoneNumber = model.PhoneNumber;
-                var result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction(nameof(Profile));
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            user.DisplayName = model.DisplayName;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(Profile));
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
             }
 
             return View(model);

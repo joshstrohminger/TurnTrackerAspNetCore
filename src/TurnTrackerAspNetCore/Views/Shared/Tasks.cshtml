@@ -1,5 +1,5 @@
 ﻿@using System.Threading.Tasks
-@model HomePageViewModel
+@model TasksViewModel
 @{ViewBag.Title = "Turn Tracker";}
 @if (!string.IsNullOrWhiteSpace(Model.Error))
 {
@@ -11,7 +11,7 @@
     <span>Tasks</span>
     @if (User.Identity.IsAuthenticated)
     {
-        <span> <a class="btn btn-sm btn-primary" asp-action="Create">Create</a></span>
+        <span> <a class="btn btn-sm btn-primary" asp-controller="Task" asp-action="Create">Create</a></span>
     }
 </h1>
 @if (Model.TaskCounts.Count == 0)

@@ -25,13 +25,6 @@ namespace TurnTrackerAspNetCore.Controllers
             _taskData = taskData;
             _authorizationService = authorizationService;
         }
-
-        public IActionResult All(string error = null)
-        {
-            var tasks = _taskData.GetAllTasks().ToList();
-            var taskCounts = tasks.ToDictionary(x => x, x => (TurnCount)null);
-            return View(nameof(Index), new HomePageViewModel { TaskCounts = taskCounts, Error = error });
-        }
         
         public IActionResult Index(string error = null)
         {
@@ -45,7 +38,7 @@ namespace TurnTrackerAspNetCore.Controllers
                 task.PopulateLatestTurnInfo(counts, taskCounts, latest);
             }
 
-            return View(new HomePageViewModel { TaskCounts = taskCounts, Error = error });
+            return View("Tasks", new TasksViewModel { TaskCounts = taskCounts, Error = error });
         }
         
         public async Task<IActionResult> Details(long id, string error = null)
@@ -55,7 +48,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }
@@ -119,7 +112,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }
@@ -152,7 +145,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }
@@ -187,7 +180,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, Policies.CanAccessTask))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
             {
                 return new ChallengeResult();
             }

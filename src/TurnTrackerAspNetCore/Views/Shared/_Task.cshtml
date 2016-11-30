@@ -19,5 +19,5 @@
             <span>@task.DueTimeSpan.ToString(@"hh\:mm\:ss")</span>
         }
     </td>
-    <td><a class="btn btn-default btn-xs" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
+    <td><a class="btn btn-default btn-xs" asp-controller="Task" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
 </tr>
