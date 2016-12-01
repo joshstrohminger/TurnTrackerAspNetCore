@@ -8,5 +8,11 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             return View();
         }
+
+        // stash this here for now, maybe move it to another controller at some point
+        public IActionResult Error(string code)
+        {
+            return View(nameof(Error), code);
+        }
     }
 }

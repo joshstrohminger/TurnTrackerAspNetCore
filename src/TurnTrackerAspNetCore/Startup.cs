@@ -73,13 +73,15 @@ namespace TurnTrackerAspNetCore
             }
 
             app.UseStaticFiles();
-            //app.UseStatusCodePages();
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseIdentity();
             app.UseMvc(ConfigureRoutes);
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
+            routeBuilder.MapRoute("tasks", "tasks", new { controller = "Task", action = "Index" });
+            routeBuilder.MapRoute("error", "error/{code}", new { controller = "About", action = "Error" });
             routeBuilder.MapRoute("default", "{controller=task}/{action=Index}/{id?}");
         }
 
