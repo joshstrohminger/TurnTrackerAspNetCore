@@ -9,6 +9,7 @@ namespace TurnTrackerAspNetCore.ViewModels
         public List<UserCountViewModel> Counts { get; set; }
         public int MaxTurns { get; set; }
         public bool CanTakeTurn { get; set; }
+        public bool CanDeleteTask { get; set; }
         public string Error { get; set; }
     }
 }

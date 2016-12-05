@@ -68,6 +68,7 @@ namespace TurnTrackerAspNetCore.Controllers
                 Counts = counts,
                 MaxTurns = maxTurns,
                 CanTakeTurn = task.Participants.Any(x => x.UserId == userId),
+                CanDeleteTask = task.UserId == userId,
                 Error = error
             };
 
@@ -180,7 +181,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanAccessTask)))
+            if (!await _authorizationService.AuthorizeAsync(User, task, nameof(Policies.CanDeleteTask)))
             {
                 return new ChallengeResult();
             }

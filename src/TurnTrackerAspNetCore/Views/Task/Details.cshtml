@@ -43,13 +43,22 @@
                 @if (Model.CanTakeTurn)
                 {
                 <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Turn" asp-action="Take" method="post">
-                    <input class="btn btn-primary" type="submit" value="Take Turn"/>
+                    <button class="btn btn-primary btn-sm" type="submit">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
                 </form>
                 }
-                <a class="btn btn-success" asp-action="Edit" asp-route-id="@Model.Task.Id">Edit</a>
-                <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Task" asp-action="Delete" method="post">
-                    <input class="btn btn-danger" type="submit" value="Delete" />
-                </form>
+                <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@Model.Task.Id">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                @if (Model.CanDeleteTask)
+                {
+                    <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Task" asp-action="Delete" method="post">
+                        <button class="btn btn-danger btn-sm" type="submit">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </form>
+                }
             </div>
         }
     </div>

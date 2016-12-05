@@ -46,6 +46,7 @@ namespace TurnTrackerAspNetCore
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(nameof(Policies.CanAccessTask), policy => policy.AddRequirements(new TaskOwnerOrParticipantRequirement()));
+                options.AddPolicy(nameof(Policies.CanDeleteTask), policy => policy.AddRequirements(new TaskOwnerRequirement()));
                 options.AddPolicy(nameof(Policies.CanAccessAdmin), policy => policy.RequireRole(nameof(Roles.Admin)));
             });
         }

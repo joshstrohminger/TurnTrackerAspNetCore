@@ -12,6 +12,9 @@
     "jquery": "3.1.1",
     "jquery-validation": "1.15.1",
     "jquery-validation-unobtrusive": "3.2.6",
-    "merge-stream": "1.0.0"
+    "merge-stream": "1.0.0",
+    "gulp-concat": "2.6.1",
+    "gulp-cssmin": "0.1.7",
+    "gulp-uglify":  "2.0.0" 
   }
 }
