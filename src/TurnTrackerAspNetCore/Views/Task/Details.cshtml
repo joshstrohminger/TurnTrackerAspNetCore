@@ -39,17 +39,15 @@
         <div><label>Created</label><span> @Model.Task.Created.ToOffset(timezoneOffset)</span></div>
         @if (User.Identity.IsAuthenticated)
         {
-            <div class="clearfix">
-                <form class="pull-left" asp-antiforgery="true" asp-controller="Turn" asp-action="Take" method="post">
-                    <input name="id" value="@Model.Task.Id" type="hidden" />
-                    @if (Model.CanTakeTurn)
-                    {
-                        <input class="btn btn-primary" type="submit" value="Take Turn"/>
-                    }
+            <div class="action-group">
+                @if (Model.CanTakeTurn)
+                {
+                <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Turn" asp-action="Take" method="post">
+                    <input class="btn btn-primary" type="submit" value="Take Turn"/>
                 </form>
-                <a class="btn btn-success pull-left" asp-action="Edit" asp-route-id="@Model.Task.Id">Edit</a>
-                <form class="pull-left" asp-antiforgery="true" asp-action="Delete" method="post">
-                    <input name="id" value="@Model.Task.Id" type="hidden" />
+                }
+                <a class="btn btn-success" asp-action="Edit" asp-route-id="@Model.Task.Id">Edit</a>
+                <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Task" asp-action="Delete" method="post">
                     <input class="btn btn-danger" type="submit" value="Delete" />
                 </form>
             </div>
@@ -57,21 +55,29 @@
     </div>
     <div class="col-sm-6">
         <h4>Participants</h4>
-        @if (Model.Counts.Count == 0)
+        @if ((Model.Counts?.Count ?? 0) == 0)
         {
             <p>No participants</p>
         }
         else
         {
-            <table class="table table-condensed table-striped">
+            <table class="table table-condensed table-striped participants">
                 <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Turns</th>
-                        <th>Todo</th>
-                    </tr>
+                <tr>
+                    <th>User</th>
+                    <th>Turns</th>
+                    <th>Todo</th>
+                </tr>
                 </thead>
-                @foreach (var row in Model.Counts)
+                @{
+                    var firstRow = Model.Counts.First();
+                }
+                <tr class="danger">
+                    <td>@firstRow.Name</td>
+                    <td>@firstRow.TotalTurns</td>
+                    <td>@(Model.MaxTurns - firstRow.TotalTurns)</td>
+                </tr>
+                @foreach (var row in Model.Counts.Skip(1))
                 {
                     <tr>
                         <td>@row.Name</td>
@@ -84,7 +90,7 @@
     </div>
 </div>
 <h4>Turns</h4>
-@if (Model.Task.Turns.Count == 0)
+@if ((Model.Task.Turns?.Count ?? 0) == 0)
 {
     <p>No turns</p>
 }
@@ -92,19 +98,18 @@ else
 {
     <table class="table table-condensed table-hover table-striped">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>User</th>
-                <th>Taken</th>
-                <th>Modified</th>
-                <th>Created</th>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <th>Actions</th>
-                }
-            </tr>
+        <tr>
+            <th>User</th>
+            <th>Taken</th>
+            <th>Modified</th>
+            <th>Created</th>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th>Actions</th>
+            }
+        </tr>
         </thead>
-        @foreach (var turn in Model.Task.Turns ?? new List<Turn>())
+        @foreach (var turn in Model.Task.Turns)
         {
             @Html.Partial("_Turn", turn)
         }

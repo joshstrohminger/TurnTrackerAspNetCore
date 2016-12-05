@@ -12,6 +12,7 @@
     <environment Names="Staging,Production">
         <link href="/lib/css/bootstrap.min.css" rel="stylesheet" />
     </environment>
+    <link href="/css/site.min.css" rel="stylesheet"/>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -47,6 +48,7 @@
     @RenderBody()
     <footer>
         @RenderSection("footer", required: false)
+        <div class="pull-right">Build @(Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion)</div>
     </footer>
 </div>
 <script type="text/javascript">
@@ -62,5 +64,6 @@
 </environment>
 <script src="/lib/js/jquery.validate.js"></script>
 <script src="/lib/js/jquery.validate.unobtrusive.js"></script>
+<script src="/js/site.js"></script>
 </body>
 </html>

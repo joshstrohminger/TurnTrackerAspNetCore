@@ -1,29 +1,28 @@
 ﻿@model Turn
 <tr>
-    <td>@Model.Id</td>
     <td>@(Model.User.DisplayName ?? Model.User.UserName)</td>
     <td>
         <span>@Model.Taken.ToOffset(ViewBag.TimezoneOffset)</span>
         @if (Math.Abs((Model.Taken - Model.Created).TotalHours) > 2)
         {
-            <span class="glyphicon glyphicon-alert"></span>
+            <span class="glyphicon glyphicon-alert warning"></span>
         }
     </td>
     <td>
         <span>@Model.Modified.ToOffset(ViewBag.TimezoneOffset)</span>
         @if (Model.Modified != Model.Created)
         {
-            <span class="glyphicon glyphicon-alert"></span>
+            <span class="glyphicon glyphicon-alert warning"></span>
         }
     </td>
     <td>@Model.Created.ToOffset(ViewBag.TimezoneOffset)</td>
     @if (User.Identity.IsAuthenticated)
     {
-        <td class="clearfix">
-            <a asp-controller="Turn" asp-action="Edit" asp-route-id="@Model.Id" class="pull-left btn btn-xs btn-success">
+        <td class="action-group">
+            <a asp-controller="Turn" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-xs btn-success">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
-            <form asp-controller="Turn" asp-action="Delete" asp-route-id="@Model.Id" asp-antiforgery="true" method="post" class="pull-left">
+            <form asp-controller="Turn" asp-action="Delete" asp-route-id="@Model.Id" asp-antiforgery="true" method="post">
                 <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
             </form>
         </td>

@@ -4,13 +4,13 @@
     var count = Model.Value;
 }
 
-<tr>
+<tr class="task-row @(task.Overdue ? "danger" : "")">
     <td>@task.Name</td>
     @*<td>@task.TeamBased</td>*@
     <td>@(task.Period == 0m ? "Non-Periodic" : $"{task.Period} {task.Unit}")</td>
     <td>@(count?.DisplayName ?? count?.UserName ?? "")</td>
     <td>
-        @if (@task.Overdue)
+        @if (task.Overdue)
         {
             <strong>@task.DueTimeSpan.ToString(@"hh\:mm\:ss") overdue</strong>
         }
@@ -19,5 +19,5 @@
             <span>@task.DueTimeSpan.ToString(@"hh\:mm\:ss")</span>
         }
     </td>
-    <td><a class="btn btn-default btn-xs" asp-controller="Task" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
+    <td><a class="btn btn-default btn-xs details-btn" asp-controller="Task" asp-action="Details" asp-route-id="@task.Id">Details</a></td>
 </tr>

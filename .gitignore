@@ -242,3 +242,5 @@ ModelManifest.xml
 .fake/
 src/TurnTrackerAspNetCore/Properties/PublishProfiles/
 src/TurnTrackerAspNetCore/wwwroot/lib/
+src/TurnTrackerAspNetCore/wwwroot/css/*.min.*
+src/TurnTrackerAspNetCore/wwwroot/css/*.map
