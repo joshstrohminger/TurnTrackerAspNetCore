@@ -59,7 +59,7 @@ namespace TurnTrackerAspNetCore.Entities
             {
                 var period = task.GetPeriod();
                 var elapsed = DateTimeOffset.UtcNow - task.LastTaken.Value;
-                task.Overdue = elapsed > period;
+                task.Overdue = 0m != task.Period && elapsed > period;
                 task.DueTimeSpan = elapsed - period;
             }
         }

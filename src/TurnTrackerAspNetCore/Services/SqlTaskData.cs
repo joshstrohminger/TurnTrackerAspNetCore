@@ -47,12 +47,12 @@ namespace TurnTrackerAspNetCore.Services
                     taskIds.Cast<object>().ToArray());
         }
 
-        public Dictionary<long, List<TurnCount>> GetTurnCounts(string userId)
+        public Dictionary<long, List<TurnCount>> GetTurnCounts(string userId = null)
         {
-            return _context.TurnCounts
-                .FromSql(
-                    "SELECT u.UserName, u.DisplayName, t.Name as TaskName, t.Id as TaskId, count(r.Taken) + p.Offset as TotalTurns, p.UserId from Participants p inner join Tasks t on p.TaskId = t.Id inner join AspNetUsers u on p.UserId = u.Id left join Turns r on r.TaskId = p.TaskId and r.UserId = p.UserId where p.TaskId in (select p.TaskId from Participants p where p.UserId = {0}) or t.UserId = {0} group by p.TaskId, p.UserId, u.UserName, u.DisplayName, t.Name, t.Id, p.Offset order by t.Id, TotalTurns, u.UserName;",
-                    userId)
+            var sql = string.IsNullOrWhiteSpace(userId)
+                ? _context.TurnCounts.FromSql("SELECT u.UserName, u.DisplayName, t.Name as TaskName, t.Id as TaskId, count(r.Taken) + p.Offset as TotalTurns, p.UserId from Participants p inner join Tasks t on p.TaskId = t.Id inner join AspNetUsers u on p.UserId = u.Id left join Turns r on r.TaskId = p.TaskId and r.UserId = p.UserId group by p.TaskId, p.UserId, u.UserName, u.DisplayName, t.Name, t.Id, p.Offset order by t.Id, TotalTurns, u.UserName;")
+                : _context.TurnCounts.FromSql("SELECT u.UserName, u.DisplayName, t.Name as TaskName, t.Id as TaskId, count(r.Taken) + p.Offset as TotalTurns, p.UserId from Participants p inner join Tasks t on p.TaskId = t.Id inner join AspNetUsers u on p.UserId = u.Id left join Turns r on r.TaskId = p.TaskId and r.UserId = p.UserId where p.TaskId in (select p.TaskId from Participants p where p.UserId = {0}) or t.UserId = {0} group by p.TaskId, p.UserId, u.UserName, u.DisplayName, t.Name, t.Id, p.Offset order by t.Id, TotalTurns, u.UserName;", userId);
+            return sql
                 .ToList()
                 .GroupBy(x => x.TaskId)
                 .ToDictionary(x => x.Key, x => x.ToList());

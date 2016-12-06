@@ -18,7 +18,7 @@ namespace TurnTrackerAspNetCore.Services
         Turn GetTurn(long id);
         IEnumerable<User> GetAllUsers();
         IEnumerable<User> GetAllUsersWithRoles();
-        Dictionary<long, List<TurnCount>> GetTurnCounts(string userId);
+        Dictionary<long, List<TurnCount>> GetTurnCounts(string userId = null);
         IEnumerable<Turn> GetLatestTurns(params long[] taskIds);
         IEnumerable<TurnCount> GetTurnCounts(long taskId);
     }

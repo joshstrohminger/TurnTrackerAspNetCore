@@ -29,8 +29,15 @@ namespace TurnTrackerAspNetCore.Controllers
 
         public IActionResult Tasks(string error = null)
         {
+            var counts = _taskData.GetTurnCounts();
             var tasks = _taskData.GetAllTasks().ToList();
-            var taskCounts = tasks.ToDictionary(x => x, x => (TurnCount)null);
+            var latest = _taskData.GetLatestTurns(tasks.Select(x => x.Id).ToArray()).ToList();
+            var taskCounts = new Dictionary<TrackedTask, TurnCount>();
+            foreach (var task in tasks)
+            {
+                task.PopulateLatestTurnInfo(counts, taskCounts, latest);
+            }
+
             return View("Tasks", new TasksViewModel { TaskCounts = taskCounts, Error = error });
         }
 
