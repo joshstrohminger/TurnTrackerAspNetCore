@@ -60,7 +60,7 @@ namespace TurnTrackerAspNetCore.Controllers
                 new Dictionary<long, List<TurnCount>> { { task.Id, counts } },
                 new Dictionary<TrackedTask, TurnCount>(),
                 task.Turns);
-            var maxTurns = counts.Count == 0 ? 0 : counts.Max(x => x.TotalTurns);
+            var maxTurns = counts.Max(x => x.TotalTurns, 0);
 
             var model = new TaskDetailsViewModel
             {
@@ -162,11 +162,16 @@ namespace TurnTrackerAspNetCore.Controllers
             task.Name = model.Name;
             model.Participants = model.Participants ?? new List<string>();
 
+            // update participants and give you users the max count as an offset
+            var counts = _taskData.GetTurnCounts(task.Id).ToList();
+            var max = counts.Max(x => x.TotalTurns, 0);
             task.Participants.RemoveAll(x => !model.Participants.Contains(x.UserId));
             foreach (var newId in model.Participants.Except(task.Participants.Select(x => x.UserId)))
             {
-                task.Participants.Add(new Participant { TaskId = id, UserId = newId, Offset = 0 });
+                var offset = max - task.Turns.Count(x => x.UserId == newId);
+                task.Participants.Add(new Participant { TaskId = id, UserId = newId, Offset = offset });
             }
+
             task.Modified = DateTimeOffset.UtcNow;
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new { id = task.Id });

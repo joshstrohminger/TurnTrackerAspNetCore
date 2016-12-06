@@ -64,6 +64,18 @@ namespace TurnTrackerAspNetCore.Entities
                 task.DueTimeSpan = elapsed - period;
             }
         }
+
+        public static int Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector, int fallback)
+        {
+            try
+            {
+                return source.Max(selector);
+            }
+            catch (InvalidOperationException)
+            {
+                return fallback;
+            }
+        }
     }
 
     public class TurnCountComparer : IComparer<TurnCount>
