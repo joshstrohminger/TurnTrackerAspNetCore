@@ -35,8 +35,18 @@
                 <span>@Model.Task.Period @Model.Task.Unit</span>
             }
         </div>
-        <div><label>Modified</label><span> @Model.Task.Modified.ToOffset(timezoneOffset)</span></div>
-        <div><label>Created</label><span> @Model.Task.Created.ToOffset(timezoneOffset)</span></div>
+        <div><label>Modified</label><span> @Model.Task.Modified.ToOffset(timezoneOffset).ToString("G")</span></div>
+        <div><label>Created</label><span> @Model.Task.Created.ToOffset(timezoneOffset).ToString("G")</span></div>
+        <div>
+            @if (Model.Task.Overdue)
+            {
+                <strong class="danger">@Model.Task.DueTimeSpan.ToString(@"hh\:mm\:ss") overdue</strong>
+            }
+            else
+            {
+                <span>@Model.Task.DueTimeSpan.ToString(@"hh\:mm\:ss") remaining</span>
+            }
+        </div>
         @if (User.Identity.IsAuthenticated)
         {
             <div class="action-group">
@@ -70,7 +80,7 @@
         }
         else
         {
-            <table class="table table-condensed table-striped participants">
+            <table class="table table-condensed participants">
                 <thead>
                 <tr>
                     <th>User</th>
@@ -81,7 +91,7 @@
                 @{
                     var firstRow = Model.Counts.First();
                 }
-                <tr class="danger">
+                <tr class="@(Model.Task.Overdue ? "danger" : "info")">
                     <td>@firstRow.Name</td>
                     <td>@firstRow.TotalTurns</td>
                     <td>@(Model.MaxTurns - firstRow.TotalTurns)</td>

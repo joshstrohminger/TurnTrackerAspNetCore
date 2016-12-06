@@ -48,7 +48,8 @@ namespace TurnTrackerAspNetCore.Entities
         {
             List<TurnCount> count;
             counts.TryGetValue(task.Id, out count);
-            task.LastTaken = latest.FirstOrDefault(x => x.TaskId == task.Id)?.Taken;
+            count?.Sort(new TurnCountComparer(task.Turns));
+            task.LastTaken = latest?.FirstOrDefault(x => x.TaskId == task.Id)?.Taken;
             taskCounts.Add(task, count?.FirstOrDefault());
 
             if (null == task.LastTaken)
@@ -62,6 +63,28 @@ namespace TurnTrackerAspNetCore.Entities
                 task.Overdue = 0m != task.Period && elapsed > period;
                 task.DueTimeSpan = elapsed - period;
             }
+        }
+    }
+
+    public class TurnCountComparer : IComparer<TurnCount>
+    {
+        private readonly List<Turn> _turns;
+
+        public TurnCountComparer(List<Turn> turns)
+        {
+            _turns = turns;
+        }
+
+        public int Compare(TurnCount x, TurnCount y)
+        {
+            var diff = x.TotalTurns - y.TotalTurns;
+            if (0 == diff)
+            {
+                diff = DateTimeOffset.Compare(
+                    _turns.FirstOrDefault(t => t.UserId == x.UserId)?.Taken ?? default(DateTimeOffset),
+                    _turns.FirstOrDefault(t => t.UserId == y.UserId)?.Taken ?? default(DateTimeOffset));
+            }
+            return diff;
         }
     }
 

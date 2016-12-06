@@ -2,20 +2,20 @@
 <tr>
     <td>@(Model.User.DisplayName ?? Model.User.UserName)</td>
     <td>
-        <span>@Model.Taken.ToOffset(ViewBag.TimezoneOffset)</span>
+        <span>@Model.Taken.ToOffset(ViewBag.TimezoneOffset).ToString("G")</span>
         @if (Math.Abs((Model.Taken - Model.Created).TotalHours) > 2)
         {
             <span class="glyphicon glyphicon-alert warning"></span>
         }
     </td>
     <td>
-        <span>@Model.Modified.ToOffset(ViewBag.TimezoneOffset)</span>
+        <span>@Model.Modified.ToOffset(ViewBag.TimezoneOffset).ToString("G")</span>
         @if (Model.Modified != Model.Created)
         {
             <span class="glyphicon glyphicon-alert warning"></span>
         }
     </td>
-    <td>@Model.Created.ToOffset(ViewBag.TimezoneOffset)</td>
+    <td>@Model.Created.ToOffset(ViewBag.TimezoneOffset).ToString("G")</td>
     @if (User.Identity.IsAuthenticated)
     {
         <td class="action-group">

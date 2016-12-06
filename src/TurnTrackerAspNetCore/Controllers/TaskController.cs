@@ -55,17 +55,17 @@ namespace TurnTrackerAspNetCore.Controllers
 
             var userId = _userManager.GetUserId(HttpContext.User);
 
-            var counts = _taskData.GetTurnCounts(id)
-                .Select(x => new UserCountViewModel(x))
-                .OrderBy(x => x.TotalTurns)
-                .ThenBy(x => x.Name)
-                .ToList();
+            var counts = _taskData.GetTurnCounts(id).ToList();
+            task.PopulateLatestTurnInfo(
+                new Dictionary<long, List<TurnCount>> { { task.Id, counts } },
+                new Dictionary<TrackedTask, TurnCount>(),
+                task.Turns);
             var maxTurns = counts.Count == 0 ? 0 : counts.Max(x => x.TotalTurns);
 
             var model = new TaskDetailsViewModel
             {
                 Task = task,
-                Counts = counts,
+                Counts = counts.Select(x => new UserCountViewModel(x)).ToList(),
                 MaxTurns = maxTurns,
                 CanTakeTurn = task.Participants.Any(x => x.UserId == userId),
                 CanDeleteTask = task.UserId == userId,
