@@ -41,13 +41,25 @@ namespace TurnTrackerAspNetCore
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("TurnTracker")));
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<TurnTrackerDbContext>();
+                .AddEntityFrameworkStores<TurnTrackerDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(nameof(Policies.CanAccessTask), policy => policy.AddRequirements(new TaskOwnerOrParticipantRequirement()));
                 options.AddPolicy(nameof(Policies.CanDeleteTask), policy => policy.AddRequirements(new TaskOwnerRequirement()));
                 options.AddPolicy(nameof(Policies.CanAccessAdmin), policy => policy.RequireRole(nameof(Roles.Admin)));
+            });
+
+            //services.AddTransient<IEmailSender, AuthMessageSender>();
+            //services.AddTransient<ISmsSender, AuthMessageSender>();
+            //services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                //options.SignIn.RequireConfirmedEmail = true;
+                //options.SignIn.RequireConfirmedPhoneNumber = true;
             });
         }
 
