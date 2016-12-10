@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace TurnTrackerAspNetCore.ViewModels
+namespace TurnTrackerAspNetCore.ViewModels.Account
 {
     public class EditAccountViewModel
     {

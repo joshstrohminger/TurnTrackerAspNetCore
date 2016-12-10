@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TurnTrackerAspNetCore.Entities;
 
-namespace TurnTrackerAspNetCore.ViewModels
+namespace TurnTrackerAspNetCore.ViewModels.Task
 {
     public class EditTaskViewModel
     {

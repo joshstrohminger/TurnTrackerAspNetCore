@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TurnTrackerAspNetCore.Entities;
 
-namespace TurnTrackerAspNetCore.ViewModels
+namespace TurnTrackerAspNetCore.ViewModels.Task
 {
     public class TaskDetailsViewModel
     {

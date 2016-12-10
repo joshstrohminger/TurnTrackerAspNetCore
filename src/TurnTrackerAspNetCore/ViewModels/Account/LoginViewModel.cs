@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TurnTrackerAspNetCore.ViewModels
+namespace TurnTrackerAspNetCore.ViewModels.Account
 {
     public class LoginViewModel
     {

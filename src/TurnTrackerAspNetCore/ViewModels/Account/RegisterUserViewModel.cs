@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TurnTrackerAspNetCore.ViewModels
+namespace TurnTrackerAspNetCore.ViewModels.Account
 {
     public class RegisterUserViewModel
     {
@@ -13,10 +13,10 @@ namespace TurnTrackerAspNetCore.ViewModels
         [Display(Name = "Display Name"), MaxLength(100)]
         public string DisplayName { get; set; }
 
-        [Display(Name = "Phone"), MaxLength(100), DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
+        //[Display(Name = "Phone"), MaxLength(100), DataType(DataType.PhoneNumber)]
+        //public string PhoneNumber { get; set; }
 
-        [MaxLength(256), DataType(DataType.EmailAddress)]
+        [Required, MaxLength(256), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Display(Name = "Confirm Password"), DataType(DataType.Password), Compare(nameof(Password))]

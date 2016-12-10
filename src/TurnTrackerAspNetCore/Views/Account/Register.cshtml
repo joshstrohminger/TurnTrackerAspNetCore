@@ -1,4 +1,4 @@
-﻿@model RegisterUserViewModel
+﻿@model TurnTrackerAspNetCore.ViewModels.Account.RegisterUserViewModel
 
 @{ ViewBag.Title = "Register";}
 
@@ -23,7 +23,7 @@
             <span asp-validation-for="DisplayName"></span>
         </div>
     </div>
-    <div class="form-group">
+    @*<div class="form-group">
         <label asp-for="PhoneNumber" class="col-sm-2 control-label"></label>
         <div class="col-sm-4">
             <input asp-for="PhoneNumber" class="form-control" />
@@ -32,7 +32,7 @@
             <span>Optional</span>
             <span asp-validation-for="PhoneNumber"></span>
         </div>
-    </div>
+    </div>*@
     <div class="form-group">
         <label asp-for="Email" class="col-sm-2 control-label"></label>
         <div class="col-sm-6">

@@ -57,15 +57,15 @@ namespace TurnTrackerAspNetCore
             });
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            //services.AddTransient<ISmsSender, AuthMessageSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    options.User.RequireUniqueEmail = true;
-            //    //options.SignIn.RequireConfirmedEmail = true;
-            //    //options.SignIn.RequireConfirmedPhoneNumber = true;
-            //});
+            services.Configure<IdentityOptions>(options =>
+            {
+                //options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
+                //options.SignIn.RequireConfirmedPhoneNumber = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +73,7 @@ namespace TurnTrackerAspNetCore
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddFile("Logs/myapp-{Date}.txt");
             db.Database.Migrate();
             ConfigureRoles(roleManager).Wait();
 

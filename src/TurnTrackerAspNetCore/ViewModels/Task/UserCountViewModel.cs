@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TurnTrackerAspNetCore.Entities;
+﻿using TurnTrackerAspNetCore.Entities;
 
-namespace TurnTrackerAspNetCore.ViewModels
+namespace TurnTrackerAspNetCore.ViewModels.Task
 {
     public class UserCountViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TurnTrackerAspNetCore.ViewModels
+namespace TurnTrackerAspNetCore.ViewModels.Turn
 {
     public class EditTurnViewModel
     {

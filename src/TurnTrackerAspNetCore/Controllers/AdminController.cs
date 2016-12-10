@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
-using TurnTrackerAspNetCore.ViewModels;
+using TurnTrackerAspNetCore.ViewModels.Account;
+using TurnTrackerAspNetCore.ViewModels.Admin;
+using TurnTrackerAspNetCore.ViewModels.Task;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
@@ -46,10 +48,11 @@ namespace TurnTrackerAspNetCore.Controllers
             return View("Tasks", new TasksViewModel { TaskCounts = taskCounts, Error = error });
         }
 
-        public IActionResult Users()
+        public IActionResult Users(string errorMessage = null)
         {
             ViewBag.Roles = _roleManager.Roles.ToDictionary(x => x.Id, x => x.Name);
             ViewBag.MyUserId = _userManager.GetUserId(User);
+            ViewBag.ErrorMessage = errorMessage;
             return View(_taskData.GetAllUsersWithRoles().OrderBy(x => x.UserName).ToList());
         }
 
@@ -197,7 +200,7 @@ namespace TurnTrackerAspNetCore.Controllers
             }
 
             var name = _userManager.GetUserName(User);
-            var success = await _emailSender.SendEmailAsync("Test Email", $"This is a test from {name}.", "Confirm", model.Email);
+            var success = await _emailSender.SendEmailAsync("Test Email", $"This is a test from {name}.", EmailCategory.Confirm, model.Email);
             if (success)
             {
                 _logger.LogInformation(EventIds.EmailConfirmationSent, name);
@@ -206,6 +209,18 @@ namespace TurnTrackerAspNetCore.Controllers
             
             ModelState.AddModelError("", "Failed to send");
             return View(nameof(Test), model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReSendConfirmationEmail(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = Url.Action(nameof(AccountController.ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+            var success = await _emailSender.SendEmailAsync("Confirm your account",
+               $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>",
+               EmailCategory.Confirm, user.Email);
+            return RedirectToAction(nameof(Users), new {errorMessage = success ? "" : "Failed to send email"});
         }
     }
 }

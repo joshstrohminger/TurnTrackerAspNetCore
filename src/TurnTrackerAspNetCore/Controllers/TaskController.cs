@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
-using TurnTrackerAspNetCore.ViewModels;
+using TurnTrackerAspNetCore.ViewModels.Task;
 
 namespace TurnTrackerAspNetCore.Controllers
 {

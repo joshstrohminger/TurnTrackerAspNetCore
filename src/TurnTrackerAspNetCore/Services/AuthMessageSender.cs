@@ -14,9 +14,14 @@ namespace TurnTrackerAspNetCore.Services
         public string SendGridKey { get; set; }
     }
 
+    public enum EmailCategory
+    {
+        Confirm
+    }
+
     public interface IEmailSender
     {
-        Task<bool> SendEmailAsync(string subject, string message, string category, params string[] destinations);
+        Task<bool> SendEmailAsync(string subject, string message, EmailCategory category, params string[] destinations);
     }
 
     public interface ISmsSender
@@ -24,7 +29,7 @@ namespace TurnTrackerAspNetCore.Services
         Task SendSmsAsync(string number, string message);
     }
 
-    public class AuthMessageSender : IEmailSender, ISmsSender
+    public class AuthMessageSender : IEmailSender//, ISmsSender
     {
         private readonly IConfiguration _config;
         private readonly ILogger _logger;
@@ -39,7 +44,7 @@ namespace TurnTrackerAspNetCore.Services
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
 
-        public async Task<bool> SendEmailAsync(string subject, string message, string category, params string[] destinations)
+        public async Task<bool> SendEmailAsync(string subject, string message, EmailCategory category, params string[] destinations)
         {
             if (destinations.Length == 0)
             {
@@ -47,10 +52,10 @@ namespace TurnTrackerAspNetCore.Services
                 return false;
             }
 
-            var section = _config.GetSection("Mail").GetSection(category);
+            var section = _config.GetSection("Mail").GetSection(category.ToString());
             var fromAddress = section["Address"];
             var fromName = section["Name"];
-            if (null == fromAddress || null == fromName)
+            if (string.IsNullOrWhiteSpace(fromAddress) || string.IsNullOrWhiteSpace(fromName))
             {
                 _logger.LogError($"Couldn't find 'Address' and 'Name' for email category '{category}'");
                 return false;
@@ -85,10 +90,10 @@ namespace TurnTrackerAspNetCore.Services
             return false;
         }
 
-        public Task SendSmsAsync(string number, string message)
-        {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
-        }
+        //public Task SendSmsAsync(string number, string message)
+        //{
+        //    // Plug in your SMS service here to send a text message.
+        //    return Task.FromResult(0);
+        //}
     }
 }

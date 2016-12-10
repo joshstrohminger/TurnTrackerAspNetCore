@@ -1,0 +1,953 @@
+2016-12-10T00:52:28.6039313-08:00  [INF] Executed DbCommand (462ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory'); (6438bdd5)
+2016-12-10T00:52:28.6214463-08:00  [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory'); (6438bdd5)
+2016-12-10T00:52:28.6549721-08:00  [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; (6438bdd5)
+2016-12-10T00:52:30.0085490-08:00  [INF] Executed DbCommand (151ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2016-12-10T00:52:30.6185075-08:00  [INF] User profile is available. Using '"C:\Users\Josh\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2016-12-10T00:52:32.6459549-08:00 0HL10R7GLA5LO [INF] Request starting HTTP/1.1 GET http://localhost:44371/   (e5be5b71)
+2016-12-10T00:52:32.6459549-08:00 0HL10R7GLA5LN [INF] Request starting HTTP/1.1 DEBUG http://localhost:44371/  0 (e5be5b71)
+2016-12-10T00:52:33.7347279-08:00 0HL10R7GLA5LN [INF] Request finished in 1439.1094ms 200  (15c52c40)
+2016-12-10T00:52:34.5733232-08:00 0HL10R7GLA5LO [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-10T00:52:34.5823296-08:00 0HL10R7GLA5LO [INF] Authorization failed for the request at filter '"Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter"'. (8b6446cb)
+2016-12-10T00:52:34.5958389-08:00 0HL10R7GLA5LO [INF] Executing ChallengeResult with authentication schemes ([]). (f3dca807)
+2016-12-10T00:52:34.6778972-08:00 0HL10R7GLA5LO [INF] AuthenticationScheme: "Identity.Application" was challenged. (d45f1f38)
+2016-12-10T00:52:34.6924078-08:00 0HL10R7GLA5LO [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 178.2382ms (afa2e885)
+2016-12-10T00:52:34.8565243-08:00 0HL10R7GLA5LO [INF] Request finished in 2504.3609ms 302  (15c52c40)
+2016-12-10T00:52:37.8866751-08:00 0HL10R7GLA5LP [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Login?ReturnUrl=%2F   (e5be5b71)
+2016-12-10T00:52:38.3379955-08:00 0HL10R7GLA5LP [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments (["/"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T00:52:43.6777866-08:00 0HL10R7GLA5LP [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2016-12-10T00:52:44.7465619-08:00 0HL10R7GLA5LP [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 6842.1751ms (afa2e885)
+2016-12-10T00:52:44.8371333-08:00 0HL10R7GLA5LP [INF] Request finished in 6929.6303ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T00:52:44.8651532-08:00 0HL10R7GLA5LQ [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T00:52:44.8921753-08:00 0HL10R7GLA5LQ [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T00:52:44.9347057-08:00 0HL10R7GLA5LQ [INF] Request finished in 72.0773ms 200 text/css (15c52c40)
+2016-12-10T00:52:45.0549951-08:00 0HL10R7GLA5LR [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T00:52:45.0690045-08:00 0HL10R7GLA5LS [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T00:52:45.0710059-08:00 0HL10R7GLA5LT [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T00:52:45.0730079-08:00 0HL10R7GLA5LU [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T00:52:45.0820143-08:00 0HL10R7GLA5LS [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T00:52:45.0840157-08:00 0HL10R7GLA5LR [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T00:52:45.0990264-08:00 0HL10R7GLA5LS [INF] Request finished in 32.2262ms 200 application/javascript (15c52c40)
+2016-12-10T00:52:45.1030292-08:00 0HL10R7GLA5LT [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T00:52:45.1040299-08:00 0HL10R7GLA5LU [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T00:52:45.1245511-08:00 0HL10R7GLA5LR [INF] Request finished in 54.5829ms 200 text/css (15c52c40)
+2016-12-10T00:52:45.1615774-08:00 0HL10R7GLA5LU [INF] Request finished in 72.5255ms 200 application/javascript (15c52c40)
+2016-12-10T00:52:45.1675816-08:00 0HL10R7GLA5LT [INF] Request finished in 116.0869ms 200 application/javascript (15c52c40)
+2016-12-10T00:52:45.1815927-08:00 0HL10R7GLA5LV [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T00:52:45.1996044-08:00 0HL10R7GLA5M0 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T00:52:45.2401368-08:00 0HL10R7GLA5M0 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T00:52:45.2611512-08:00 0HL10R7GLA5LV [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T00:52:45.2681562-08:00 0HL10R7GLA5M0 [INF] Request finished in 67.1644ms 200 application/javascript (15c52c40)
+2016-12-10T00:52:45.2851688-08:00 0HL10R7GLA5LV [INF] Request finished in 229.2083ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:18.3259419-08:00 0HL10R7GLA5M1 [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Register   (e5be5b71)
+2016-12-10T00:53:18.3359496-08:00 0HL10R7GLA5M1 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-10T00:53:18.5123706-08:00 0HL10R7GLA5M1 [INF] Executing ViewResult, running view at path "/Views/Account/Register.cshtml". (9707eebe)
+2016-12-10T00:53:18.5849446-08:00 0HL10R7GLA5M1 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" in 252.3181ms (afa2e885)
+2016-12-10T00:53:18.6139663-08:00 0HL10R7GLA5M1 [INF] Request finished in 265.6512ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T00:53:18.7285565-08:00 0HL10R7GLA5M2 [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T00:53:18.7355615-08:00 0HL10R7GLA5M2 [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T00:53:18.7385636-08:00 0HL10R7GLA5M3 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T00:53:18.7670842-08:00 0HL10R7GLA5M3 [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T00:53:18.7755905-08:00 0HL10R7GLA5M2 [INF] Request finished in 81.3785ms 200 text/css (15c52c40)
+2016-12-10T00:53:18.7901005-08:00 0HL10R7GLA5M3 [INF] Request finished in 74.7544ms 200 text/css (15c52c40)
+2016-12-10T00:53:18.9922457-08:00 0HL10R7GLA5M4 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T00:53:19.0032530-08:00 0HL10R7GLA5M5 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T00:53:19.0132595-08:00 0HL10R7GLA5M5 [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T00:53:19.0182631-08:00 0HL10R7GLA5M6 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T00:53:19.0192638-08:00 0HL10R7GLA5M7 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T00:53:19.0222659-08:00 0HL10R7GLA5M6 [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T00:53:19.0387842-08:00 0HL10R7GLA5M6 [INF] Request finished in 39.7535ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:19.0412880-08:00 0HL10R7GLA5M4 [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T00:53:19.0462927-08:00 0HL10R7GLA5M8 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T00:53:19.0643049-08:00 0HL10R7GLA5M4 [INF] Request finished in 69.0592ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:19.0703097-08:00 0HL10R7GLA5M8 [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T00:53:19.0863205-08:00 0HL10R7GLA5M7 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T00:53:19.0893226-08:00 0HL10R7GLA5M8 [INF] Request finished in 40.2701ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:19.1043339-08:00 0HL10R7GLA5M7 [INF] Request finished in 105.6636ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:19.1083361-08:00 0HL10R7GLA5M5 [INF] Request finished in 74.2344ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:40.9183340-08:00 0HL10R7GLA5M9 [INF] Request starting HTTP/1.1 POST http://localhost:44371/Account/Register application/x-www-form-urlencoded 294 (e5be5b71)
+2016-12-10T00:53:41.0724480-08:00 0HL10R7GLA5M9 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" with arguments (["TurnTrackerAspNetCore.ViewModels.Account.RegisterUserViewModel"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T00:53:41.5385943-08:00 0HL10R7GLA5M9 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DisplayName], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a] (6438bdd5)
+2016-12-10T00:53:41.7572498-08:00 0HL10R7GLA5M9 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[DisplayName], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-10T00:53:42.0254602-08:00 0HL10R7GLA5M9 [INF] Executed DbCommand (35ms) [Parameters=[@p0='?' (Size = 450), @p1='?', @p2='?' (Size = 4000), @p3='?' (Size = 100), @p4='?' (Size = 256), @p5='?', @p6='?', @p7='?', @p8='?' (Size = 256), @p9='?' (Size = 256), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?', @p13='?' (Size = 4000), @p14='?', @p15='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [DisplayName], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15); (6438bdd5)
+2016-12-10T00:53:42.0755060-08:00 0HL10R7GLA5M9 [INF] asdf123 (619bb22a)
+2016-12-10T00:53:42.2146219-08:00 0HL10R7GLA5M9 [ERR] No destinations provided to SendEmailAsync (b008fb2f)
+2016-12-10T00:53:42.2386469-08:00 0HL10R7GLA5M9 [INF] Executing RedirectResult, redirecting to "/tasks". (d98d540e)
+2016-12-10T00:53:42.2556664-08:00 0HL10R7GLA5M9 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" in 1319.2984ms (afa2e885)
+2016-12-10T00:53:42.2806836-08:00 0HL10R7GLA5M9 [INF] Request finished in 1350.3513ms 302  (15c52c40)
+2016-12-10T00:53:42.3047000-08:00 0HL10R7GLA5MA [INF] Request starting HTTP/1.1 GET http://localhost:44371/tasks   (e5be5b71)
+2016-12-10T00:53:42.3107037-08:00 0HL10R7GLA5MA [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-10T00:53:42.3157079-08:00 0HL10R7GLA5MA [INF] Authorization failed for the request at filter '"Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter"'. (8b6446cb)
+2016-12-10T00:53:42.3207108-08:00 0HL10R7GLA5MA [INF] Executing ChallengeResult with authentication schemes ([]). (f3dca807)
+2016-12-10T00:53:42.3272203-08:00 0HL10R7GLA5MA [INF] AuthenticationScheme: "Identity.Application" was challenged. (d45f1f38)
+2016-12-10T00:53:42.3317232-08:00 0HL10R7GLA5MA [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 21.0126ms (afa2e885)
+2016-12-10T00:53:42.3457377-08:00 0HL10R7GLA5MA [INF] Request finished in 31.1446ms 302  (15c52c40)
+2016-12-10T00:53:42.3507407-08:00 0HL10R7GLA5MB [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Login?ReturnUrl=%2Ftasks   (e5be5b71)
+2016-12-10T00:53:42.3547430-08:00 0HL10R7GLA5MB [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments (["/tasks"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T00:53:42.3587464-08:00 0HL10R7GLA5MB [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2016-12-10T00:53:42.3737571-08:00 0HL10R7GLA5MB [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 10.4028ms (afa2e885)
+2016-12-10T00:53:42.5323728-08:00 0HL10R7GLA5MB [INF] Request finished in 28.4555ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T00:53:42.5859105-08:00 0HL10R7GLA5MC [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T00:53:42.5944169-08:00 0HL10R7GLA5MD [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T00:53:42.6084268-08:00 0HL10R7GLA5ME [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T00:53:42.6124296-08:00 0HL10R7GLA5MF [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T00:53:42.6174326-08:00 0HL10R7GLA5MG [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T00:53:42.6224367-08:00 0HL10R7GLA5MH [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T00:53:42.6279404-08:00 0HL10R7GLA5MD [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T00:53:42.6334446-08:00 0HL10R7GLA5MI [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T00:53:42.6434517-08:00 0HL10R7GLA5ME [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T00:53:42.7235085-08:00 0HL10R7GLA5MF [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T00:53:42.7370184-08:00 0HL10R7GLA5MG [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T00:53:42.7595335-08:00 0HL10R7GLA5MI [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T00:53:42.7810496-08:00 0HL10R7GLA5MH [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T00:53:42.8185760-08:00 0HL10R7GLA5MG [INF] Request finished in 273.995ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:42.8475966-08:00 0HL10R7GLA5MI [INF] Request finished in 226.5916ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:42.8726144-08:00 0HL10R7GLA5MD [INF] Request finished in 270.4797ms 200 text/css (15c52c40)
+2016-12-10T00:53:42.8821208-08:00 0HL10R7GLA5MF [INF] Request finished in 315.0647ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:42.8861242-08:00 0HL10R7GLA5MC [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T00:53:42.8966314-08:00 0HL10R7GLA5ME [INF] Request finished in 317.4333ms 200 application/javascript (15c52c40)
+2016-12-10T00:53:42.9001336-08:00 0HL10R7GLA5MH [INF] Request finished in 313.9682ms 200 text/css (15c52c40)
+2016-12-10T00:53:42.9101407-08:00 0HL10R7GLA5MC [INF] Request finished in 361.6738ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:25.4339913-08:00  [INF] Executed DbCommand (300ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory'); (6438bdd5)
+2016-12-10T01:07:25.4449985-08:00  [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory'); (6438bdd5)
+2016-12-10T01:07:25.4730207-08:00  [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; (6438bdd5)
+2016-12-10T01:07:26.0773398-08:00  [INF] Executed DbCommand (112ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2016-12-10T01:07:26.3527074-08:00  [INF] User profile is available. Using '"C:\Users\Josh\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2016-12-10T01:07:26.7030478-08:00 0HL10RFR3LVHN [INF] Request starting HTTP/1.1 GET http://localhost:44371/   (e5be5b71)
+2016-12-10T01:07:26.7030478-08:00 0HL10RFR3LVHO [INF] Request starting HTTP/1.1 GET http://localhost:44371/   (e5be5b71)
+2016-12-10T01:07:26.9991144-08:00 0HL10RFR3LVHN [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-10T01:07:26.9991144-08:00 0HL10RFR3LVHO [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-10T01:07:27.0010993-08:00 0HL10RFR3LVHN [INF] Authorization failed for the request at filter '"Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter"'. (8b6446cb)
+2016-12-10T01:07:27.0010993-08:00 0HL10RFR3LVHO [INF] Authorization failed for the request at filter '"Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter"'. (8b6446cb)
+2016-12-10T01:07:27.0106092-08:00 0HL10RFR3LVHN [INF] Executing ChallengeResult with authentication schemes ([]). (f3dca807)
+2016-12-10T01:07:27.0106092-08:00 0HL10RFR3LVHO [INF] Executing ChallengeResult with authentication schemes ([]). (f3dca807)
+2016-12-10T01:07:27.0379243-08:00 0HL10RFR3LVHN [INF] AuthenticationScheme: "Identity.Application" was challenged. (d45f1f38)
+2016-12-10T01:07:27.0379243-08:00 0HL10RFR3LVHO [INF] AuthenticationScheme: "Identity.Application" was challenged. (d45f1f38)
+2016-12-10T01:07:27.0439292-08:00 0HL10RFR3LVHN [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 63.3235ms (afa2e885)
+2016-12-10T01:07:27.0439292-08:00 0HL10RFR3LVHO [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 63.3235ms (afa2e885)
+2016-12-10T01:07:27.1299971-08:00 0HL10RFR3LVHO [INF] Request finished in 437.5995ms 302  (15c52c40)
+2016-12-10T01:07:27.1299971-08:00 0HL10RFR3LVHN [INF] Request finished in 437.6018ms 302  (15c52c40)
+2016-12-10T01:07:27.1420056-08:00 0HL10RFR3LVHP [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Login?ReturnUrl=%2F   (e5be5b71)
+2016-12-10T01:07:27.3136374-08:00 0HL10RFR3LVHP [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments (["/"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:07:29.6839745-08:00 0HL10RFR3LVHP [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2016-12-10T01:07:30.7957678-08:00 0HL10RFR3LVHQ [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:07:30.8092771-08:00 0HL10RFR3LVHR [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:07:30.8147807-08:00 0HL10RFR3LVHP [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 3659.869ms (afa2e885)
+2016-12-10T01:07:30.8217857-08:00 0HL10RFR3LVHQ [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:07:30.8217857-08:00 0HL10RFR3LVHR [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:07:30.8307926-08:00 0HL10RFR3LVHP [INF] Request finished in 3688.093ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:07:30.8468040-08:00 0HL10RFR3LVHQ [INF] Request finished in 50.9096ms 200 text/css (15c52c40)
+2016-12-10T01:07:30.9218567-08:00 0HL10RFR3LVHR [INF] Request finished in 127.5007ms 200 text/css (15c52c40)
+2016-12-10T01:07:31.2821165-08:00 0HL10RFR3LVHS [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:07:31.2831172-08:00 0HL10RFR3LVHS [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:07:31.2831172-08:00 0HL10RFR3LVHT [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:07:31.2831172-08:00 0HL10RFR3LVHU [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:07:31.2831172-08:00 0HL10RFR3LVHU [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:07:31.2831172-08:00 0HL10RFR3LVHT [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:07:31.2841185-08:00 0HL10RFR3LVHT [INF] Request finished in 0.7258ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:31.2851192-08:00 0HL10RFR3LVHU [INF] Request finished in 1.8155ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:31.2851192-08:00 0HL10RFR3LVHS [INF] Request finished in 2.9736ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:31.2861205-08:00 0HL10RFR3LVHV [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:07:31.2871206-08:00 0HL10RFR3LVHV [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:07:31.2881213-08:00 0HL10RFR3LVI0 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:07:31.2891226-08:00 0HL10RFR3LVI0 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:07:31.2901227-08:00 0HL10RFR3LVI0 [INF] Request finished in 1.856ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:31.2911229-08:00 0HL10RFR3LVHV [INF] Request finished in 4.3107ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:38.9281786-08:00 0HL10RFR3LVI1 [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Register   (e5be5b71)
+2016-12-10T01:07:38.9301800-08:00 0HL10RFR3LVI1 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:07:39.1118110-08:00 0HL10RFR3LVI1 [INF] Executing ViewResult, running view at path "/Views/Account/Register.cshtml". (9707eebe)
+2016-12-10T01:07:39.3354700-08:00 0HL10RFR3LVI1 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" in 405.5089ms (afa2e885)
+2016-12-10T01:07:39.3364708-08:00 0HL10RFR3LVI1 [INF] Request finished in 408.0298ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:07:39.4265324-08:00 0HL10RFR3LVI2 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:07:39.4270325-08:00 0HL10RFR3LVI2 [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:07:39.4285333-08:00 0HL10RFR3LVI3 [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:07:39.4290339-08:00 0HL10RFR3LVI3 [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:07:39.4295345-08:00 0HL10RFR3LVI2 [INF] Request finished in 3.0956ms 200 text/css (15c52c40)
+2016-12-10T01:07:39.4295345-08:00 0HL10RFR3LVI3 [INF] Request finished in 0.8889ms 200 text/css (15c52c40)
+2016-12-10T01:07:39.4305353-08:00 0HL10RFR3LVI4 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:07:39.4305353-08:00 0HL10RFR3LVI5 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:07:39.4310353-08:00 0HL10RFR3LVI4 [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:07:39.4310353-08:00 0HL10RFR3LVI5 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:07:39.4310353-08:00 0HL10RFR3LVI5 [INF] Request finished in 0.5148ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:39.4440451-08:00 0HL10RFR3LVI6 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:07:39.4445452-08:00 0HL10RFR3LVI6 [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:07:39.4460466-08:00 0HL10RFR3LVI6 [INF] Request finished in 1.6684ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:39.4460466-08:00 0HL10RFR3LVI7 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:07:39.4470467-08:00 0HL10RFR3LVI7 [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:07:39.4645594-08:00 0HL10RFR3LVI8 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:07:39.4665608-08:00 0HL10RFR3LVI8 [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:07:39.4685623-08:00 0HL10RFR3LVI8 [INF] Request finished in 2.7284ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:39.4850737-08:00 0HL10RFR3LVI7 [INF] Request finished in 39.1206ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:39.5005844-08:00 0HL10RFR3LVI4 [INF] Request finished in 70.3029ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:53.5848192-08:00 0HL10RFR3LVI9 [INF] Request starting HTTP/1.1 POST http://localhost:44371/Account/Register application/x-www-form-urlencoded 294 (e5be5b71)
+2016-12-10T01:07:53.7649516-08:00 0HL10RFR3LVI9 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" with arguments (["TurnTrackerAspNetCore.ViewModels.Account.RegisterUserViewModel"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:07:53.8825359-08:00 0HL10RFR3LVI9 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DisplayName], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a] (6438bdd5)
+2016-12-10T01:07:53.9926147-08:00 0HL10RFR3LVI9 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[DisplayName], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-10T01:07:54.1713113-08:00 0HL10RFR3LVI9 [INF] Executed DbCommand (31ms) [Parameters=[@p0='?' (Size = 450), @p1='?', @p2='?' (Size = 4000), @p3='?' (Size = 100), @p4='?' (Size = 256), @p5='?', @p6='?', @p7='?', @p8='?' (Size = 256), @p9='?' (Size = 256), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?', @p13='?' (Size = 4000), @p14='?', @p15='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [DisplayName], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15); (6438bdd5)
+2016-12-10T01:07:54.1997577-08:00 0HL10RFR3LVI9 [INF] unknown (2e8ffceb)
+2016-12-10T01:07:55.0602536-08:00 0HL10RFR3LVI9 [INF] Executing RedirectResult, redirecting to "/tasks". (d98d540e)
+2016-12-10T01:07:55.0617538-08:00 0HL10RFR3LVI9 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Register (TurnTrackerAspNetCore)" in 1472.3131ms (afa2e885)
+2016-12-10T01:07:55.0672870-08:00 0HL10RFR3LVI9 [INF] Request finished in 1482.7632ms 302  (15c52c40)
+2016-12-10T01:07:55.0902760-08:00 0HL10RFR3LVIA [INF] Request starting HTTP/1.1 GET http://localhost:44371/tasks   (e5be5b71)
+2016-12-10T01:07:55.0912773-08:00 0HL10RFR3LVIA [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-10T01:07:55.0922774-08:00 0HL10RFR3LVIA [INF] Authorization failed for the request at filter '"Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter"'. (8b6446cb)
+2016-12-10T01:07:55.0922774-08:00 0HL10RFR3LVIA [INF] Executing ChallengeResult with authentication schemes ([]). (f3dca807)
+2016-12-10T01:07:55.0922774-08:00 0HL10RFR3LVIA [INF] AuthenticationScheme: "Identity.Application" was challenged. (d45f1f38)
+2016-12-10T01:07:55.0932781-08:00 0HL10RFR3LVIA [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 1.6872ms (afa2e885)
+2016-12-10T01:07:55.0932781-08:00 0HL10RFR3LVIA [INF] Request finished in 3.3185ms 302  (15c52c40)
+2016-12-10T01:07:55.1162956-08:00 0HL10RFR3LVIB [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Login?ReturnUrl=%2Ftasks   (e5be5b71)
+2016-12-10T01:07:55.1202973-08:00 0HL10RFR3LVIB [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments (["/tasks"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:07:55.1202973-08:00 0HL10RFR3LVIB [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2016-12-10T01:07:55.1273017-08:00 0HL10RFR3LVIB [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 10.0088ms (afa2e885)
+2016-12-10T01:07:55.1283030-08:00 0HL10RFR3LVIB [INF] Request finished in 11.493ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:07:55.2083661-08:00 0HL10RFR3LVIC [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:07:55.2083661-08:00 0HL10RFR3LVIC [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:07:55.2123690-08:00 0HL10RFR3LVIC [INF] Request finished in 4.455ms 200 text/css (15c52c40)
+2016-12-10T01:07:55.2123690-08:00 0HL10RFR3LVID [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:07:55.2123690-08:00 0HL10RFR3LVIE [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:07:55.2133702-08:00 0HL10RFR3LVIE [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:07:55.2133702-08:00 0HL10RFR3LVID [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:07:55.2463931-08:00 0HL10RFR3LVIF [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:07:55.2463931-08:00 0HL10RFR3LVIF [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:07:55.2463931-08:00 0HL10RFR3LVIG [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:07:55.2463931-08:00 0HL10RFR3LVIF [INF] Request finished in 0.8171ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:55.2473938-08:00 0HL10RFR3LVIG [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:07:55.2473938-08:00 0HL10RFR3LVIH [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:07:55.2473938-08:00 0HL10RFR3LVIG [INF] Request finished in 1.0457ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:55.2473938-08:00 0HL10RFR3LVIH [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:07:55.2473938-08:00 0HL10RFR3LVII [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:07:55.2483945-08:00 0HL10RFR3LVII [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:07:55.2488986-08:00 0HL10RFR3LVIH [INF] Request finished in 1.2932ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:55.2488986-08:00 0HL10RFR3LVID [INF] Request finished in 35.8134ms 200 application/javascript (15c52c40)
+2016-12-10T01:07:55.2498993-08:00 0HL10RFR3LVII [INF] Request finished in 1.8833ms 200 text/css (15c52c40)
+2016-12-10T01:07:55.2503994-08:00 0HL10RFR3LVIE [INF] Request finished in 37.5867ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:31.6760514-08:00 0HL10RFR3LVIJ [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/ConfirmEmail?userId=94311506-e84d-4001-97a9-abd6ef4424ba&code=CfDJ8LycBdrdrKZDo977kuESMVKwtFHS3Z1l%2Bndyl%2FtSsyyjOQf8fT1g0NMO4PRkCXIxc04ZUt6LLnewdoTDyy21hTfQSN9qSf4o%2F%2FoSp8jf%2F5Sra%2FJecbUE5dCXEM7DZ0%2BHeHqXQ3gQvFinvQ5Bdhu1BsagvY1nbxeb%2B%2FMypqeSi8FnAHkYotvHrgwSXTKmX5SoQ0m8WTMO94%2BR67ksN1t%2Fr0xAgNJJxcPOFc4k7s5ddm0TAst6AtH39QWOi20djfQQjQ%3D%3D   (e5be5b71)
+2016-12-10T01:08:31.6800549-08:00 0HL10RFR3LVIJ [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.ConfirmEmail (TurnTrackerAspNetCore)" with arguments (["94311506-e84d-4001-97a9-abd6ef4424ba", "CfDJ8LycBdrdrKZDo977kuESMVKwtFHS3Z1l+ndyl/tSsyyjOQf8fT1g0NMO4PRkCXIxc04ZUt6LLnewdoTDyy21hTfQSN9qSf4o//oSp8jf/5Sra/JecbUE5dCXEM7DZ0+HeHqXQ3gQvFinvQ5Bdhu1BsagvY1nbxeb+/MypqeSi8FnAHkYotvHrgwSXTKmX5SoQ0m8WTMO94+R67ksN1t/r0xAgNJJxcPOFc4k7s5ddm0TAst6AtH39QWOi20djfQQjQ=="]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:08:31.7826833-08:00 0HL10RFR3LVIJ [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[DisplayName], [e].[Email], [e].[EmailConfirmed], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2016-12-10T01:08:31.8672533-08:00 0HL10RFR3LVIJ [INF] Executed DbCommand (0ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[DisplayName], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-10T01:08:31.9258801-08:00 0HL10RFR3LVIJ [INF] Executed DbCommand (22ms) [Parameters=[@p15='?' (Size = 450), @p0='?', @p1='?' (Size = 4000), @p16='?' (Size = 4000), @p2='?' (Size = 100), @p3='?' (Size = 256), @p4='?', @p5='?', @p6='?', @p7='?' (Size = 256), @p8='?' (Size = 256), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?', @p12='?' (Size = 4000), @p13='?', @p14='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [AspNetUsers] SET [AccessFailedCount] = @p0, [ConcurrencyStamp] = @p1, [DisplayName] = @p2, [Email] = @p3, [EmailConfirmed] = @p4, [LockoutEnabled] = @p5, [LockoutEnd] = @p6, [NormalizedEmail] = @p7, [NormalizedUserName] = @p8, [PasswordHash] = @p9, [PhoneNumber] = @p10, [PhoneNumberConfirmed] = @p11, [SecurityStamp] = @p12, [TwoFactorEnabled] = @p13, [UserName] = @p14
+WHERE [Id] = @p15 AND [ConcurrencyStamp] = @p16;
+SELECT @@ROWCOUNT; (6438bdd5)
+2016-12-10T01:08:32.0484366-08:00 0HL10RFR3LVIJ [INF] Executing ViewResult, running view at path "/Views/Account/ConfirmEmail.cshtml". (9707eebe)
+2016-12-10T01:08:32.0654550-08:00 0HL10RFR3LVIJ [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.ConfirmEmail (TurnTrackerAspNetCore)" in 386.1613ms (afa2e885)
+2016-12-10T01:08:32.0664500-08:00 0HL10RFR3LVIJ [INF] Request finished in 390.6505ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:08:32.1104807-08:00 0HL10RFR3LVIK [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:08:32.1114814-08:00 0HL10RFR3LVIK [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:08:32.1274956-08:00 0HL10RFR3LVIL [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:08:32.1279962-08:00 0HL10RFR3LVIK [INF] Request finished in 16.5045ms 200 text/css (15c52c40)
+2016-12-10T01:08:32.1279962-08:00 0HL10RFR3LVIL [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:08:32.1324992-08:00 0HL10RFR3LVIL [INF] Request finished in 4.9317ms 200 text/css (15c52c40)
+2016-12-10T01:08:32.5496449-08:00 0HL10RFR3LVIM [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:08:32.5506456-08:00 0HL10RFR3LVIM [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:08:32.5526476-08:00 0HL10RFR3LVIN [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:08:32.5536477-08:00 0HL10RFR3LVIN [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:08:32.5536477-08:00 0HL10RFR3LVIO [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:08:32.5536477-08:00 0HL10RFR3LVIO [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:08:32.5546490-08:00 0HL10RFR3LVIN [INF] Request finished in 1.5059ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:32.5556537-08:00 0HL10RFR3LVIO [INF] Request finished in 1.8805ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:32.5571545-08:00 0HL10RFR3LVIM [INF] Request finished in 6.8515ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:32.5571545-08:00 0HL10RFR3LVIP [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:08:32.5576551-08:00 0HL10RFR3LVIP [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:08:32.5591559-08:00 0HL10RFR3LVIP [INF] Request finished in 2.0407ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:32.5596560-08:00 0HL10RFR3LVIQ [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:08:32.5601566-08:00 0HL10RFR3LVIQ [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:08:32.5606573-08:00 0HL10RFR3LVIQ [INF] Request finished in 1.0064ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:39.3037991-08:00 0HL10RFR3LVIR [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Login   (e5be5b71)
+2016-12-10T01:08:39.3053039-08:00 0HL10RFR3LVIR [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:08:39.3053039-08:00 0HL10RFR3LVIR [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2016-12-10T01:08:39.3073053-08:00 0HL10RFR3LVIR [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 3.6783ms (afa2e885)
+2016-12-10T01:08:39.3073053-08:00 0HL10RFR3LVIR [INF] Request finished in 4.3654ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:08:39.3613437-08:00 0HL10RFR3LVIS [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:08:39.3613437-08:00 0HL10RFR3LVIS [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:08:39.3623438-08:00 0HL10RFR3LVIT [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:08:39.3623438-08:00 0HL10RFR3LVIT [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:08:39.3623438-08:00 0HL10RFR3LVIT [INF] Request finished in 0.7851ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:39.3633451-08:00 0HL10RFR3LVIU [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:08:39.3633451-08:00 0HL10RFR3LVIU [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:08:39.3633451-08:00 0HL10RFR3LVIV [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:08:39.3643458-08:00 0HL10RFR3LVIV [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:08:39.3643458-08:00 0HL10RFR3LVIV [INF] Request finished in 0.837ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:39.3643458-08:00 0HL10RFR3LVIU [INF] Request finished in 1.7636ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:39.3683481-08:00 0HL10RFR3LVIS [INF] Request finished in 6.823ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:39.3683481-08:00 0HL10RFR3LVJ0 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:08:39.3683481-08:00 0HL10RFR3LVJ1 [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:08:39.3683481-08:00 0HL10RFR3LVJ0 [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:08:39.3693488-08:00 0HL10RFR3LVJ2 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:08:39.3693488-08:00 0HL10RFR3LVJ2 [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:08:39.3693488-08:00 0HL10RFR3LVJ1 [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:08:39.3703495-08:00 0HL10RFR3LVJ1 [INF] Request finished in 1.2042ms 200 text/css (15c52c40)
+2016-12-10T01:08:39.3703495-08:00 0HL10RFR3LVJ0 [INF] Request finished in 2.1074ms 200 text/css (15c52c40)
+2016-12-10T01:08:39.3703495-08:00 0HL10RFR3LVJ2 [INF] Request finished in 1.3576ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:45.7599817-08:00 0HL10RFR3LVJ3 [INF] Request starting HTTP/1.1 POST http://localhost:44371/Account/Login application/x-www-form-urlencoded 236 (e5be5b71)
+2016-12-10T01:08:45.7649847-08:00 0HL10RFR3LVJ3 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments (["TurnTrackerAspNetCore.ViewModels.Account.LoginViewModel"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:08:45.7739933-08:00 0HL10RFR3LVJ3 [INF] Executed DbCommand (0ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[DisplayName], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-10T01:08:46.0352136-08:00 0HL10RFR3LVJ3 [INF] Executed DbCommand (26ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [role].[Name]
+FROM [AspNetUserRoles] AS [userRole]
+INNER JOIN [AspNetRoles] AS [role] ON [userRole].[RoleId] = [role].[Id]
+WHERE [userRole].[UserId] = @__userId_0 (6438bdd5)
+2016-12-10T01:08:46.1022566-08:00 0HL10RFR3LVJ3 [INF] Executed DbCommand (3ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [uc].[Id], [uc].[ClaimType], [uc].[ClaimValue], [uc].[UserId]
+FROM [AspNetUserClaims] AS [uc]
+WHERE [uc].[UserId] = @__user_Id_0 (6438bdd5)
+2016-12-10T01:08:46.2033763-08:00 0HL10RFR3LVJ3 [INF] AuthenticationScheme: "Identity.Application" signed in. (c66dd7e7)
+2016-12-10T01:08:46.2043496-08:00 0HL10RFR3LVJ3 [INF] unknown (2e8ffceb)
+2016-12-10T01:08:46.2053566-08:00 0HL10RFR3LVJ3 [INF] Executing RedirectResult, redirecting to "/tasks". (d98d540e)
+2016-12-10T01:08:46.2053566-08:00 0HL10RFR3LVJ3 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 444.499ms (afa2e885)
+2016-12-10T01:08:46.2063510-08:00 0HL10RFR3LVJ3 [INF] Request finished in 446.4942ms 302  (15c52c40)
+2016-12-10T01:08:46.2324111-08:00 0HL10RFR3LVJ4 [INF] Request starting HTTP/1.1 GET http://localhost:44371/tasks   (e5be5b71)
+2016-12-10T01:08:46.2724116-08:00 0HL10RFR3LVJ4 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:08:46.2744204-08:00 0HL10RFR3LVJ4 [INF] Authorization was successful for user: "unknown". (d7eb274a)
+2016-12-10T01:08:46.2784164-08:00 0HL10RFR3LVJ4 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:08:46.4946007-08:00 0HL10RFR3LVJ4 [INF] Executed DbCommand (142ms) [Parameters=[@p0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT u.UserName, u.DisplayName, t.Name as TaskName, t.Id as TaskId, count(r.Taken) + p.Offset as TotalTurns, p.UserId from Participants p inner join Tasks t on p.TaskId = t.Id inner join AspNetUsers u on p.UserId = u.Id left join Turns r on r.TaskId = p.TaskId and r.UserId = p.UserId where p.TaskId in (select p.TaskId from Participants p where p.UserId = @p0) or t.UserId = @p0 group by p.TaskId, p.UserId, u.UserName, u.DisplayName, t.Name, t.Id, p.Offset order by t.Id, TotalTurns, u.UserName; (6438bdd5)
+2016-12-10T01:08:46.6096927-08:00 0HL10RFR3LVJ4 [WRN] The Include operation for navigation: 'x.Task' was ignored because the target navigation is not reachable in the final query results. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'CoreEventId.IncludeIgnoredWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2016-12-10T01:08:46.6537336-08:00 0HL10RFR3LVJ4 [INF] Executed DbCommand (27ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [x.Task].[Id], [x.Task].[Created], [x.Task].[Modified], [x.Task].[Name], [x.Task].[Period], [x.Task].[TeamBased], [x.Task].[Unit], [x.Task].[UserId]
+FROM [Participants] AS [x]
+INNER JOIN [Tasks] AS [x.Task] ON [x].[TaskId] = [x.Task].[Id]
+WHERE [x].[UserId] = @__userId_0 (6438bdd5)
+2016-12-10T01:08:46.6727528-08:00 0HL10RFR3LVJ4 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[Created], [t].[Modified], [t].[Name], [t].[Period], [t].[TeamBased], [t].[Unit], [t].[UserId]
+FROM [Tasks] AS [t] (6438bdd5)
+2016-12-10T01:08:46.9660676-08:00 0HL10RFR3LVJ4 [INF] Executing ViewResult, running view at path "/Views/Shared/Tasks.cshtml". (9707eebe)
+2016-12-10T01:08:47.0281134-08:00 0HL10RFR3LVJ4 [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 754.9057ms (afa2e885)
+2016-12-10T01:08:47.0291146-08:00 0HL10RFR3LVJ4 [INF] Request finished in 795.7318ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:08:47.1276929-08:00 0HL10RFR3LVJ5 [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:08:47.1276929-08:00 0HL10RFR3LVJ6 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:08:47.1281930-08:00 0HL10RFR3LVJ6 [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:08:47.1281930-08:00 0HL10RFR3LVJ5 [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:08:47.1286936-08:00 0HL10RFR3LVJ5 [INF] Request finished in 0.8364ms 200 text/css (15c52c40)
+2016-12-10T01:08:47.1286936-08:00 0HL10RFR3LVJ6 [INF] Request finished in 0.9454ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:47.1311951-08:00 0HL10RFR3LVJ7 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:08:47.1311951-08:00 0HL10RFR3LVJ8 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:08:47.1311951-08:00 0HL10RFR3LVJ7 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:08:47.1316957-08:00 0HL10RFR3LVJ9 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:08:47.1316957-08:00 0HL10RFR3LVJ8 [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:08:47.1321958-08:00 0HL10RFR3LVJ9 [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:08:47.1321958-08:00 0HL10RFR3LVJA [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:08:47.1321958-08:00 0HL10RFR3LVJ8 [INF] Request finished in 1.2248ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:47.1321958-08:00 0HL10RFR3LVJA [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:08:47.1321958-08:00 0HL10RFR3LVJB [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:08:47.1331999-08:00 0HL10RFR3LVJ7 [INF] Request finished in 2.0635ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:47.1362026-08:00 0HL10RFR3LVJB [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:08:47.1372034-08:00 0HL10RFR3LVJB [INF] Request finished in 4.788ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:47.1372034-08:00 0HL10RFR3LVJ9 [INF] Request finished in 5.4255ms 200 text/css (15c52c40)
+2016-12-10T01:08:47.1372034-08:00 0HL10RFR3LVJA [INF] Request finished in 5.5977ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:47.3008620-08:00 0HL10RFR3LVJC [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/fonts/glyphicons-halflings-regular.woff2   (e5be5b71)
+2016-12-10T01:08:47.3008620-08:00 0HL10RFR3LVJC [INF] Sending file. Request path: '"/lib/fonts/glyphicons-halflings-regular.woff2"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\fonts\glyphicons-halflings-regular.woff2"' (27b0a520)
+2016-12-10T01:08:47.3018627-08:00 0HL10RFR3LVJC [INF] Request finished in 0.8741ms 200 application/font-woff2 (15c52c40)
+2016-12-10T01:08:50.8585377-08:00 0HL10RFR3LVJD [INF] Request starting HTTP/1.1 GET http://localhost:44371/   (e5be5b71)
+2016-12-10T01:08:50.8600385-08:00 0HL10RFR3LVJD [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:08:50.8600385-08:00 0HL10RFR3LVJD [INF] Authorization was successful for user: "unknown". (d7eb274a)
+2016-12-10T01:08:50.8600385-08:00 0HL10RFR3LVJD [INF] Executing action method "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:08:50.8630406-08:00 0HL10RFR3LVJD [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT u.UserName, u.DisplayName, t.Name as TaskName, t.Id as TaskId, count(r.Taken) + p.Offset as TotalTurns, p.UserId from Participants p inner join Tasks t on p.TaskId = t.Id inner join AspNetUsers u on p.UserId = u.Id left join Turns r on r.TaskId = p.TaskId and r.UserId = p.UserId where p.TaskId in (select p.TaskId from Participants p where p.UserId = @p0) or t.UserId = @p0 group by p.TaskId, p.UserId, u.UserName, u.DisplayName, t.Name, t.Id, p.Offset order by t.Id, TotalTurns, u.UserName; (6438bdd5)
+2016-12-10T01:08:50.8660427-08:00 0HL10RFR3LVJD [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [x.Task].[Id], [x.Task].[Created], [x.Task].[Modified], [x.Task].[Name], [x.Task].[Period], [x.Task].[TeamBased], [x.Task].[Unit], [x.Task].[UserId]
+FROM [Participants] AS [x]
+INNER JOIN [Tasks] AS [x.Task] ON [x].[TaskId] = [x.Task].[Id]
+WHERE [x].[UserId] = @__userId_0 (6438bdd5)
+2016-12-10T01:08:50.8705462-08:00 0HL10RFR3LVJD [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[Created], [t].[Modified], [t].[Name], [t].[Period], [t].[TeamBased], [t].[Unit], [t].[UserId]
+FROM [Tasks] AS [t] (6438bdd5)
+2016-12-10T01:08:50.8710463-08:00 0HL10RFR3LVJD [INF] Executing ViewResult, running view at path "/Views/Shared/Tasks.cshtml". (9707eebe)
+2016-12-10T01:08:50.8715469-08:00 0HL10RFR3LVJD [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 11.7279ms (afa2e885)
+2016-12-10T01:08:50.8720481-08:00 0HL10RFR3LVJD [INF] Request finished in 13.3371ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:08:50.9270855-08:00 0HL10RFR3LVJE [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:08:50.9275867-08:00 0HL10RFR3LVJF [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:08:50.9280868-08:00 0HL10RFR3LVJE [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:08:50.9280868-08:00 0HL10RFR3LVJF [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:08:50.9285874-08:00 0HL10RFR3LVJG [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:08:50.9285874-08:00 0HL10RFR3LVJH [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:08:50.9290875-08:00 0HL10RFR3LVJG [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:08:50.9290875-08:00 0HL10RFR3LVJH [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:08:50.9305883-08:00 0HL10RFR3LVJF [INF] Request finished in 2.9017ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:50.9310889-08:00 0HL10RFR3LVJH [INF] Request finished in 2.1759ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:50.9315896-08:00 0HL10RFR3LVJG [INF] Request finished in 3.0608ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:50.9320902-08:00 0HL10RFR3LVJE [INF] Request finished in 5.2162ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:50.9375938-08:00 0HL10RFR3LVJI [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:08:50.9380945-08:00 0HL10RFR3LVJI [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:08:50.9395953-08:00 0HL10RFR3LVJJ [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:08:50.9415967-08:00 0HL10RFR3LVJJ [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:08:50.9435981-08:00 0HL10RFR3LVJJ [INF] Request finished in 4.114ms 200 text/css (15c52c40)
+2016-12-10T01:08:50.9461002-08:00 0HL10RFR3LVJI [INF] Request finished in 8.5234ms 200 text/css (15c52c40)
+2016-12-10T01:08:50.9466002-08:00 0HL10RFR3LVJK [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:08:50.9471003-08:00 0HL10RFR3LVJK [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:08:50.9481010-08:00 0HL10RFR3LVJK [INF] Request finished in 1.6193ms 200 application/javascript (15c52c40)
+2016-12-10T01:08:51.4149322-08:00 0HL10RFR3LVJL [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/fonts/glyphicons-halflings-regular.woff2   (e5be5b71)
+2016-12-10T01:08:51.4154328-08:00 0HL10RFR3LVJL [INF] Sending file. Request path: '"/lib/fonts/glyphicons-halflings-regular.woff2"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\fonts\glyphicons-halflings-regular.woff2"' (27b0a520)
+2016-12-10T01:08:51.4159334-08:00 0HL10RFR3LVJL [INF] Request finished in 0.8718ms 200 application/font-woff2 (15c52c40)
+2016-12-10T01:09:14.4652043-08:00 0HL10RFR3LVJM [INF] Request starting HTTP/1.1 POST http://localhost:44371/Account/Logout application/x-www-form-urlencoded 225 (e5be5b71)
+2016-12-10T01:09:14.4657032-08:00 0HL10RFR3LVJM [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:09:14.4667034-08:00 0HL10RFR3LVJM [INF] Authorization was successful for user: "unknown". (d7eb274a)
+2016-12-10T01:09:14.4672040-08:00 0HL10RFR3LVJM [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Logout (TurnTrackerAspNetCore)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:09:14.4897249-08:00 0HL10RFR3LVJM [INF] AuthenticationScheme: "Identity.Application" signed out. (d3f50c8d)
+2016-12-10T01:09:14.4917257-08:00 0HL10RFR3LVJM [INF] AuthenticationScheme: "Identity.External" signed out. (d3f50c8d)
+2016-12-10T01:09:14.4917257-08:00 0HL10RFR3LVJM [INF] AuthenticationScheme: "Identity.TwoFactorUserId" signed out. (d3f50c8d)
+2016-12-10T01:09:14.4917257-08:00 0HL10RFR3LVJM [INF] unknown (2e8ffceb)
+2016-12-10T01:09:14.4917257-08:00 0HL10RFR3LVJM [INF] Executing RedirectResult, redirecting to "/tasks". (d98d540e)
+2016-12-10T01:09:14.4917257-08:00 0HL10RFR3LVJM [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Logout (TurnTrackerAspNetCore)" in 25.6027ms (afa2e885)
+2016-12-10T01:09:14.4927253-08:00 0HL10RFR3LVJM [INF] Request finished in 27.6623ms 302  (15c52c40)
+2016-12-10T01:09:14.5017311-08:00 0HL10RFR3LVJN [INF] Request starting HTTP/1.1 GET http://localhost:44371/tasks   (e5be5b71)
+2016-12-10T01:09:14.5027318-08:00 0HL10RFR3LVJN [INF] Authorization failed for user: null. (a4ab1676)
+2016-12-10T01:09:14.5027318-08:00 0HL10RFR3LVJN [INF] Authorization failed for the request at filter '"Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter"'. (8b6446cb)
+2016-12-10T01:09:14.5027318-08:00 0HL10RFR3LVJN [INF] Executing ChallengeResult with authentication schemes ([]). (f3dca807)
+2016-12-10T01:09:14.5027318-08:00 0HL10RFR3LVJN [INF] AuthenticationScheme: "Identity.Application" was challenged. (d45f1f38)
+2016-12-10T01:09:14.5027318-08:00 0HL10RFR3LVJN [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 0.3712ms (afa2e885)
+2016-12-10T01:09:14.5027318-08:00 0HL10RFR3LVJN [INF] Request finished in 1.0366ms 302  (15c52c40)
+2016-12-10T01:09:14.5107369-08:00 0HL10RFR3LVJO [INF] Request starting HTTP/1.1 GET http://localhost:44371/Account/Login?ReturnUrl=%2Ftasks   (e5be5b71)
+2016-12-10T01:09:14.5117376-08:00 0HL10RFR3LVJO [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments (["/tasks"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:09:14.5117376-08:00 0HL10RFR3LVJO [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2016-12-10T01:09:14.5127383-08:00 0HL10RFR3LVJO [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 1.6496ms (afa2e885)
+2016-12-10T01:09:14.5127383-08:00 0HL10RFR3LVJO [INF] Request finished in 2.2728ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:09:14.5667807-08:00 0HL10RFR3LVJP [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:09:14.5672808-08:00 0HL10RFR3LVJP [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:09:14.5727901-08:00 0HL10RFR3LVJQ [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:09:14.5727901-08:00 0HL10RFR3LVJR [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:09:14.5737897-08:00 0HL10RFR3LVJP [INF] Request finished in 7.1766ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:14.5737897-08:00 0HL10RFR3LVJQ [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:09:14.5737897-08:00 0HL10RFR3LVJR [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:09:14.5737897-08:00 0HL10RFR3LVJR [INF] Request finished in 0.995ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:14.5998081-08:00 0HL10RFR3LVJS [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:09:14.6028120-08:00 0HL10RFR3LVJS [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:09:14.6038116-08:00 0HL10RFR3LVJT [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:09:14.6048117-08:00 0HL10RFR3LVJT [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:09:14.6048117-08:00 0HL10RFR3LVJS [INF] Request finished in 4.6739ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:14.6048117-08:00 0HL10RFR3LVJQ [INF] Request finished in 31.822ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:14.6058130-08:00 0HL10RFR3LVJU [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:09:14.6058130-08:00 0HL10RFR3LVJU [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:09:14.6058130-08:00 0HL10RFR3LVJU [INF] Request finished in 6.0618ms 200 text/css (15c52c40)
+2016-12-10T01:09:14.7559224-08:00 0HL10RFR3LVJT [INF] Request finished in 3.6624ms 200 text/css (15c52c40)
+2016-12-10T01:09:14.7594246-08:00 0HL10RFR3LVJV [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:09:14.7599252-08:00 0HL10RFR3LVJV [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:09:14.7619267-08:00 0HL10RFR3LVJV [INF] Request finished in 59.3378ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:20.8660513-08:00 0HL10RFR3LVK0 [INF] Request starting HTTP/1.1 POST http://localhost:44371/Account/Login application/x-www-form-urlencoded 233 (e5be5b71)
+2016-12-10T01:09:20.8670520-08:00 0HL10RFR3LVK0 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" with arguments (["TurnTrackerAspNetCore.ViewModels.Account.LoginViewModel"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:09:20.8680527-08:00 0HL10RFR3LVK0 [INF] Executed DbCommand (0ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[DisplayName], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2016-12-10T01:09:20.8865661-08:00 0HL10RFR3LVK0 [INF] Executed DbCommand (0ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [role].[Name]
+FROM [AspNetUserRoles] AS [userRole]
+INNER JOIN [AspNetRoles] AS [role] ON [userRole].[RoleId] = [role].[Id]
+WHERE [userRole].[UserId] = @__userId_0 (6438bdd5)
+2016-12-10T01:09:20.8920721-08:00 0HL10RFR3LVK0 [INF] Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2016-12-10T01:09:20.9120840-08:00 0HL10RFR3LVK0 [INF] Executed DbCommand (1ms) [Parameters=[@__role_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [rc].[ClaimType], [rc].[ClaimValue]
+FROM [AspNetRoleClaims] AS [rc]
+WHERE [rc].[RoleId] = @__role_Id_0 (6438bdd5)
+2016-12-10T01:09:20.9135859-08:00 0HL10RFR3LVK0 [INF] Executed DbCommand (0ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [uc].[Id], [uc].[ClaimType], [uc].[ClaimValue], [uc].[UserId]
+FROM [AspNetUserClaims] AS [uc]
+WHERE [uc].[UserId] = @__user_Id_0 (6438bdd5)
+2016-12-10T01:09:20.9140854-08:00 0HL10RFR3LVK0 [INF] AuthenticationScheme: "Identity.Application" signed in. (c66dd7e7)
+2016-12-10T01:09:20.9140854-08:00 0HL10RFR3LVK0 [INF] josh (f4dde967)
+2016-12-10T01:09:20.9140854-08:00 0HL10RFR3LVK0 [INF] Executing RedirectResult, redirecting to "/tasks". (d98d540e)
+2016-12-10T01:09:20.9140854-08:00 0HL10RFR3LVK0 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AccountController.Login (TurnTrackerAspNetCore)" in 47.7313ms (afa2e885)
+2016-12-10T01:09:20.9145860-08:00 0HL10RFR3LVK0 [INF] Request finished in 48.3756ms 302  (15c52c40)
+2016-12-10T01:09:20.9235924-08:00 0HL10RFR3LVK1 [INF] Request starting HTTP/1.1 GET http://localhost:44371/tasks   (e5be5b71)
+2016-12-10T01:09:20.9240925-08:00 0HL10RFR3LVK1 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:09:20.9240925-08:00 0HL10RFR3LVK1 [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:09:20.9240925-08:00 0HL10RFR3LVK1 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:09:20.9596380-08:00 0HL10RFR3LVK1 [INF] Executed DbCommand (34ms) [Parameters=[@p0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT u.UserName, u.DisplayName, t.Name as TaskName, t.Id as TaskId, count(r.Taken) + p.Offset as TotalTurns, p.UserId from Participants p inner join Tasks t on p.TaskId = t.Id inner join AspNetUsers u on p.UserId = u.Id left join Turns r on r.TaskId = p.TaskId and r.UserId = p.UserId where p.TaskId in (select p.TaskId from Participants p where p.UserId = @p0) or t.UserId = @p0 group by p.TaskId, p.UserId, u.UserName, u.DisplayName, t.Name, t.Id, p.Offset order by t.Id, TotalTurns, u.UserName; (6438bdd5)
+2016-12-10T01:09:20.9826543-08:00 0HL10RFR3LVK1 [INF] Executed DbCommand (0ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [x.Task].[Id], [x.Task].[Created], [x.Task].[Modified], [x.Task].[Name], [x.Task].[Period], [x.Task].[TeamBased], [x.Task].[Unit], [x.Task].[UserId]
+FROM [Participants] AS [x]
+INNER JOIN [Tasks] AS [x.Task] ON [x].[TaskId] = [x.Task].[Id]
+WHERE [x].[UserId] = @__userId_0 (6438bdd5)
+2016-12-10T01:09:20.9946657-08:00 0HL10RFR3LVK1 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[Created], [t].[Modified], [t].[Name], [t].[Period], [t].[TeamBased], [t].[Unit], [t].[UserId]
+FROM [Tasks] AS [t] (6438bdd5)
+2016-12-10T01:09:21.0146776-08:00 0HL10RFR3LVK1 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?', @p1='?', @p2='?'], CommandType='Text', CommandTimeout='30']
+with o as (select *, ROW_NUMBER() OVER (PARTITION BY TaskId ORDER BY Taken DESC) AS rn FROM Turns where TaskId in (@p0,@p1,@p2)) select * from o where rn = 1; (6438bdd5)
+2016-12-10T01:09:21.0842278-08:00 0HL10RFR3LVK1 [INF] Executing ViewResult, running view at path "/Views/Shared/Tasks.cshtml". (9707eebe)
+2016-12-10T01:09:21.3896424-08:00 0HL10RFR3LVK1 [INF] Executed action "TurnTrackerAspNetCore.Controllers.TaskController.Index (TurnTrackerAspNetCore)" in 465.2733ms (afa2e885)
+2016-12-10T01:09:21.3901425-08:00 0HL10RFR3LVK1 [INF] Request finished in 466.7621ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:09:21.5117268-08:00 0HL10RFR3LVK2 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:09:21.5122269-08:00 0HL10RFR3LVK3 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:09:21.5122269-08:00 0HL10RFR3LVK3 [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:09:21.5122269-08:00 0HL10RFR3LVK2 [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:09:21.5122269-08:00 0HL10RFR3LVK4 [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:09:21.5127275-08:00 0HL10RFR3LVK5 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:09:21.5127275-08:00 0HL10RFR3LVK4 [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:09:21.5132276-08:00 0HL10RFR3LVK5 [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:09:21.5132276-08:00 0HL10RFR3LVK4 [INF] Request finished in 0.8895ms 200 text/css (15c52c40)
+2016-12-10T01:09:21.5152296-08:00 0HL10RFR3LVK2 [INF] Request finished in 3.525ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:21.5157296-08:00 0HL10RFR3LVK6 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:09:21.5157296-08:00 0HL10RFR3LVK7 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:09:21.5162297-08:00 0HL10RFR3LVK6 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:09:21.5222334-08:00 0HL10RFR3LVK6 [INF] Request finished in 0.8724ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:21.5242377-08:00 0HL10RFR3LVK3 [INF] Request finished in 10.6371ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:21.5257368-08:00 0HL10RFR3LVK5 [INF] Request finished in 12.7064ms 200 text/css (15c52c40)
+2016-12-10T01:09:21.5427488-08:00 0HL10RFR3LVK7 [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:09:21.5432495-08:00 0HL10RFR3LVK7 [INF] Request finished in 27.5032ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:21.5457510-08:00 0HL10RFR3LVK8 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:09:21.5507545-08:00 0HL10RFR3LVK8 [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:09:21.5512546-08:00 0HL10RFR3LVK8 [INF] Request finished in 32.8563ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:21.7253788-08:00 0HL10RFR3LVK9 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/fonts/glyphicons-halflings-regular.woff2   (e5be5b71)
+2016-12-10T01:09:21.7308824-08:00 0HL10RFR3LVK9 [INF] The file "/lib/fonts/glyphicons-halflings-regular.woff2" was not modified (f1f8d725)
+2016-12-10T01:09:21.7328838-08:00 0HL10RFR3LVK9 [INF] Request finished in 7.7878ms 304 application/font-woff2 (15c52c40)
+2016-12-10T01:09:24.8097886-08:00 0HL10RFR3LVKA [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:09:24.8107893-08:00 0HL10RFR3LVKA [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:09:24.8147921-08:00 0HL10RFR3LVKA [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:09:24.8177942-08:00 0HL10RFR3LVKA [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:09:24.8373078-08:00 0HL10RFR3LVKA [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:09:24.9138625-08:00 0HL10RFR3LVKA [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:09:24.9603958-08:00 0HL10RFR3LVKA [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:09:25.0864853-08:00 0HL10RFR3LVKA [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:09:25.1675514-08:00 0HL10RFR3LVKA [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 355.3662ms (afa2e885)
+2016-12-10T01:09:25.1680515-08:00 0HL10RFR3LVKA [INF] Request finished in 358.2132ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:09:25.2355991-08:00 0HL10RFR3LVKB [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:09:25.2360998-08:00 0HL10RFR3LVKB [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:09:25.2416034-08:00 0HL10RFR3LVKC [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:09:25.2426047-08:00 0HL10RFR3LVKC [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:09:25.2441060-08:00 0HL10RFR3LVKC [INF] Request finished in 2.3424ms 200 text/css (15c52c40)
+2016-12-10T01:09:25.2451062-08:00 0HL10RFR3LVKB [INF] Request finished in 9.6279ms 200 text/css (15c52c40)
+2016-12-10T01:09:25.3817023-08:00 0HL10RFR3LVKD [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:09:25.3822024-08:00 0HL10RFR3LVKD [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:09:25.3832031-08:00 0HL10RFR3LVKE [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:09:25.3837031-08:00 0HL10RFR3LVKF [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:09:25.3837031-08:00 0HL10RFR3LVKF [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:09:25.3837031-08:00 0HL10RFR3LVKE [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:09:25.3842038-08:00 0HL10RFR3LVKE [INF] Request finished in 1.3599ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:25.3847044-08:00 0HL10RFR3LVKF [INF] Request finished in 1.1535ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:25.3847044-08:00 0HL10RFR3LVKD [INF] Request finished in 3.3083ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:25.3857051-08:00 0HL10RFR3LVKG [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:09:25.3862052-08:00 0HL10RFR3LVKG [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:09:25.3862052-08:00 0HL10RFR3LVKH [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:09:25.3867058-08:00 0HL10RFR3LVKG [INF] Request finished in 0.756ms 200 application/javascript (15c52c40)
+2016-12-10T01:09:25.3867058-08:00 0HL10RFR3LVKH [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:09:25.4037179-08:00 0HL10RFR3LVKH [INF] Request finished in 0.8091ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:20.9275297-08:00 0HL10RFR3LVKI [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:10:20.9285304-08:00 0HL10RFR3LVKI [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:10:20.9285304-08:00 0HL10RFR3LVKI [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:10:20.9295311-08:00 0HL10RFR3LVKI [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:10:20.9365361-08:00 0HL10RFR3LVKI [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:10:20.9385375-08:00 0HL10RFR3LVKI [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:10:20.9395382-08:00 0HL10RFR3LVKI [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:10:21.0436195-08:00 0HL10RFR3LVKI [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:10:21.1016619-08:00 0HL10RFR3LVKI [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 172.868ms (afa2e885)
+2016-12-10T01:10:21.1021625-08:00 0HL10RFR3LVKI [INF] Request finished in 174.3978ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:10:21.1316860-08:00 0HL10RFR3LVKJ [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:10:21.1326873-08:00 0HL10RFR3LVKJ [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:10:21.1336880-08:00 0HL10RFR3LVKK [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:10:21.1346887-08:00 0HL10RFR3LVKK [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:10:21.1426939-08:00 0HL10RFR3LVKK [INF] Request finished in 8.3905ms 200 text/css (15c52c40)
+2016-12-10T01:10:21.1436951-08:00 0HL10RFR3LVKJ [INF] Request finished in 11.7627ms 200 text/css (15c52c40)
+2016-12-10T01:10:21.4899569-08:00 0HL10RFR3LVKL [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:10:21.4899569-08:00 0HL10RFR3LVKL [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:10:21.4899569-08:00 0HL10RFR3LVKL [INF] Request finished in 0.7481ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:21.4899569-08:00 0HL10RFR3LVKM [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:10:21.4909582-08:00 0HL10RFR3LVKM [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:10:21.4954640-08:00 0HL10RFR3LVKN [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:10:21.4959646-08:00 0HL10RFR3LVKN [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:10:21.4969648-08:00 0HL10RFR3LVKO [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:10:21.4974654-08:00 0HL10RFR3LVKO [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:10:21.4979660-08:00 0HL10RFR3LVKO [INF] Request finished in 0.9739ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:21.4984661-08:00 0HL10RFR3LVKP [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:10:21.4984661-08:00 0HL10RFR3LVKP [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:10:21.4994668-08:00 0HL10RFR3LVKP [INF] Request finished in 0.9431ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:21.5004675-08:00 0HL10RFR3LVKM [INF] Request finished in 9.7151ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:21.5004675-08:00 0HL10RFR3LVKN [INF] Request finished in 4.9031ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:21.5835265-08:00 0HL10RFR3LVKQ [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/fonts/glyphicons-halflings-regular.woff2   (e5be5b71)
+2016-12-10T01:10:21.5840266-08:00 0HL10RFR3LVKQ [INF] The file "/lib/fonts/glyphicons-halflings-regular.woff2" was not modified (f1f8d725)
+2016-12-10T01:10:21.5845266-08:00 0HL10RFR3LVKQ [INF] Request finished in 0.9049ms 304 application/font-woff2 (15c52c40)
+2016-12-10T01:10:22.0122371-08:00 0HL10RFR3LVKR [INF] Request starting HTTP/1.1 GET http://localhost:44371/favicon.ico   (e5be5b71)
+2016-12-10T01:10:22.0132378-08:00 0HL10RFR3LVKR [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\favicon.ico"' (27b0a520)
+2016-12-10T01:10:22.0372555-08:00 0HL10RFR3LVKR [INF] Request finished in 25.3929ms 200 image/x-icon (15c52c40)
+2016-12-10T01:10:35.4749212-08:00 0HL10RFR3LVKS [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:10:35.4754218-08:00 0HL10RFR3LVKS [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:10:35.4759219-08:00 0HL10RFR3LVKS [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:10:35.4759219-08:00 0HL10RFR3LVKS [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:10:35.4774238-08:00 0HL10RFR3LVKS [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:10:35.4789246-08:00 0HL10RFR3LVKS [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:10:35.4794247-08:00 0HL10RFR3LVKS [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:10:35.5990093-08:00 0HL10RFR3LVKS [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:10:35.6710604-08:00 0HL10RFR3LVKS [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 195.1271ms (afa2e885)
+2016-12-10T01:10:35.6710604-08:00 0HL10RFR3LVKS [INF] Request finished in 196.7413ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:10:35.7266002-08:00 0HL10RFR3LVKT [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:10:35.7266002-08:00 0HL10RFR3LVKU [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:10:35.7271002-08:00 0HL10RFR3LVKT [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:10:35.7271002-08:00 0HL10RFR3LVKU [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:10:35.7276009-08:00 0HL10RFR3LVKT [INF] Request finished in 1.0486ms 200 text/css (15c52c40)
+2016-12-10T01:10:35.7301024-08:00 0HL10RFR3LVKU [INF] Request finished in 3.8386ms 200 text/css (15c52c40)
+2016-12-10T01:10:35.9282436-08:00 0HL10RFR3LVKV [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:10:35.9287437-08:00 0HL10RFR3LVKV [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:10:35.9292437-08:00 0HL10RFR3LVL0 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:10:35.9292437-08:00 0HL10RFR3LVL1 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:10:35.9292437-08:00 0HL10RFR3LVL0 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:10:35.9292437-08:00 0HL10RFR3LVL1 [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:10:35.9297438-08:00 0HL10RFR3LVKV [INF] Request finished in 1.2983ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:35.9297438-08:00 0HL10RFR3LVL0 [INF] Request finished in 0.6449ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:35.9432537-08:00 0HL10RFR3LVL2 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:10:35.9437543-08:00 0HL10RFR3LVL2 [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:10:35.9437543-08:00 0HL10RFR3LVL3 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:10:35.9442550-08:00 0HL10RFR3LVL3 [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:10:35.9442550-08:00 0HL10RFR3LVL2 [INF] Request finished in 1.5133ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:35.9447550-08:00 0HL10RFR3LVL1 [INF] Request finished in 15.7376ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:35.9452551-08:00 0HL10RFR3LVL3 [INF] Request finished in 1.7066ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:36.3570478-08:00 0HL10RFR3LVL4 [INF] Request starting HTTP/1.1 GET http://localhost:44371/favicon.ico   (e5be5b71)
+2016-12-10T01:10:36.3575478-08:00 0HL10RFR3LVL4 [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\favicon.ico"' (27b0a520)
+2016-12-10T01:10:36.3575478-08:00 0HL10RFR3LVL4 [INF] Request finished in 0.776ms 200 image/x-icon (15c52c40)
+2016-12-10T01:10:51.7311447-08:00 0HL10RFR3LVL5 [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:10:51.7321454-08:00 0HL10RFR3LVL5 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:10:51.7321454-08:00 0HL10RFR3LVL5 [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:10:51.7321454-08:00 0HL10RFR3LVL5 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:10:51.7331649-08:00 0HL10RFR3LVL5 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:10:51.7341491-08:00 0HL10RFR3LVL5 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:10:51.7341491-08:00 0HL10RFR3LVL5 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:10:51.8259938-08:00 0HL10RFR3LVL5 [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:10:51.9010534-08:00 0HL10RFR3LVL5 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 168.6593ms (afa2e885)
+2016-12-10T01:10:51.9010534-08:00 0HL10RFR3LVL5 [INF] Request finished in 169.8265ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:10:51.9585973-08:00 0HL10RFR3LVL6 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:10:51.9585973-08:00 0HL10RFR3LVL6 [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:10:51.9600987-08:00 0HL10RFR3LVL7 [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:10:51.9605988-08:00 0HL10RFR3LVL7 [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:10:51.9610994-08:00 0HL10RFR3LVL7 [INF] Request finished in 1.9757ms 200 text/css (15c52c40)
+2016-12-10T01:10:51.9626008-08:00 0HL10RFR3LVL6 [INF] Request finished in 4.2371ms 200 text/css (15c52c40)
+2016-12-10T01:10:52.4349361-08:00 0HL10RFR3LVL8 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:10:52.4354362-08:00 0HL10RFR3LVL8 [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:10:52.4389384-08:00 0HL10RFR3LVL8 [INF] Request finished in 4.102ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:52.4394390-08:00 0HL10RFR3LVL9 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:10:52.4394390-08:00 0HL10RFR3LVLA [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:10:52.4394390-08:00 0HL10RFR3LVLA [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:10:52.4399391-08:00 0HL10RFR3LVL9 [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:10:52.4399391-08:00 0HL10RFR3LVL9 [INF] Request finished in 0.8758ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:52.4454433-08:00 0HL10RFR3LVLB [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/fonts/glyphicons-halflings-regular.woff2   (e5be5b71)
+2016-12-10T01:10:52.4454433-08:00 0HL10RFR3LVLC [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:10:52.4459433-08:00 0HL10RFR3LVLB [INF] The file "/lib/fonts/glyphicons-halflings-regular.woff2" was not modified (f1f8d725)
+2016-12-10T01:10:52.4459433-08:00 0HL10RFR3LVLB [INF] Request finished in 0.5878ms 304 application/font-woff2 (15c52c40)
+2016-12-10T01:10:52.4464440-08:00 0HL10RFR3LVLC [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:10:52.4469441-08:00 0HL10RFR3LVLD [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:10:52.4509475-08:00 0HL10RFR3LVLD [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:10:52.4519482-08:00 0HL10RFR3LVLA [INF] Request finished in 12.7743ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:52.4519482-08:00 0HL10RFR3LVLC [INF] Request finished in 6.3726ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:52.4519482-08:00 0HL10RFR3LVLD [INF] Request finished in 5.1535ms 200 application/javascript (15c52c40)
+2016-12-10T01:10:52.8767495-08:00 0HL10RFR3LVLE [INF] Request starting HTTP/1.1 GET http://localhost:44371/favicon.ico   (e5be5b71)
+2016-12-10T01:10:52.8772501-08:00 0HL10RFR3LVLE [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\favicon.ico"' (27b0a520)
+2016-12-10T01:10:52.8777513-08:00 0HL10RFR3LVLE [INF] Request finished in 0.7743ms 200 image/x-icon (15c52c40)
+2016-12-10T01:11:01.6761324-08:00 0HL10RFR3LVLF [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:11:01.6766331-08:00 0HL10RFR3LVLF [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:11:01.6771331-08:00 0HL10RFR3LVLF [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:11:01.6771331-08:00 0HL10RFR3LVLF [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:11:01.7036522-08:00 0HL10RFR3LVLF [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:11:01.7216650-08:00 0HL10RFR3LVLF [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:11:01.7376764-08:00 0HL10RFR3LVLF [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:11:01.9077972-08:00 0HL10RFR3LVLF [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:11:01.9823498-08:00 0HL10RFR3LVLF [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 305.2423ms (afa2e885)
+2016-12-10T01:11:01.9828499-08:00 0HL10RFR3LVLF [INF] Request finished in 306.7055ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:11:02.0348880-08:00 0HL10RFR3LVLG [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:11:02.0353880-08:00 0HL10RFR3LVLG [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:11:02.0423924-08:00 0HL10RFR3LVLG [INF] Request finished in 7.5204ms 200 text/css (15c52c40)
+2016-12-10T01:11:02.0428931-08:00 0HL10RFR3LVLH [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:11:02.0433937-08:00 0HL10RFR3LVLH [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:11:02.0458952-08:00 0HL10RFR3LVLH [INF] Request finished in 3.1538ms 200 text/css (15c52c40)
+2016-12-10T01:11:02.2460373-08:00 0HL10RFR3LVLI [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:11:02.2460373-08:00 0HL10RFR3LVLI [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:11:02.2490394-08:00 0HL10RFR3LVLJ [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:11:02.2490394-08:00 0HL10RFR3LVLK [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:11:02.2495401-08:00 0HL10RFR3LVLJ [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:11:02.2495401-08:00 0HL10RFR3LVLK [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:11:02.2495401-08:00 0HL10RFR3LVLJ [INF] Request finished in 0.8119ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:02.2505402-08:00 0HL10RFR3LVLK [INF] Request finished in 1.3245ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:02.2510409-08:00 0HL10RFR3LVLI [INF] Request finished in 5.0514ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:02.2520416-08:00 0HL10RFR3LVLL [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:11:02.2520416-08:00 0HL10RFR3LVLM [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:11:02.2525422-08:00 0HL10RFR3LVLL [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:11:02.2525422-08:00 0HL10RFR3LVLL [INF] Request finished in 1.0343ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:02.2530429-08:00 0HL10RFR3LVLM [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:11:02.2535424-08:00 0HL10RFR3LVLM [INF] Request finished in 1.5133ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:02.6868500-08:00 0HL10RFR3LVLN [INF] Request starting HTTP/1.1 GET http://localhost:44371/favicon.ico   (e5be5b71)
+2016-12-10T01:11:02.6873501-08:00 0HL10RFR3LVLN [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\favicon.ico"' (27b0a520)
+2016-12-10T01:11:02.6878507-08:00 0HL10RFR3LVLN [INF] Request finished in 0.7646ms 200 image/x-icon (15c52c40)
+2016-12-10T01:11:16.7519635-08:00 0HL10RFR3LVLO [INF] Request starting HTTP/1.1 POST http://localhost:44371/Admin/DeleteUser/c551f3d6-1051-4cfb-ab0a-7aecc67eb64d application/x-www-form-urlencoded 225 (e5be5b71)
+2016-12-10T01:11:16.7529625-08:00 0HL10RFR3LVLO [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:11:16.7539649-08:00 0HL10RFR3LVLO [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:11:16.7539649-08:00 0HL10RFR3LVLO [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.DeleteUser (TurnTrackerAspNetCore)" with arguments (["c551f3d6-1051-4cfb-ab0a-7aecc67eb64d"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:11:16.7599680-08:00 0HL10RFR3LVLO [INF] Executed DbCommand (0ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[DisplayName], [e].[Email], [e].[EmailConfirmed], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2016-12-10T01:11:16.8262390-08:00 0HL10RFR3LVLO [INF] Executed DbCommand (51ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [AspNetUsers]
+WHERE [Id] = @p0 AND [ConcurrencyStamp] = @p1;
+SELECT @@ROWCOUNT; (6438bdd5)
+2016-12-10T01:11:16.8310863-08:00 0HL10RFR3LVLO [INF] josh deleted admin (1401f7c6)
+2016-12-10T01:11:16.8315875-08:00 0HL10RFR3LVLO [INF] Executing RedirectResult, redirecting to "/Admin/Users". (d98d540e)
+2016-12-10T01:11:16.8315875-08:00 0HL10RFR3LVLO [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.DeleteUser (TurnTrackerAspNetCore)" in 77.9847ms (afa2e885)
+2016-12-10T01:11:16.8320876-08:00 0HL10RFR3LVLO [INF] Request finished in 79.506ms 302  (15c52c40)
+2016-12-10T01:11:16.8536071-08:00 0HL10RFR3LVLP [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:11:16.8546067-08:00 0HL10RFR3LVLP [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:11:16.8546067-08:00 0HL10RFR3LVLP [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:11:16.8546067-08:00 0HL10RFR3LVLP [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:11:16.8556074-08:00 0HL10RFR3LVLP [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:11:16.8566081-08:00 0HL10RFR3LVLP [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:11:16.8566081-08:00 0HL10RFR3LVLP [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:11:16.8566081-08:00 0HL10RFR3LVLP [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:11:16.8586095-08:00 0HL10RFR3LVLP [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 3.7114ms (afa2e885)
+2016-12-10T01:11:16.8586095-08:00 0HL10RFR3LVLP [INF] Request finished in 4.7258ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:11:16.9241604-08:00 0HL10RFR3LVLQ [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:11:16.9246610-08:00 0HL10RFR3LVLQ [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:11:16.9326661-08:00 0HL10RFR3LVLR [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:11:16.9331668-08:00 0HL10RFR3LVLR [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:11:16.9331668-08:00 0HL10RFR3LVLR [INF] Request finished in 1.0851ms 200 text/css (15c52c40)
+2016-12-10T01:11:16.9341675-08:00 0HL10RFR3LVLQ [INF] Request finished in 10.1781ms 200 text/css (15c52c40)
+2016-12-10T01:11:17.0677700-08:00 0HL10RFR3LVLS [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:11:17.0677700-08:00 0HL10RFR3LVLS [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:11:17.0687713-08:00 0HL10RFR3LVLT [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:11:17.0687713-08:00 0HL10RFR3LVLT [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:11:17.0687713-08:00 0HL10RFR3LVLU [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:11:17.0697714-08:00 0HL10RFR3LVLU [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:11:17.0697714-08:00 0HL10RFR3LVLU [INF] Request finished in 0.7389ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:17.0707721-08:00 0HL10RFR3LVLV [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:11:17.0707721-08:00 0HL10RFR3LVLV [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:11:17.0707721-08:00 0HL10RFR3LVLT [INF] Request finished in 2.5625ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:17.0717729-08:00 0HL10RFR3LVLV [INF] Request finished in 0.9744ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:17.0717729-08:00 0HL10RFR3LVLS [INF] Request finished in 4.0615ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:17.0907858-08:00 0HL10RFR3LVM0 [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:11:17.0917871-08:00 0HL10RFR3LVM0 [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:11:17.0917871-08:00 0HL10RFR3LVM0 [INF] Request finished in 1.0406ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:17.1067983-08:00 0HL10RFR3LVM1 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/fonts/glyphicons-halflings-regular.woff2   (e5be5b71)
+2016-12-10T01:11:17.1067983-08:00 0HL10RFR3LVM1 [INF] The file "/lib/fonts/glyphicons-halflings-regular.woff2" was not modified (f1f8d725)
+2016-12-10T01:11:17.1067983-08:00 0HL10RFR3LVM1 [INF] Request finished in 0.7749ms 304 application/font-woff2 (15c52c40)
+2016-12-10T01:11:26.4814865-08:00 0HL10RFR3LVM2 [INF] Request starting HTTP/1.1 POST http://localhost:44371/Admin/DeleteUser/e219340a-69e2-412c-a410-e74eff7ba9e5 application/x-www-form-urlencoded 225 (e5be5b71)
+2016-12-10T01:11:26.4824872-08:00 0HL10RFR3LVM2 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:11:26.4824872-08:00 0HL10RFR3LVM2 [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:11:26.4824872-08:00 0HL10RFR3LVM2 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.DeleteUser (TurnTrackerAspNetCore)" with arguments (["e219340a-69e2-412c-a410-e74eff7ba9e5"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:11:26.4854899-08:00 0HL10RFR3LVM2 [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[DisplayName], [e].[Email], [e].[EmailConfirmed], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2016-12-10T01:11:26.4874914-08:00 0HL10RFR3LVM2 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [AspNetUsers]
+WHERE [Id] = @p0 AND [ConcurrencyStamp] = @p1;
+SELECT @@ROWCOUNT; (6438bdd5)
+2016-12-10T01:11:26.4949291-08:00 0HL10RFR3LVM2 [INF] josh deleted person (82d526d5)
+2016-12-10T01:11:26.4949291-08:00 0HL10RFR3LVM2 [INF] Executing RedirectResult, redirecting to "/Admin/Users". (d98d540e)
+2016-12-10T01:11:26.4949291-08:00 0HL10RFR3LVM2 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.DeleteUser (TurnTrackerAspNetCore)" in 12.3592ms (afa2e885)
+2016-12-10T01:11:26.4949291-08:00 0HL10RFR3LVM2 [INF] Request finished in 13.4277ms 302  (15c52c40)
+2016-12-10T01:11:26.5029359-08:00 0HL10RFR3LVM3 [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:11:26.5039372-08:00 0HL10RFR3LVM3 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:11:26.5039372-08:00 0HL10RFR3LVM3 [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:11:26.5039372-08:00 0HL10RFR3LVM3 [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:11:26.5049396-08:00 0HL10RFR3LVM3 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:11:26.5049396-08:00 0HL10RFR3LVM3 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:11:26.5059386-08:00 0HL10RFR3LVM3 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:11:26.5059386-08:00 0HL10RFR3LVM3 [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:11:26.5079418-08:00 0HL10RFR3LVM3 [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 3.8426ms (afa2e885)
+2016-12-10T01:11:26.5079418-08:00 0HL10RFR3LVM3 [INF] Request finished in 4.6659ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:11:26.5419642-08:00 0HL10RFR3LVM4 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:11:26.5429655-08:00 0HL10RFR3LVM4 [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:11:26.5429655-08:00 0HL10RFR3LVM5 [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:11:26.5429655-08:00 0HL10RFR3LVM5 [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:11:26.5439662-08:00 0HL10RFR3LVM5 [INF] Request finished in 0.7515ms 200 text/css (15c52c40)
+2016-12-10T01:11:26.5439662-08:00 0HL10RFR3LVM4 [INF] Request finished in 2.2346ms 200 text/css (15c52c40)
+2016-12-10T01:11:26.6680623-08:00 0HL10RFR3LVM6 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:11:26.6685629-08:00 0HL10RFR3LVM6 [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:11:26.6700643-08:00 0HL10RFR3LVM7 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:11:26.6700643-08:00 0HL10RFR3LVM7 [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:11:26.6705644-08:00 0HL10RFR3LVM6 [INF] Request finished in 2.3138ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:26.6710650-08:00 0HL10RFR3LVM7 [INF] Request finished in 1.1905ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:26.6715651-08:00 0HL10RFR3LVM8 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:11:26.6715651-08:00 0HL10RFR3LVM9 [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:11:26.6715651-08:00 0HL10RFR3LVM9 [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:11:26.6725698-08:00 0HL10RFR3LVM8 [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:11:26.6725698-08:00 0HL10RFR3LVM8 [INF] Request finished in 0.8581ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:26.6735705-08:00 0HL10RFR3LVM9 [INF] Request finished in 1.8605ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:26.6785740-08:00 0HL10RFR3LVMA [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:11:26.6795753-08:00 0HL10RFR3LVMA [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:11:26.6795753-08:00 0HL10RFR3LVMA [INF] Request finished in 1.3502ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:29.1076696-08:00 0HL10RFR3LVMB [INF] Request starting HTTP/1.1 POST http://localhost:44371/Admin/DeleteUser/94311506-e84d-4001-97a9-abd6ef4424ba application/x-www-form-urlencoded 225 (e5be5b71)
+2016-12-10T01:11:29.1081708-08:00 0HL10RFR3LVMB [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:11:29.1081708-08:00 0HL10RFR3LVMB [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:11:29.1086708-08:00 0HL10RFR3LVMB [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.DeleteUser (TurnTrackerAspNetCore)" with arguments (["94311506-e84d-4001-97a9-abd6ef4424ba"]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:11:29.1106723-08:00 0HL10RFR3LVMB [INF] Executed DbCommand (0ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[DisplayName], [e].[Email], [e].[EmailConfirmed], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2016-12-10T01:11:29.1116724-08:00 0HL10RFR3LVMB [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [AspNetUsers]
+WHERE [Id] = @p0 AND [ConcurrencyStamp] = @p1;
+SELECT @@ROWCOUNT; (6438bdd5)
+2016-12-10T01:11:29.1121725-08:00 0HL10RFR3LVMB [INF] josh deleted unknown (1b146a69)
+2016-12-10T01:11:29.1126743-08:00 0HL10RFR3LVMB [INF] Executing RedirectResult, redirecting to "/Admin/Users". (d98d540e)
+2016-12-10T01:11:29.1126743-08:00 0HL10RFR3LVMB [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.DeleteUser (TurnTrackerAspNetCore)" in 4.3398ms (afa2e885)
+2016-12-10T01:11:29.1126743-08:00 0HL10RFR3LVMB [INF] Request finished in 5.4654ms 302  (15c52c40)
+2016-12-10T01:11:29.1311860-08:00 0HL10RFR3LVMC [INF] Request starting HTTP/1.1 GET http://localhost:44371/Admin/Users   (e5be5b71)
+2016-12-10T01:11:29.1326873-08:00 0HL10RFR3LVMC [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2016-12-10T01:11:29.1331874-08:00 0HL10RFR3LVMC [INF] Authorization was successful for user: "josh". (d7eb274a)
+2016-12-10T01:11:29.1336880-08:00 0HL10RFR3LVMC [INF] Executing action method "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" with arguments ([""]) - ModelState is Valid (ba7f4ac2)
+2016-12-10T01:11:29.1366907-08:00 0HL10RFR3LVMC [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a] (6438bdd5)
+2016-12-10T01:11:29.1381915-08:00 0HL10RFR3LVMC [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [x].[Id], [x].[AccessFailedCount], [x].[ConcurrencyStamp], [x].[DisplayName], [x].[Email], [x].[EmailConfirmed], [x].[LockoutEnabled], [x].[LockoutEnd], [x].[NormalizedEmail], [x].[NormalizedUserName], [x].[PasswordHash], [x].[PhoneNumber], [x].[PhoneNumberConfirmed], [x].[SecurityStamp], [x].[TwoFactorEnabled], [x].[UserName]
+FROM [AspNetUsers] AS [x]
+ORDER BY [x].[Id] (6438bdd5)
+2016-12-10T01:11:29.1386922-08:00 0HL10RFR3LVMC [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE EXISTS (
+    SELECT 1
+    FROM [AspNetUsers] AS [x]
+    WHERE [a].[UserId] = [x].[Id])
+ORDER BY [a].[UserId] (6438bdd5)
+2016-12-10T01:11:29.1391922-08:00 0HL10RFR3LVMC [INF] Executing ViewResult, running view at path "/Views/Admin/Users.cshtml". (9707eebe)
+2016-12-10T01:11:29.1411931-08:00 0HL10RFR3LVMC [INF] Executed action "TurnTrackerAspNetCore.Controllers.AdminController.Users (TurnTrackerAspNetCore)" in 7.8317ms (afa2e885)
+2016-12-10T01:11:29.1411931-08:00 0HL10RFR3LVMC [INF] Request finished in 10.2808ms 200 text/html; charset=utf-8 (15c52c40)
+2016-12-10T01:11:29.2157469-08:00 0HL10RFR3LVMD [INF] Request starting HTTP/1.1 GET http://localhost:44371/css/site.min.css   (e5be5b71)
+2016-12-10T01:11:29.2162475-08:00 0HL10RFR3LVMD [INF] Sending file. Request path: '"/css/site.min.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\css\site.min.css"' (27b0a520)
+2016-12-10T01:11:29.2167476-08:00 0HL10RFR3LVME [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/css/bootstrap.css   (e5be5b71)
+2016-12-10T01:11:29.2172476-08:00 0HL10RFR3LVME [INF] Sending file. Request path: '"/lib/css/bootstrap.css"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\css\bootstrap.css"' (27b0a520)
+2016-12-10T01:11:29.2172476-08:00 0HL10RFR3LVMD [INF] Request finished in 2.0019ms 200 text/css (15c52c40)
+2016-12-10T01:11:29.2192491-08:00 0HL10RFR3LVME [INF] Request finished in 2.2306ms 200 text/css (15c52c40)
+2016-12-10T01:11:29.4153883-08:00 0HL10RFR3LVMF [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/bootstrap.js   (e5be5b71)
+2016-12-10T01:11:29.4158884-08:00 0HL10RFR3LVMF [INF] Sending file. Request path: '"/lib/js/bootstrap.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\bootstrap.js"' (27b0a520)
+2016-12-10T01:11:29.4163890-08:00 0HL10RFR3LVMG [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.js   (e5be5b71)
+2016-12-10T01:11:29.4163890-08:00 0HL10RFR3LVMG [INF] Sending file. Request path: '"/lib/js/jquery.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.js"' (27b0a520)
+2016-12-10T01:11:29.4168891-08:00 0HL10RFR3LVMF [INF] Request finished in 1.6786ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:29.4218927-08:00 0HL10RFR3LVMH [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.js   (e5be5b71)
+2016-12-10T01:11:29.4233940-08:00 0HL10RFR3LVMH [INF] Sending file. Request path: '"/lib/js/jquery.validate.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.js"' (27b0a520)
+2016-12-10T01:11:29.4248948-08:00 0HL10RFR3LVMH [INF] Request finished in 2.6098ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:29.4434076-08:00 0HL10RFR3LVMI [INF] Request starting HTTP/1.1 GET http://localhost:44371/js/site.js   (e5be5b71)
+2016-12-10T01:11:29.4449090-08:00 0HL10RFR3LVMI [INF] Sending file. Request path: '"/js/site.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\js\site.js"' (27b0a520)
+2016-12-10T01:11:29.4454096-08:00 0HL10RFR3LVMI [INF] Request finished in 20.6009ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:29.4459097-08:00 0HL10RFR3LVMJ [INF] Request starting HTTP/1.1 GET http://localhost:44371/lib/js/jquery.validate.unobtrusive.js   (e5be5b71)
+2016-12-10T01:11:29.4464103-08:00 0HL10RFR3LVMJ [INF] Sending file. Request path: '"/lib/js/jquery.validate.unobtrusive.js"'. Physical path: '"C:\Users\Josh\Documents\Engineering\Web\TurnTrackerAspNetCore\src\TurnTrackerAspNetCore\wwwroot\lib\js\jquery.validate.unobtrusive.js"' (27b0a520)
+2016-12-10T01:11:29.4469104-08:00 0HL10RFR3LVMJ [INF] Request finished in 21.3308ms 200 application/javascript (15c52c40)
+2016-12-10T01:11:29.4619211-08:00 0HL10RFR3LVMG [INF] Request finished in 10.7609ms 200 application/javascript (15c52c40)
