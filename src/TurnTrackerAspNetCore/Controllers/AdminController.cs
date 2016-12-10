@@ -133,6 +133,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new ChallengeResult();
             }
+            var myName = _userManager.GetUserName(User);
 
             user.DisplayName = model.DisplayName;
             user.Email = model.Email;
@@ -162,6 +163,15 @@ namespace TurnTrackerAspNetCore.Controllers
 
             if (results.All(x => x.Succeeded))
             {
+                foreach (var role in rolesToRemove)
+                {
+                    _logger.LogInformation(EventIds.UserRoleRemoved, $"{role} removed from {user.UserName} by {myName}");
+                }
+                foreach (var role in rolesToAdd)
+                {
+                    _logger.LogInformation(EventIds.UserRoleAdded, $"{role} added to {user.UserName} by {myName}");
+                }
+                _logger.LogInformation(EventIds.UserProfileModifiedByAdmin, $"{myName} modified {user.UserName}");
                 return RedirectToAction(nameof(Users));
             }
 
@@ -190,6 +200,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var success = await _emailSender.SendEmailAsync("Test Email", $"This is a test from {name}.", "Confirm", model.Email);
             if (success)
             {
+                _logger.LogInformation(EventIds.EmailConfirmationSent, name);
                 return RedirectToAction(nameof(Test));
             }
             

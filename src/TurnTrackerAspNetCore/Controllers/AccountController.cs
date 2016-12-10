@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
@@ -15,13 +16,15 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IAuthorizationService _authorizationService;
+        private readonly ILogger _logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, IAuthorizationService authorizationService)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, IAuthorizationService authorizationService, ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _taskData = taskData;
             _authorizationService = authorizationService;
+            _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
         [HttpGet]
@@ -60,14 +63,24 @@ namespace TurnTrackerAspNetCore.Controllers
             var numberExistingUsers = _taskData.GetAllUsers().Count();
 
             var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded && (model.UserName.ToLower() == "admin" || 0 == numberExistingUsers))
+            if (result.Succeeded)
             {
-                result = await _userManager.AddToRoleAsync(user, nameof(Roles.Admin));
+                _logger.LogInformation(EventIds.UserRegistered, user.UserName);
+                if (user.UserName.ToLower() == "admin" || 0 == numberExistingUsers)
+                {
+                    result = await _userManager.AddToRoleAsync(user, nameof(Roles.Admin));
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation(EventIds.UserRoleAdded,
+                            $"{nameof(Roles.Admin)} added to user {user.UserName} at registration");
+                    }
+                }
             }
 
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
+                _logger.LogInformation(EventIds.UserLoggedIn, user.UserName);
                 return RedirectToAction(nameof(TaskController.Index), "Task");
             }
 
@@ -79,10 +92,12 @@ namespace TurnTrackerAspNetCore.Controllers
             return View(model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, Authorize, ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
+            var name = _userManager.GetUserName(User);
             await _signInManager.SignOutAsync();
+            _logger.LogInformation(EventIds.UserLoggedOut, name);
             return RedirectToAction(nameof(TaskController.Index), "Task");
         }
 
@@ -101,6 +116,7 @@ namespace TurnTrackerAspNetCore.Controllers
                     await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
                 if (loginResult.Succeeded)
                 {
+                    _logger.LogInformation(EventIds.UserLoggedIn, model.UserName);
                     if (Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
@@ -154,6 +170,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
+                _logger.LogInformation(EventIds.UserUpdatedProfile, user.UserName);
                 return RedirectToAction(nameof(Profile));
             }
 
