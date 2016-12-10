@@ -1,14 +1,17 @@
 {
-  "version": "0.0.1.35", 
+  "version": "0.0.1.65",
+  "userSecretsId": "turntrackeraspnetcore-41968dc5-8a17-4392-9cd3-3ca7d42a1e3d",
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.1.0",
       "type": "platform"
     },
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
     "Microsoft.Extensions.Logging.Console": "1.1.0",
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.Extensions.Configuration.FileExtensions": "1.1.0",
     "Microsoft.Extensions.Configuration.Json": "1.1.0",
@@ -25,7 +28,8 @@
 
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final",
-    "Microsoft.EntityFrameworkCore.Tools": "1.1.0-preview4-final"
+    "Microsoft.EntityFrameworkCore.Tools": "1.1.0-preview4-final",
+    "Microsoft.Extensions.SecretManager.Tools": "1.1.0-preview4-final"
   },
 
   "frameworks": {
@@ -60,7 +64,7 @@
   },
 
   "scripts": {
-    "prepublish": [ "npm install", "gulp"],
+    "prepublish": [ "npm install", "gulp" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }

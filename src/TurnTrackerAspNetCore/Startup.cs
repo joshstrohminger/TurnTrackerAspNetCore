@@ -24,9 +24,14 @@ namespace TurnTrackerAspNetCore
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets();
+            }
+
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -51,16 +56,16 @@ namespace TurnTrackerAspNetCore
                 options.AddPolicy(nameof(Policies.CanAccessAdmin), policy => policy.RequireRole(nameof(Roles.Admin)));
             });
 
-            //services.AddTransient<IEmailSender, AuthMessageSender>();
-            //services.AddTransient<ISmsSender, AuthMessageSender>();
-            //services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-                //options.SignIn.RequireConfirmedEmail = true;
-                //options.SignIn.RequireConfirmedPhoneNumber = true;
-            });
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    options.User.RequireUniqueEmail = true;
+            //    //options.SignIn.RequireConfirmedEmail = true;
+            //    //options.SignIn.RequireConfirmedPhoneNumber = true;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

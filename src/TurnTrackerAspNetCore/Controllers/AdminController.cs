@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels;
@@ -19,12 +20,16 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly ITaskData _taskData;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly IEmailSender _emailSender;
+        private readonly ILogger _logger;
 
-        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory)
         {
             _taskData = taskData;
             _roleManager = roleManager;
             _userManager = userManager;
+            _emailSender = emailSender;
+            _logger = loggerFactory.CreateLogger<AdminController>();
         }
 
         public IActionResult Tasks(string error = null)
@@ -62,7 +67,12 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new NotFoundResult();
             }
-            await _userManager.DeleteAsync(user);
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                var myUserName = _userManager.GetUserName(User);
+                _logger.LogInformation(EventIds.UserDeleted, $"{myUserName} deleted {user.UserName}");
+            }
             // todo show errors
             return RedirectToAction(nameof(Users));
         }
@@ -160,6 +170,31 @@ namespace TurnTrackerAspNetCore.Controllers
                 ModelState.AddModelError("", error.Description);
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Test()
+        {
+            return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendEmail(SendEmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Test), model);
+            }
+
+            var name = _userManager.GetUserName(User);
+            var success = await _emailSender.SendEmailAsync("Test Email", $"This is a test from {name}.", "Confirm", model.Email);
+            if (success)
+            {
+                return RedirectToAction(nameof(Test));
+            }
+            
+            ModelState.AddModelError("", "Failed to send");
+            return View(nameof(Test), model);
         }
     }
 }
