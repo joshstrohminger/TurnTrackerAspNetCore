@@ -217,11 +217,7 @@ namespace TurnTrackerAspNetCore.Controllers
         public async Task<IActionResult> ReSendConfirmationEmail(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = Url.Action(nameof(AccountController.ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-            var success = await _emailSender.SendEmailAsync("Confirm your account",
-               $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>",
-               EmailCategory.Confirm, user.Email);
+            var success = await _emailSender.SendConfirmationEmailAsync(user, Url, HttpContext);
             return RedirectToAction(nameof(Users), new {errorMessage = success ? "" : "Failed to send email"});
         }
 
@@ -250,6 +246,26 @@ namespace TurnTrackerAspNetCore.Controllers
             }
             ViewBag.ErrorMessage = "Failed to save";
             return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Invite(SendEmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Users), model);
+            }
+
+            var name = _userManager.GetUserName(User);
+            var success = await _emailSender.SendEmailAsync($"{_siteSettings.Settings.General.Name} Invite", $"This is an invite to register for {_siteSettings.Settings.General.Name}. Please followt his link: link", EmailCategory.Confirm, model.Email);
+            if (success)
+            {
+                _logger.LogInformation(EventIds.EmailInviteSent, name);
+                return RedirectToAction(nameof(Users));
+            }
+
+            ModelState.AddModelError("", "Failed to send");
+            return View(nameof(Users), model);
         }
     }
 }

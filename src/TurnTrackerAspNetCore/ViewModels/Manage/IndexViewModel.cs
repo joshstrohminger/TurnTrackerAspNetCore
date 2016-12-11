@@ -14,5 +14,11 @@ namespace TurnTrackerAspNetCore.ViewModels.Manage
         public bool TwoFactor { get; set; }
 
         public bool BrowserRemembered { get; set; }
+
+        public string UserName { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public string Email { get; set; }
     }
 }

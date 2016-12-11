@@ -20,5 +20,7 @@ namespace TurnTrackerAspNetCore.ViewModels.Account
         public IEnumerable<string> Roles { get; set; }
 
         public List<SelectListItem> AllRoles { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

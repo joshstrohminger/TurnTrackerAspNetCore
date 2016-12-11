@@ -2,9 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TurnTrackerAspNetCore.Controllers;
+using TurnTrackerAspNetCore.Entities;
 
 namespace TurnTrackerAspNetCore.Services
 {
@@ -22,6 +27,7 @@ namespace TurnTrackerAspNetCore.Services
     public interface IEmailSender
     {
         Task<bool> SendEmailAsync(string subject, string message, EmailCategory category, params string[] destinations);
+        Task<bool> SendConfirmationEmailAsync(User user, IUrlHelper url, HttpContext context);
     }
 
     public interface ISmsSender
@@ -33,11 +39,13 @@ namespace TurnTrackerAspNetCore.Services
     {
         private readonly IConfiguration _config;
         private readonly ILogger _logger;
+        private readonly UserManager<User> _userManager;
 
         public AuthMessageSender(IOptions<AuthMessageSenderOptions> optionsAccessor, IConfiguration config,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory, UserManager<User> userManager)
         {
             _config = config;
+            _userManager = userManager;
             _logger = loggerFactory.CreateLogger<AuthMessageSender>();
             Options = optionsAccessor.Value;
         }
@@ -88,6 +96,16 @@ namespace TurnTrackerAspNetCore.Services
                 _logger.LogError(EventIds.EmailErrorUnknown, e, $"Category '{category}', Subject '{subject}'");
             }
             return false;
+        }
+
+        public async Task<bool> SendConfirmationEmailAsync(User user, IUrlHelper url, HttpContext context)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = url.Action(nameof(AccountController.ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: context.Request.Scheme);
+            var success = await SendEmailAsync("Confirm your account",
+               $"Please confirm your account by clicking this <a href='{callbackUrl}'>link</a>",
+               EmailCategory.Confirm, user.Email);
+            return success;
         }
 
         //public Task SendSmsAsync(string number, string message)

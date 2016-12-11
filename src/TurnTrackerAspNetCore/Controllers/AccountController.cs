@@ -137,11 +137,7 @@ namespace TurnTrackerAspNetCore.Controllers
             if (result.Succeeded)
             {
                 // Send an email with this link
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                var success = await _emailSender.SendEmailAsync("Confirm your account",
-                   $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>",
-                   EmailCategory.Confirm, model.Email);
+                var success = await _emailSender.SendConfirmationEmailAsync(user, Url, HttpContext);
                 //todo handle failed email
                 //await _signInManager.SignInAsync(user, false);
                 //_logger.LogInformation(EventIds.UserLoggedIn, user.UserName);
@@ -220,15 +216,22 @@ namespace TurnTrackerAspNetCore.Controllers
 
         #region Edit Profile
         [HttpGet]
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> Edit(string returnUrl = null)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl) && !Url.IsLocalUrl(returnUrl))
+            {
+                returnUrl = null;
+            }
+
             var model = new EditAccountViewModel
             {
                 DisplayName = user.DisplayName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                UserName = user.UserName
+                UserName = user.UserName,
+                ReturnUrl = returnUrl
             };
             return View(model);
         }
@@ -240,16 +243,28 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return View(model);
             }
-
+            
             var user = await _userManager.GetUserAsync(HttpContext.User);
             user.DisplayName = model.DisplayName;
-            user.Email = model.Email;
-            user.PhoneNumber = model.PhoneNumber;
+            if (user.Email != model.Email)
+            {
+                user.EmailConfirmed = false;
+                user.Email = model.Email;
+            }
+            //user.PhoneNumber = model.PhoneNumber;
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
                 _logger.LogInformation(EventIds.UserUpdatedProfile, user.UserName);
+                if (!user.EmailConfirmed)
+                {
+                    var success = _emailSender.SendConfirmationEmailAsync(user, Url, HttpContext);
+                }
+                if(!string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                {
+                    return Redirect(model.ReturnUrl);
+                }
                 return RedirectToAction(nameof(Profile));
             }
 
@@ -377,7 +392,7 @@ namespace TurnTrackerAspNetCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Email);
+                var user = await _userManager.FindByNameAsync(model.UserName);// ?? await _userManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -390,7 +405,7 @@ namespace TurnTrackerAspNetCore.Controllers
                 var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 await _emailSender.SendEmailAsync("Reset Password",
                    $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>",
-                   EmailCategory.Confirm, model.Email);
+                   EmailCategory.Confirm, user.Email);
                 return View("ForgotPasswordConfirmation");
             }
 
@@ -419,7 +434,7 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return View(model);
             }
-            var user = await _userManager.FindByNameAsync(model.Email);
+            var user = await _userManager.FindByNameAsync(model.UserName);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
@@ -479,7 +494,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var message = "Your security code is: " + code;
             if (model.SelectedProvider == "Email")
             {
-                await _emailSender.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", EmailCategory.Confirm, message);
+                await _emailSender.SendEmailAsync("Security Code", message, EmailCategory.Confirm, await _userManager.GetEmailAsync(user));
             }
             //else if (model.SelectedProvider == "Phone")
             //{

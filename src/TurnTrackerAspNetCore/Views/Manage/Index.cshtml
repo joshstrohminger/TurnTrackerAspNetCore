@@ -11,6 +11,12 @@
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>UserName:</dt>
+        <dd>@Model.UserName</dd>
+        <dt>Display Name:</dt>
+        <dd>@Model.DisplayName <a asp-controller="Account" asp-action="Edit" asp-route-returnurl="@($"{Context.Request.Path}{Context.Request.QueryString}")">Change</a></dd>
+        <dt>Email:</dt>
+        <dd>@Model.Email <a asp-controller="Account" asp-action="Edit" asp-route-returnurl="@($"{Context.Request.Path}{Context.Request.QueryString}")">Change</a></dd>
         <dt>Password:</dt>
         <dd>
             @if (Model.HasPassword)
@@ -51,22 +57,18 @@
 
         <dt>Two-Factor Authentication:</dt>
         <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
-                for setting up this application to support two-factor authentication.
-            </p>
             @if (Model.TwoFactor)
-                {
-                    <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal">
-                        Enabled <button type="submit" class="btn btn-sm btn-default">Disable</button>
-                    </form>
-                }
-                else
-                {
-                    <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal">
-                        <button type="submit" class="btn btn-sm btn-default">Enable</button> Disabled
-                    </form>
-                }
+            {
+                <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal">
+                    Enabled <button type="submit" class="btn btn-sm btn-default">Disable</button>
+                </form>
+            }
+            else
+            {
+                <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal">
+                    <button type="submit" class="btn btn-sm btn-default">Enable</button> Disabled
+                </form>
+            }
         </dd>
     </dl>
 </div>

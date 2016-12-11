@@ -18,5 +18,6 @@
         public const int SiteSettingSaveError = 14;
         public const int SiteSettingRemoved = 15;
         public const int SiteSettingAdded = 16;
+        public const int EmailInviteSent = 17;
     }
 }

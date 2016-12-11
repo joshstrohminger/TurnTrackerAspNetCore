@@ -17,8 +17,8 @@ namespace TurnTrackerAspNetCore.ViewModels.Admin
         [Required, Display(Name = "Registration Mode")]
         public RegistrationMode RegistrationMode { get; set; } = RegistrationMode.Open;
 
-        [Required, Display(Name = "New Thing")]
-        public bool NewThing { get; set; } = true;
+        [Required, Display(Name = "API Enabled")]
+        public bool ApiEnabled { get; set; } = true;
     }
 
     public enum RegistrationMode
