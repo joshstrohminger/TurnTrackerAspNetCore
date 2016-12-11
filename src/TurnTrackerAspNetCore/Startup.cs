@@ -74,7 +74,7 @@ namespace TurnTrackerAspNetCore
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            loggerFactory.AddFile("Logs/myapp-{Date}.txt");
+            loggerFactory.AddFile("bin/Logs/turntracker-{Date}.txt");
             db.Database.Migrate();
             ConfigureRoles(roleManager).Wait();
 
