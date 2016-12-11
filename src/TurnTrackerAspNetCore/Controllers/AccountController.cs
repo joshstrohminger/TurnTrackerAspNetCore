@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels.Account;
+using TurnTrackerAspNetCore.ViewModels.Admin;
 
 namespace TurnTrackerAspNetCore.Controllers
 {
@@ -22,8 +24,9 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly ILogger _logger;
         //private readonly ISmsSender _smsSender;
         private readonly IEmailSender _emailSender;
+        private readonly ISiteSettings _siteSettings;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, IAuthorizationService authorizationService, ILoggerFactory loggerFactory, /*ISmsSender smsSender,*/ IEmailSender emailSender)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITaskData taskData, IAuthorizationService authorizationService, ILoggerFactory loggerFactory, /*ISmsSender smsSender,*/ IEmailSender emailSender, ISiteSettings siteSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -31,6 +34,7 @@ namespace TurnTrackerAspNetCore.Controllers
             _authorizationService = authorizationService;
             //_smsSender = smsSender;
             _emailSender = emailSender;
+            _siteSettings = siteSettings;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -42,14 +46,58 @@ namespace TurnTrackerAspNetCore.Controllers
 
         #region Register
         [HttpGet, AllowAnonymous]
-        public IActionResult Register()
+        public IActionResult Register(string inviteToken = null)
         {
-            return View();
+            switch (_siteSettings.Settings.General.RegistrationMode)
+            {
+                case RegistrationMode.Open:
+                    return View();
+                case RegistrationMode.InviteOnly:
+                    if (string.IsNullOrWhiteSpace(inviteToken))
+                    {
+                        return View("RegistrationInviteOnly");
+                    }
+                    if (!IsValidRegistrationToken(inviteToken))
+                    {
+                        ViewBag.ErrorMessage = "Invalid Token";
+                        return View("RegistrationInviteOnly");
+                    }
+                    return View(nameof(Register), new RegisterUserViewModel { InviteToken = inviteToken });
+                case RegistrationMode.Closed:
+                default:
+                    return View("RegistrationClosed");
+            }
+        }
+
+        private bool IsValidRegistrationToken(string token)
+        {
+            // todo check if it's a legit token
+            return false;
         }
 
         [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
+            switch (_siteSettings.Settings.General.RegistrationMode)
+            {
+                case RegistrationMode.Open:
+                    break;
+                case RegistrationMode.InviteOnly:
+                    if (string.IsNullOrWhiteSpace(model.InviteToken))
+                    {
+                        return View("RegistrationInviteOnly");
+                    }
+                    if (!IsValidRegistrationToken(model.InviteToken))
+                    {
+                        ViewBag.ErrorMessage = "Invalid Token";
+                        return View("RegistrationInviteOnly");
+                    }
+                    break;
+                case RegistrationMode.Closed:
+                default:
+                    return View("RegistrationClosed");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);

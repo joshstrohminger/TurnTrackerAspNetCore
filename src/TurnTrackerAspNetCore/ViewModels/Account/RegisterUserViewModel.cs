@@ -21,5 +21,7 @@ namespace TurnTrackerAspNetCore.ViewModels.Account
 
         [Display(Name = "Confirm Password"), DataType(DataType.Password), Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
+
+        public string InviteToken { get; set; }
     }
 }

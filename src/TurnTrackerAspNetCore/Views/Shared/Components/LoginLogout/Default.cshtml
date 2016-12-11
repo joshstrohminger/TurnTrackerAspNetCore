@@ -1,5 +1,7 @@
 ﻿@using System.Threading.Tasks
 @using Microsoft.AspNetCore.Identity
+@using TurnTrackerAspNetCore.Services
+@using TurnTrackerAspNetCore.ViewModels.Admin
 @*@if (User.Identity.IsAuthenticated)
 {
     <form class="navbar-form navbar-right" method="post" asp-antiforgery="true" asp-controller="Account" asp-action="Logout">
@@ -22,7 +24,7 @@ else
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+    <form asp-controller="Account" asp-action="Logout" method="post" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a asp-controller="Manage" asp-action="Index" title="Manage"><span class="glyphicon glyphicon-user"></span> @UserManager.GetUserName(User)</a>

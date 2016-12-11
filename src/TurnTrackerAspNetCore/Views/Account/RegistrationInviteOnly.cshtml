@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Registration";
+    var errorMessage = ViewBag.ErrorMessage;
+}
+<h1>Registration By Invite Only</h1>
+@if (string.IsNullOrWhiteSpace(errorMessage))
+{
+    <p>
+        You need to know the site creator or someone who already has an account to get an invite. It's very exclusive.
+    </p>
+}
+else
+{
+    <p class="text-danger">@errorMessage</p>
+}
