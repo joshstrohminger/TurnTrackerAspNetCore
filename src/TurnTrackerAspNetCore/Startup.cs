@@ -41,6 +41,7 @@ namespace TurnTrackerAspNetCore
         {
             services.AddMvc();
             services.AddSingleton(Configuration);
+            services.AddSingleton<ISiteSettings, SiteSettings>();
             services.AddScoped<ITaskData, SqlTaskData>();
             services.AddDbContext<TurnTrackerDbContext>(
                 options => options.UseSqlServer(

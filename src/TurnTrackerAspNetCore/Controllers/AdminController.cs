@@ -24,13 +24,15 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ISiteSettings _siteSettings;
 
-        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory)
+        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory, ISiteSettings siteSettings)
         {
             _taskData = taskData;
             _roleManager = roleManager;
             _userManager = userManager;
             _emailSender = emailSender;
+            _siteSettings = siteSettings;
             _logger = loggerFactory.CreateLogger<AdminController>();
         }
 
@@ -221,6 +223,33 @@ namespace TurnTrackerAspNetCore.Controllers
                $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>",
                EmailCategory.Confirm, user.Email);
             return RedirectToAction(nameof(Users), new {errorMessage = success ? "" : "Failed to send email"});
+        }
+
+        [HttpGet]
+        public IActionResult SiteSettings()
+        {
+            if (!_siteSettings.Load())
+            {
+                ViewBag.ErrorMessage = "Failed to load";
+            }
+            return View(_siteSettings.Settings);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult SiteSettings(SiteSettingsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            _siteSettings.Settings = model;
+            if (_siteSettings.Save())
+            {
+                return RedirectToAction(nameof(SiteSettings));
+            }
+            ViewBag.ErrorMessage = "Failed to save";
+            return View(model);
         }
     }
 }

@@ -13,6 +13,8 @@ namespace TurnTrackerAspNetCore.Entities
 
         public DbSet<TurnCount> TurnCounts { get; set; }
 
+        public DbSet<SiteSetting> SiteSettings { get; set; }
+
         public TurnTrackerDbContext(DbContextOptions options) : base(options)
         {
         }

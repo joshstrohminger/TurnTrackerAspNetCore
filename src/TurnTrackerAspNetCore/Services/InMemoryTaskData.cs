@@ -36,6 +36,21 @@ namespace TurnTrackerAspNetCore.Services
             }
         }
 
+        public List<SiteSetting> GetSiteSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(SiteSetting setting)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(SiteSetting setting)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<TrackedTask> GetAllTasks()
         {
             return Tasks;

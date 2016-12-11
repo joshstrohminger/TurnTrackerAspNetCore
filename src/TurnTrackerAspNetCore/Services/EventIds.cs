@@ -14,5 +14,9 @@
         public const int UserUpdatedProfile = 10;
         public const int UserProfileModifiedByAdmin = 11;
         public const int EmailConfirmationSent = 12;
+        public const int SiteSettingLoadError = 13;
+        public const int SiteSettingSaveError = 14;
+        public const int SiteSettingRemoved = 15;
+        public const int SiteSettingAdded = 16;
     }
 }

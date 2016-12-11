@@ -5,6 +5,9 @@ namespace TurnTrackerAspNetCore.Services
 {
     public interface ITaskData
     {
+        List<SiteSetting> GetSiteSettings();
+        void Add(SiteSetting setting);
+        void Remove(SiteSetting setting);
         IEnumerable<TrackedTask> GetAllTasks();
         TrackedTask GetTask(long id);
         TrackedTask GetTaskDetails(long id);

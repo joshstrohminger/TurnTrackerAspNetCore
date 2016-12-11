@@ -1,0 +1,55 @@
+﻿@using System.Threading.Tasks
+@using TurnTrackerAspNetCore.ViewModels.Admin
+@model SiteSettingsViewModel
+@{
+    ViewBag.Title = "Site Settings";
+    var errorMessage = ViewBag.ErrorMessage;
+}
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Error:</strong> @errorMessage
+    </div>
+}
+<h1>@ViewBag.Title</h1>
+<form method="post" class="form-horizontal" asp-action="SiteSettings" asp-antiforgery="true">
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <h4>@nameof(Model.General)</h4>
+    <div class="form-group">
+        <label asp-for="General.Name" class="col-sm-2 control-label"></label>
+        <div class="col-sm-4">
+            <input asp-for="General.Name" class="form-control"/>
+        </div>
+        <div class="col-sm-6">
+            <span class="text-danger" asp-validation-for="General.Name"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="General.NewThing"><label style="padding-left: 0;" asp-for="General.NewThing"></label>
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <span class="text-danger" asp-validation-for="General.NewThing"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="General.RegistrationMode" class="col-sm-2 control-label"></label>
+        <div class="col-sm-2">
+            <select asp-for="General.RegistrationMode" asp-items="@Html.GetEnumSelectList(typeof(RegistrationMode))" class="form-control"></select>
+        </div>
+        <div class="col-sm-8">
+            <span class="text-danger" asp-validation-for="General.RegistrationMode"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2">
+            <input class="btn btn-primary" type="submit" value="Save"/>
+            <a class="btn btn-default" asp-action="SiteSettings">Cancel</a>
+        </div>
+    </div>
+</form>

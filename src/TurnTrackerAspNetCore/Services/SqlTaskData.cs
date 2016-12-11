@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Server.Kestrel.Internal.Networking;
 using Microsoft.EntityFrameworkCore;
 using TurnTrackerAspNetCore.Entities;
 
@@ -13,6 +14,21 @@ namespace TurnTrackerAspNetCore.Services
         public SqlTaskData(TurnTrackerDbContext context)
         {
             _context = context;
+        }
+
+        public List<SiteSetting> GetSiteSettings()
+        {
+            return _context.SiteSettings.OrderBy(x => x.Name).ToList();
+        }
+
+        public void Add(SiteSetting setting)
+        {
+            _context.Add(setting);
+        }
+
+        public void Remove(SiteSetting setting)
+        {
+            _context.Remove(setting);
         }
 
         public IEnumerable<TrackedTask> GetAllTasks()
