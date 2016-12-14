@@ -8,6 +8,8 @@ namespace TurnTrackerAspNetCore.Entities
     {
         [Display(Name = "Display Name"), MaxLength(100)]
         public string DisplayName { get; set; }
+
         public List<Participant> Participations { get; set; }
+
     }
 }

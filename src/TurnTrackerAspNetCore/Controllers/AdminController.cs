@@ -267,5 +267,36 @@ namespace TurnTrackerAspNetCore.Controllers
             ModelState.AddModelError("", "Failed to send");
             return View(nameof(Users), model);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Disable(string id)
+        {
+            return await SetDisabled(id, true);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Enable(string id)
+        {
+            return await SetDisabled(id, false);
+        }
+
+        private async Task<IActionResult> SetDisabled(string id, bool disabled)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (null == user)
+            {
+                return new NotFoundResult();
+            }
+            var result = await _userManager.SetLockoutEndDateAsync(user, disabled ? DateTimeOffset.MaxValue : (DateTimeOffset?)null);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(Users));
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(nameof(Users));
+        }
     }
 }

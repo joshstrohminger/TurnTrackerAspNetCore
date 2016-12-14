@@ -18,32 +18,49 @@
         <th>Roles</th>
         <th>Id</th>
         <th>Email</th>
+        <th>Lock</th>
         <th></th>
     </tr>
     </thead>
     @foreach (var user in Model)
     {
-        <tr>
+        var lockedOut = user.LockoutEnabled && user.LockoutEnd.HasValue;
+        var lockType = "";
+        var disabled = false;
+        if (lockedOut)
+        {
+            disabled = user.LockoutEnd == DateTimeOffset.MaxValue;
+            lockType = disabled ? "Disabled" : "Locked";
+        }
+        <tr class="@(disabled ? "warning" : "")">
             <td>@user.UserName</td>
             <td>@user.DisplayName</td>
             <td>@string.Join(", ", user.Roles.Select(role => ViewBag.Roles[role.RoleId]))</td>
             <td>@user.Id</td>
             <td>@user.Email</td>
+            <td>@lockType</td>
             <td class="clearfix">
                 <div class="pull-right action-group">
                     @if (!user.EmailConfirmed)
-                {
+                    {
                         <form method="post" asp-action="ReSendConfirmationEmail" asp-antiforgery="true" asp-route-userid="@user.Id">
-                            <button type="submit" class="btn btn-xs btn-primary">Re-Send Confirmation</button>
+                            <button type="submit" class="btn btn-xs btn-primary" title="Re-Send Confirmation">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                            </button>
                         </form>
                     }
                     @if (ViewBag.MyUserId != user.Id)
-                {
-                        <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-xs btn-success">
+                    {
+                        <form asp-action="@(disabled ? "Enable" : "Disable")" method="post" asp-antiforgery="true" asp-route-id="@user.Id">
+                            <button type="submit" class="btn btn-xs btn-@(disabled ? "default" : "warning")" title="@(disabled ? "Enable" : "Disable")">
+                                <span class="glyphicon glyphicon-ban-circle"></span>
+                            </button>
+                        </form>
+                        <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-xs btn-success" title="Edit">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
-                        <form asp-action="DeleteUser" asp-antiforgery="true" asp-route-id="@user.Id">
-                            <button class="btn btn-xs btn-danger" type="submit">
+                        <form asp-action="DeleteUser" method="post" asp-antiforgery="true" asp-route-id="@user.Id">
+                            <button class="btn btn-xs btn-danger" type="submit" title="Delete">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </form>
