@@ -443,6 +443,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
+                await _signInManager.SignInAsync(user, false);
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
             }
             AddErrors(result);
