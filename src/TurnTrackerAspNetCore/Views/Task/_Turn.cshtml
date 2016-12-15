@@ -1,8 +1,8 @@
 ﻿@model Turn
 <tr>
-    <td>@(Model.User.DisplayName ?? Model.User.UserName)</td>
+    <td class="taker">@(Model.User.DisplayName ?? Model.User.UserName)</td>
     <td>
-        <span>@Model.Taken.ToOffset(ViewBag.TimezoneOffset).ToString("G")</span>
+        <span class="taken">@Model.Taken.ToOffset(ViewBag.TimezoneOffset).ToString("G")</span>
         @if (Math.Abs((Model.Taken - Model.Created).TotalHours) > 2)
         {
             <span class="glyphicon glyphicon-alert warning"></span>
@@ -22,8 +22,8 @@
             <a asp-controller="Turn" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-xs btn-success">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
-            <form asp-controller="Turn" asp-action="Delete" asp-route-id="@Model.Id" asp-antiforgery="true" method="post">
-                <button type="submit" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+            <form class="delete-turn" asp-controller="Turn" asp-action="Delete" asp-route-id="@Model.Id" asp-antiforgery="true" method="post">
+                <button type="button" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
             </form>
         </td>
     }

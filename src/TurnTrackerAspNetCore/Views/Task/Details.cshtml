@@ -63,11 +63,9 @@
                 </a>
                 @if (Model.CanDeleteTask)
                 {
-                    <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Task" asp-action="Delete" method="post">
-                        <button class="btn btn-danger btn-sm" type="submit">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                    </form>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-task-modal">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
                 }
             </div>
         }
@@ -134,6 +132,49 @@ else
         }
     </table>
 }
+
+<div class="modal fade" id="delete-task-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete Task</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete task '@Model.Task.Name'?</p>
+            </div>
+            <div class="modal-footer action-group">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                @if (Model.CanDeleteTask)
+                {
+                    <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Task" asp-action="Delete" method="post">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-turn-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete Turn</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the turn taken by <span id="modal-turn-taker"></span> on <span id="modal-turn-taken"></span>?</p>
+            </div>
+            <div class="modal-footer action-group">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <form asp-controller="Turn" asp-action="Delete" asp-route-id="0" asp-antiforgery="true" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section footer {
     <span class="timezone">UTC Offset: @timezoneOffset</span>
