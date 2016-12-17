@@ -78,7 +78,17 @@ namespace TurnTrackerAspNetCore.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new EditTaskViewModel { Owner = _userManager.GetUserId(HttpContext.User) });
+            var owner = _userManager.GetUserId(HttpContext.User);
+            return View(new EditTaskViewModel
+            {
+                Owner = owner,
+                Users = _taskData.GetAllUsers().Select(x => new SelectListItem
+                {
+                    Value = x.Id,
+                    Text = x.DisplayName == null ? $"{x.UserName}" : $"{x.DisplayName} ({x.UserName})",
+                    Selected = owner == x.Id
+                }).ToList()
+            });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -98,7 +108,12 @@ namespace TurnTrackerAspNetCore.Controllers
                 UserId = userId
             };
             var newTask = _taskData.Add(task);
-            newTask.Participants = new List<Participant> { new Participant { UserId = userId, TaskId = newTask.Id } };
+            // ensure the creator is a participant
+            newTask.Participants =
+                new[] {userId}.Union(model.Participants ?? new List<string>())
+                    .Distinct()
+                    .Select(x => new Participant {UserId = x, TaskId = newTask.Id})
+                    .ToList();
             _taskData.Commit();
             return RedirectToAction(nameof(Details), new { id = newTask.Id });
         }
