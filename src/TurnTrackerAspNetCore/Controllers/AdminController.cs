@@ -141,8 +141,12 @@ namespace TurnTrackerAspNetCore.Controllers
             var myName = _userManager.GetUserName(User);
 
             user.DisplayName = model.DisplayName;
+            if(user.Email != model.Email)
+            {
+                user.EmailConfirmed = false;
+            }
             user.Email = model.Email;
-            user.PhoneNumber = model.PhoneNumber;
+            //user.PhoneNumber = model.PhoneNumber;
 
             var results = new List<IdentityResult> {await _userManager.UpdateAsync(user)};
 
@@ -188,29 +192,29 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [HttpGet]
-        public IActionResult Test()
+        public IActionResult Invite()
         {
             return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendEmail(SendEmailViewModel model)
+        public async Task<IActionResult> Invite(SendEmailViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(nameof(Test), model);
+                return View(nameof(Invite), model);
             }
 
             var name = _userManager.GetUserName(User);
-            var success = await _emailSender.SendEmailAsync("Test Email", $"This is a test from {name}.", EmailCategory.Confirm, model.Email);
+            var success = await _emailSender.SendEmailAsync($"{_siteSettings.Settings.General.Name} Invite", $"This is an invite to register for {_siteSettings.Settings.General.Name}. Please follow this link: link", EmailCategory.Invite, model.Email);
             if (success)
             {
                 _logger.LogInformation(EventIds.EmailConfirmationSent, name);
-                return RedirectToAction(nameof(Test));
+                return RedirectToAction(nameof(Invite));
             }
             
             ModelState.AddModelError("", "Failed to send");
-            return View(nameof(Test), model);
+            return View(nameof(Invite), model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -246,26 +250,6 @@ namespace TurnTrackerAspNetCore.Controllers
             }
             ViewBag.ErrorMessage = "Failed to save";
             return View(model);
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Invite(SendEmailViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(nameof(Users), model);
-            }
-
-            var name = _userManager.GetUserName(User);
-            var success = await _emailSender.SendEmailAsync($"{_siteSettings.Settings.General.Name} Invite", $"This is an invite to register for {_siteSettings.Settings.General.Name}. Please followt his link: link", EmailCategory.Confirm, model.Email);
-            if (success)
-            {
-                _logger.LogInformation(EventIds.EmailInviteSent, name);
-                return RedirectToAction(nameof(Users));
-            }
-
-            ModelState.AddModelError("", "Failed to send");
-            return View(nameof(Users), model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]

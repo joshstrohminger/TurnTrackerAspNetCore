@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Send Confirmation Email";
+    var error = ViewBag.ErrorMessage;
+    var info = ViewBag.InfoMessage;
+}
+
+@if (!string.IsNullOrWhiteSpace(error))
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Error:</strong> @error
+    </div>
+}
+@if (!string.IsNullOrWhiteSpace(info))
+{
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @info
+    </div>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+You have not confirmed your email address: @Model <a asp-controller="Account" asp-action="Edit" asp-route-returnurl="@($"{Context.Request.Path}{Context.Request.QueryString}")">Change</a>
+<br/>
+<br/>
+<form asp-controller="Account" asp-action="SendConfirmationEmail" method="post" asp-antiforgery="true">
+    <button type="submit" class="btn btn-primary">Re-Send Confirmation Email</button>
+</form>

@@ -23,7 +23,7 @@ else
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-controller="Account" asp-action="Logout" method="post" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav">
             <li>
                 <a asp-controller="Manage" asp-action="Index" title="Manage"><span class="glyphicon glyphicon-user"></span> @UserManager.GetUserName(User)</a>
             </li>

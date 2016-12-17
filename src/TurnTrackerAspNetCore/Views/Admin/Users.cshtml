@@ -45,7 +45,8 @@
                     {
                         <form method="post" asp-action="ReSendConfirmationEmail" asp-antiforgery="true" asp-route-userid="@user.Id">
                             <button type="submit" class="btn btn-xs btn-primary" title="Re-Send Confirmation">
-                                <span class="glyphicon glyphicon-envelope"></span>
+                                @*<span class="glyphicon glyphicon-envelope"></span>*@
+                                <span class="glyphicon glyphicon-repeat"></span>
                             </button>
                         </form>
                     }

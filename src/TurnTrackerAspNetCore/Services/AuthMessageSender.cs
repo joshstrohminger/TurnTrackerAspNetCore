@@ -21,7 +21,8 @@ namespace TurnTrackerAspNetCore.Services
 
     public enum EmailCategory
     {
-        Confirm
+        Confirm,
+        Invite
     }
 
     public interface IEmailSender
@@ -40,12 +41,14 @@ namespace TurnTrackerAspNetCore.Services
         private readonly IConfiguration _config;
         private readonly ILogger _logger;
         private readonly UserManager<User> _userManager;
+        private readonly ISiteSettings _siteSettings;
 
         public AuthMessageSender(IOptions<AuthMessageSenderOptions> optionsAccessor, IConfiguration config,
-            ILoggerFactory loggerFactory, UserManager<User> userManager)
+            ILoggerFactory loggerFactory, UserManager<User> userManager, ISiteSettings siteSettings)
         {
             _config = config;
             _userManager = userManager;
+            _siteSettings = siteSettings;
             _logger = loggerFactory.CreateLogger<AuthMessageSender>();
             Options = optionsAccessor.Value;
         }
@@ -71,7 +74,7 @@ namespace TurnTrackerAspNetCore.Services
 
             var myMessage = new SendGrid.SendGridMessage
             {
-                From = new System.Net.Mail.MailAddress(fromAddress, fromName),
+                From = new System.Net.Mail.MailAddress(fromAddress, string.Format(fromName, _siteSettings.Settings.General.Name)),
                 Subject = subject,
                 Text = message,
                 Html = message

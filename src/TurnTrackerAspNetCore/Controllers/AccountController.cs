@@ -138,10 +138,9 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 // Send an email with this link
                 var success = await _emailSender.SendConfirmationEmailAsync(user, Url, HttpContext);
-                //todo handle failed email
                 //await _signInManager.SignInAsync(user, false);
                 //_logger.LogInformation(EventIds.UserLoggedIn, user.UserName);
-                return RedirectToAction(nameof(TaskController.Index), "Task");
+                return RedirectToAction(nameof(SendConfirmationEmail), new { errorMessage = success ? "" : "Failed to send confirmation email", infoMessage = success ? "Sent confirmation email" : "" });
             }
 
             foreach (var error in result.Errors)
@@ -169,6 +168,13 @@ namespace TurnTrackerAspNetCore.Controllers
                 if (loginResult.Succeeded)
                 {
                     _logger.LogInformation(EventIds.UserLoggedIn, model.UserName);
+
+                    var user = await _userManager.FindByNameAsync(model.UserName);
+                    if (!user.EmailConfirmed)
+                    {
+                        return RedirectToAction(nameof(SendConfirmationEmail));
+                    }
+
                     if (Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
@@ -189,6 +195,36 @@ namespace TurnTrackerAspNetCore.Controllers
             return View(model);
         }
         #endregion Login
+
+        #region Send Confirmation Email
+
+        [HttpGet]
+        public async Task<IActionResult> SendConfirmationEmail(string errorMessage = null, string infoMessage = null)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user.EmailConfirmed)
+            {
+                RedirectToAction(nameof(TaskController.Index), "Task");
+            }
+
+            ViewBag.ErrorMessage = string.IsNullOrWhiteSpace(errorMessage) ? null : errorMessage;
+            ViewBag.InfoMessage = string.IsNullOrWhiteSpace(infoMessage) ? null : infoMessage;
+            return View(nameof(SendConfirmationEmail), user.Email);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendConfirmationEmail()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user.EmailConfirmed)
+            {
+                RedirectToAction(nameof(TaskController.Index), "Task");
+            }
+
+            var success = await _emailSender.SendConfirmationEmailAsync(user, Url, HttpContext);
+            return RedirectToAction(nameof(SendConfirmationEmail), new {errorMessage = success ? "" : "Failed to send confirmation email", infoMessage = success ? "Sent confirmation email" : ""});
+        }
+        #endregion Send Confirmation Email
 
         #region Logout
         [HttpPost, ValidateAntiForgeryToken]
@@ -259,7 +295,10 @@ namespace TurnTrackerAspNetCore.Controllers
                 _logger.LogInformation(EventIds.UserUpdatedProfile, user.UserName);
                 if (!user.EmailConfirmed)
                 {
-                    var success = _emailSender.SendConfirmationEmailAsync(user, Url, HttpContext);
+                    var success = await _emailSender.SendConfirmationEmailAsync(user, Url, HttpContext);
+                    //await _signInManager.SignInAsync(user, false);
+                    //_logger.LogInformation(EventIds.UserLoggedIn, user.UserName);
+                    return RedirectToAction(nameof(SendConfirmationEmail), new { errorMessage = success ? "" : "Failed to send confirmation email", infoMessage = success ? "Sent confirmation email" : "" });
                 }
                 if(!string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                 {

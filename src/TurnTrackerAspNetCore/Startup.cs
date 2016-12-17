@@ -64,7 +64,7 @@ namespace TurnTrackerAspNetCore
             services.Configure<IdentityOptions>(options =>
             {
                 //options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = true;
+                //options.SignIn.RequireConfirmedEmail = true;
                 //options.SignIn.RequireConfirmedPhoneNumber = true;
             });
         }
