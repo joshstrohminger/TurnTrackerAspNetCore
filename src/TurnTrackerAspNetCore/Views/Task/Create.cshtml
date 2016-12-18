@@ -3,34 +3,34 @@
 <div>
     <h1>Create Task</h1>
     <form method="post" asp-action="Create" asp-antiforgery="true" class="form-horizontal">
-        <div asp-validation-summary="ModelOnly"></div>
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
         <input type="hidden" asp-for="Owner"/>
         <div class="form-group">
             <label asp-for="Name" class="col-sm-2"></label>
             <div class="col-sm-10">
                 <input asp-for="Name" class="form-control"/>
-                <span asp-validation-for="Name"></span>
+                <span class="text-danger" asp-validation-for="Name"></span>
             </div>
         </div>
         @*<div class="form-group">
         <label asp-for="TeamBased"></label>
         <div class="col-sm-10">
         <input asp-for="TeamBased" class="form-control"/>
-        <span asp-validation-for="TeamBased"></span>
+        <span class="text-danger" asp-validation-for="TeamBased"></span>
         </div>
     </div>*@
         <div class="form-group">
             <label asp-for="Period" class="col-sm-2 control-label"></label>
             <div class="col-sm-2">
                 <input asp-for="Period" class="form-control"/>
-                <span asp-validation-for="Period"></span>
+                <span class="text-danger" asp-validation-for="Period"></span>
             </div>
         </div>
         <div class="form-group">
             <label asp-for="Unit" class="col-sm-2 control-label"></label>
             <div class="col-sm-2">
                 <select asp-for="Unit" class="form-control" asp-items="@Html.GetEnumSelectList(typeof(PeriodUnit))"></select>
-                <span asp-validation-for="Unit"></span>
+                <span class="text-danger" asp-validation-for="Unit"></span>
             </div>
         </div>
         <div class="form-group">

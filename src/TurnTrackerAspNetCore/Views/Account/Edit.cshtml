@@ -5,7 +5,7 @@
 <h1>Edit Profile</h1>
 
 <form method="post" asp-antiforgery="true" class="form-horizontal">
-    <div asp-validation-summary="ModelOnly"></div>
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
     <input type="hidden" asp-for="ReturnUrl"/>
     <div class="form-group">
         <label asp-for="UserName" class="col-sm-2 control-label"></label>
@@ -18,7 +18,7 @@
         </div>
         <div class="col-sm-4">
             <span>Optional</span>
-            <span asp-validation-for="DisplayName"></span>
+            <span class="text-danger" asp-validation-for="DisplayName"></span>
         </div>
     </div>
     @*<div class="form-group">
@@ -28,7 +28,7 @@
         </div>
         <div class="col-sm-4">
             <span>Optional</span>
-            <span asp-validation-for="PhoneNumber"></span>
+            <span class="text-danger" asp-validation-for="PhoneNumber"></span>
         </div>
     </div>*@
     <div class="form-group">
@@ -37,8 +37,7 @@
             <input asp-for="Email" class="form-control" />
         </div>
         <div class="col-sm-2">
-            <span>Optional</span>
-            <span asp-validation-for="Email"></span>
+            <span class="text-danger" asp-validation-for="Email"></span>
         </div>
     </div>
     <div class="form-group">
