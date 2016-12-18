@@ -41,6 +41,26 @@ namespace TurnTrackerAspNetCore.Services
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Invite> GetAllInvites()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddInvite(Invite invite)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteInvite(Invite invite)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Invite GetInvite(Guid token)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Add(SiteSetting setting)
         {
             throw new NotImplementedException();

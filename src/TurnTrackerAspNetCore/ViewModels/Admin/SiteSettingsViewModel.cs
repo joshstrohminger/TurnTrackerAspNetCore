@@ -19,6 +19,9 @@ namespace TurnTrackerAspNetCore.ViewModels.Admin
 
         [Required, Display(Name = "API Enabled")]
         public bool ApiEnabled { get; set; } = true;
+
+        [Required, Display(Name = "Invite Expiration Hours"), Range(1, 168)]
+        public int InviteExpirationHours { get; set; } = 72;
     }
 
     public enum RegistrationMode

@@ -8,9 +8,10 @@ using TurnTrackerAspNetCore.Entities;
 namespace TurnTrackerAspNetCore.Migrations
 {
     [DbContext(typeof(TurnTrackerDbContext))]
-    partial class TurnTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161218094411_Add Invites")]
+    partial class AddInvites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -136,16 +137,14 @@ namespace TurnTrackerAspNetCore.Migrations
                         .IsRequired()
                         .HasMaxLength(256);
 
-                    b.Property<DateTimeOffset>("Expires");
-
                     b.Property<string>("InviteeId");
 
                     b.Property<string>("InviterId")
                         .IsRequired();
 
-                    b.Property<DateTimeOffset?>("Sent");
+                    b.Property<DateTimeOffset>("Sent");
 
-                    b.Property<DateTimeOffset?>("Used");
+                    b.Property<DateTimeOffset>("Used");
 
                     b.HasKey("Token");
 

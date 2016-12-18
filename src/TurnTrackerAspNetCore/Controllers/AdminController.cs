@@ -192,29 +192,66 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [HttpGet]
-        public IActionResult Invite()
+        public IActionResult Invites(string errorMessage = null, string infoMessage = null)
         {
-            return View();
+            ViewBag.ErrorMessage = string.IsNullOrWhiteSpace(errorMessage) ? null : errorMessage;
+            ViewBag.InfoMessage = string.IsNullOrWhiteSpace(infoMessage) ? null : infoMessage;
+            return View(_taskData.GetAllInvites().OrderByDescending(x => x.Sent).ThenByDescending(x => x.Created).ToList());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Invite(SendEmailViewModel model)
+        public async Task<IActionResult> AddInvite(SendEmailViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (_siteSettings.Settings.General.RegistrationMode != RegistrationMode.InviteOnly)
             {
-                return View(nameof(Invite), model);
+                return RedirectToAction(nameof(Invites), new {errorMessage = "Registration Mode must be set to InviteOnly"});
             }
 
-            var name = _userManager.GetUserName(User);
-            var success = await _emailSender.SendEmailAsync($"{_siteSettings.Settings.General.Name} Invite", $"This is an invite to register for {_siteSettings.Settings.General.Name}. Please follow this link: link", EmailCategory.Invite, model.Email);
-            if (success)
+            if (!ModelState.IsValid)
             {
-                _logger.LogInformation(EventIds.EmailConfirmationSent, name);
-                return RedirectToAction(nameof(Invite));
+                return RedirectToAction(nameof(Invites), new {errorMessage = "Invalid email"});
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var invite = new Invite
+            {
+                Email = model.Email,
+                InviterId = user.Id,
+                Expires = DateTimeOffset.UtcNow.AddHours(_siteSettings.Settings.General.InviteExpirationHours)
+            };
+
+            _taskData.AddInvite(invite);
+            _taskData.Commit();
+
+            if (invite.Token == Guid.Empty)
+            {
+                return RedirectToAction(nameof(Invites), new {errorMessage = "Failed to generate invite"});
             }
             
-            ModelState.AddModelError("", "Failed to send");
-            return View(nameof(Invite), model);
+            var success = await _emailSender.SendInviteEmailAsync(invite, Url, HttpContext);
+            if (success)
+            {
+                _logger.LogInformation(EventIds.EmailInviteSent, $"{user.UserName} invited '{invite.Email}'");
+                invite.Sent = DateTimeOffset.UtcNow;
+                _taskData.Commit();
+                return RedirectToAction(nameof(Invites), new {errorMessage = (string)null, infoMessage = "Sent invite"});
+            }
+            
+            return RedirectToAction(nameof(Invites), new { errorMessage = "Failed to send email" });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult DeleteInvite(Guid token)
+        {
+            var invite = _taskData.GetInvite(token);
+            if (null == invite)
+            {
+                return new NotFoundResult();
+            }
+            _taskData.DeleteInvite(invite);
+            _taskData.Commit();
+            return RedirectToAction(nameof(Invites), new {errorMessage = (string)null, infoMessage = "Deleted Invite"});
         }
 
         [HttpPost, ValidateAntiForgeryToken]

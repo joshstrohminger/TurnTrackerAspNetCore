@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TurnTrackerAspNetCore.Entities;
 
 namespace TurnTrackerAspNetCore.Services
@@ -6,6 +7,10 @@ namespace TurnTrackerAspNetCore.Services
     public interface ITaskData
     {
         List<SiteSetting> GetSiteSettings();
+        IEnumerable<Invite> GetAllInvites();
+        void AddInvite(Invite invite);
+        void DeleteInvite(Invite invite);
+        Invite GetInvite(Guid token);
         void Add(SiteSetting setting);
         void Remove(SiteSetting setting);
         IEnumerable<TrackedTask> GetAllTasks();

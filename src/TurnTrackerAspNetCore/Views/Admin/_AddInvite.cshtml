@@ -1,0 +1,12 @@
+﻿@model TurnTrackerAspNetCore.ViewModels.Admin.SendEmailViewModel
+
+<form class="form-inline" method="post" asp-antiforgery="true" asp-controller="Admin" asp-action="AddInvite">
+
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Send Invite</button>
+    <span class="text-danger" asp-validation-for="Email"></span>
+</form>

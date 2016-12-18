@@ -29,6 +29,7 @@ namespace TurnTrackerAspNetCore.Services
     {
         Task<bool> SendEmailAsync(string subject, string message, EmailCategory category, params string[] destinations);
         Task<bool> SendConfirmationEmailAsync(User user, IUrlHelper url, HttpContext context);
+        Task<bool> SendInviteEmailAsync(Invite invite, IUrlHelper url, HttpContext context);
     }
 
     public interface ISmsSender
@@ -108,6 +109,15 @@ namespace TurnTrackerAspNetCore.Services
             var success = await SendEmailAsync("Confirm your account",
                $"Please confirm your account by clicking this <a href='{callbackUrl}'>link</a>",
                EmailCategory.Confirm, user.Email);
+            return success;
+        }
+
+        public async Task<bool> SendInviteEmailAsync(Invite invite, IUrlHelper url, HttpContext context)
+        {
+            var callbackUrl = url.Action(nameof(AccountController.Register), "Account", new { inviteToken = invite.Token}, protocol: context.Request.Scheme);
+            var success = await SendEmailAsync($"{_siteSettings.Settings.General.Name} Invite",
+                $"This is an invite to register for {_siteSettings.Settings.General.Name}. Please follow this <a href='{callbackUrl}'>link</a><br>It is only valid for {_siteSettings.Settings.General.InviteExpirationHours} hours.",
+                EmailCategory.Invite, invite.Email);
             return success;
         }
 

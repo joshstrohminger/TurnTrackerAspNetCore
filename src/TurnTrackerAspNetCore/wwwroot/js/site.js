@@ -24,3 +24,13 @@ $('.delete-user button').click(function (event) {
     modal.find('form').attr('action', url);
     modal.modal('show');
 });
+
+$('.delete-invite button').click(function (event) {
+    var modal = $("#delete-invite-modal");
+    var url = event.currentTarget.form.action;
+    var tr = $(event.currentTarget).closest('tr');
+    var email = tr.find('.email').text();
+    modal.find('#modal-invite-email').text(email);
+    modal.find('form').attr('action', url);
+    modal.modal('show');
+});

@@ -15,6 +15,8 @@ namespace TurnTrackerAspNetCore.Entities
 
         public DbSet<SiteSetting> SiteSettings { get; set; }
 
+        public DbSet<Invite> Invites { get; set; }
+
         public TurnTrackerDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -31,6 +33,9 @@ namespace TurnTrackerAspNetCore.Entities
             var tasks = modelBuilder.Entity<TrackedTask>();
             tasks.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
             tasks.Property(x => x.Modified).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
+
+            var invites = modelBuilder.Entity<Invite>();
+            invites.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
 
             var participants = modelBuilder.Entity<Participant>();
             participants.HasKey(x => new {x.TaskId, x.UserId});

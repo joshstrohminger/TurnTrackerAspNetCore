@@ -1,0 +1,6 @@
+﻿@model Invite
+<form class="delete-invite" asp-antiforgery="true" method="post" asp-controller="Admin" asp-action="DeleteInvite" asp-route-token="@Model.Token">
+    <button type="button" class="btn btn-danger btn-xs">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+</form>

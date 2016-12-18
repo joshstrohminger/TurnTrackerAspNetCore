@@ -1,0 +1,109 @@
+﻿@using System.Threading.Tasks
+@using TurnTrackerAspNetCore.Middleware
+@using TurnTrackerAspNetCore.Services
+@using TurnTrackerAspNetCore.ViewModels.Admin
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject ISiteSettings SiteSettings
+@model List<Invite>
+@{
+    ViewBag.Title = "Invites";
+    var error = ViewBag.ErrorMessage;
+    var info = ViewBag.InfoMessage;
+    string cookie;
+    if (!HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue(TimezoneOffsetReader.CookieKey, out cookie))
+    {
+        cookie = "0";
+    }
+    int minutes;
+    int.TryParse(cookie, out minutes);
+    var timezoneOffset = TimeSpan.FromMinutes(-minutes);
+    ViewBag.TimezoneOffset = timezoneOffset;
+}
+
+@if (!string.IsNullOrWhiteSpace(error))
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Error:</strong> @error
+    </div>
+}
+@if (!string.IsNullOrWhiteSpace(info))
+{
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @info
+    </div>
+}
+
+<h1>@ViewBag.Title</h1>
+
+@if (Model.Count == 0)
+{
+    <p>No Invites</p>
+}
+else
+{
+    <table class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <th>Inviter</th>
+            <th>Token</th>
+            <th>Email</th>
+            <th>Invitee</th>
+            <th>Used</th>
+            <th>Sent</th>
+            <th>Expires</th>
+            <th>Created</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var invite in Model)
+        {
+            <tr class="@(null != invite.InviteeId ? "success" : invite.Expires < DateTimeOffset.UtcNow ? "danger" : "")">
+                <td>@invite.Inviter.UserName</td>
+                <td>@invite.Token</td>
+                <td class="email">@invite.Email</td>
+                <td>@invite.Invitee?.UserName</td>
+                <td>@invite.Used?.ToOffset(timezoneOffset).ToString("G")</td>
+                <td>@invite.Sent?.ToOffset(timezoneOffset).ToString("G")</td>
+                <td>@invite.Expires.ToOffset(timezoneOffset).ToString("G")</td>
+                <td>@invite.Created.ToOffset(timezoneOffset).ToString("G")</td>
+                <td class="action-group">
+                    @Html.Partial("_DeleteInvite", invite)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    @section footer {
+        <span class="timezone">UTC Offset: @timezoneOffset</span>
+    }
+}
+
+@if (SiteSettings.Settings.General.RegistrationMode == RegistrationMode.InviteOnly)
+{
+    @Html.Partial("_AddInvite", new SendEmailViewModel())
+}
+<br/>
+
+<div class="modal fade" id="delete-invite-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete Invite</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the invite for <span id="modal-invite-email"></span>?</p>
+            </div>
+            <div class="modal-footer action-group">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <form asp-controller="Admin" asp-action="DeleteInvite" asp-route-id="0" asp-antiforgery="true" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

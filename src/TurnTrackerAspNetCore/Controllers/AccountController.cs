@@ -57,7 +57,7 @@ namespace TurnTrackerAspNetCore.Controllers
                     {
                         return View("RegistrationInviteOnly");
                     }
-                    if (!IsValidRegistrationToken(inviteToken))
+                    if (null == GetValidRegistrationInvite(inviteToken))
                     {
                         ViewBag.ErrorMessage = "Invalid Token";
                         return View("RegistrationInviteOnly");
@@ -69,15 +69,26 @@ namespace TurnTrackerAspNetCore.Controllers
             }
         }
 
-        private bool IsValidRegistrationToken(string token)
+        private Invite GetValidRegistrationInvite(string token)
         {
-            // todo check if it's a legit token
-            return false;
+            Guid key;
+            if (Guid.TryParse(token, out key))
+            {
+                var invite = _taskData.GetInvite(key);
+                return
+                    null != invite
+                    && !invite.Used.HasValue
+                    && invite.Expires > DateTimeOffset.UtcNow
+                        ? invite
+                        : null;
+            }
+            return null;
         }
 
         [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
+            Invite invite = null;
             switch (_siteSettings.Settings.General.RegistrationMode)
             {
                 case RegistrationMode.Open:
@@ -87,7 +98,8 @@ namespace TurnTrackerAspNetCore.Controllers
                     {
                         return View("RegistrationInviteOnly");
                     }
-                    if (!IsValidRegistrationToken(model.InviteToken))
+                    invite = GetValidRegistrationInvite(model.InviteToken);
+                    if (null == invite)
                     {
                         ViewBag.ErrorMessage = "Invalid Token";
                         return View("RegistrationInviteOnly");
@@ -122,6 +134,12 @@ namespace TurnTrackerAspNetCore.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
+                if (null != invite)
+                {
+                    invite.InviteeId = user.Id;
+                    invite.Used = DateTimeOffset.UtcNow;
+                    _taskData.Commit();
+                }
                 _logger.LogInformation(EventIds.UserRegistered, user.UserName);
                 if (user.UserName.ToLower() == "admin" || 0 == numberExistingUsers)
                 {

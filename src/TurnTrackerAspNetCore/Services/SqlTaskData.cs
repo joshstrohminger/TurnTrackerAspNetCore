@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Server.Kestrel.Internal.Networking;
@@ -19,6 +20,26 @@ namespace TurnTrackerAspNetCore.Services
         public List<SiteSetting> GetSiteSettings()
         {
             return _context.SiteSettings.OrderBy(x => x.Name).ToList();
+        }
+
+        public IEnumerable<Invite> GetAllInvites()
+        {
+            return _context.Invites.Include(x => x.Invitee).Include(x => x.Inviter);
+        }
+
+        public void AddInvite(Invite invite)
+        {
+            _context.Add(invite);
+        }
+
+        public void DeleteInvite(Invite invite)
+        {
+            _context.Remove(invite);
+        }
+
+        public Invite GetInvite(Guid token)
+        {
+            return _context.Invites.Find(token);
         }
 
         public void Add(SiteSetting setting)
