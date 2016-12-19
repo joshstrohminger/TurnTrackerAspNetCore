@@ -52,21 +52,40 @@
             <div class="action-group">
                 @if (Model.CanTakeTurn)
                 {
-                <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Turn" asp-action="Take" method="post">
-                    <button class="btn btn-primary btn-sm" type="submit">
-                        <span class="glyphicon glyphicon-plus"></span>
+                    <form asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Turn" asp-action="Take" method="post">
+                        <button class="btn btn-primary btn-sm" type="submit" title="Take Turn">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </form>
+                    <button class="btn btn-primary btn-sm" title="Take Turn at Specific Time" type="button" data-toggle="collapse" data-target="#take-turn-time" aria-expanded="false" aria-controls="take-turn-time">
+                        <span class="glyphicon glyphicon-time"></span>
                     </button>
-                </form>
                 }
-                <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@Model.Task.Id">
+                <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@Model.Task.Id" title="Edit Task">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
                 @if (Model.CanDeleteTask)
                 {
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-task-modal">
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-task-modal" title="Delete Task">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 }
+            </div>
+            <div class="collapse" id="take-turn-time">
+                <br />
+                <div class="well">
+                    <form class="form-inline" asp-route-id="@Model.Task.Id" asp-antiforgery="true" asp-controller="Turn" asp-action="Take" method="post">
+                        <div class="form-group">
+                            <div class="input-group date datetimepicker">
+                                <input type="text" name="Time" class="form-control" value="@DateTime.Now" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Take Turn</button>
+                    </form>
+                </div>
             </div>
         }
     </div>

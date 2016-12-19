@@ -24,7 +24,7 @@ namespace TurnTrackerAspNetCore.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Take(long id)
+        public async Task<IActionResult> Take(long id, DateTimeOffset? time = null)
         {
             var task = _taskData.GetTaskDetails(id);
 
@@ -36,9 +36,15 @@ namespace TurnTrackerAspNetCore.Controllers
             {
                 return new ChallengeResult();
             }
-
+            // TODO use timezone, this probably only works because the server is currently in the same time zone when developing
             var userId = _userManager.GetUserId(HttpContext.User);
-            task.Turns.Add(new Turn { UserId = userId });
+            var turn = new Turn {UserId = userId};
+            if (time.HasValue && time.Value < DateTimeOffset.UtcNow.AddMinutes(30))
+            {
+                // don't allow a time very far into the future
+                turn.Taken = time.Value;
+            }
+            task.Turns.Add(turn);
             _taskData.Commit();
             return RedirectToAction(nameof(TaskController.Details), "Task", new { id });
         }
