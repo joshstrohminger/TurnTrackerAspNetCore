@@ -11,11 +11,13 @@ var uglify = require('gulp-uglify');
 
 var paths = {
     webroot: './wwwroot/',
-    node: './node_modules/'
+    node: './node_modules/',
+    bower: './bower_components/'
 };
 
 paths.lib = paths.webroot + 'lib/';
 paths.libjs = paths.lib + 'js/';
+paths.libcss = paths.lib + 'css/';
 
 paths.js = paths.webroot + 'js/**/*.js';
 paths.minJs = paths.webroot + 'js/**/*.min.js';
@@ -59,18 +61,26 @@ gulp.task('min', ['min:js', 'min:css']);
 
 gulp.task('lib:js', function() {
     return gulp.src([
-        paths.node + 'jquery/dist/**/*',
-        paths.node + 'jquery-validation/dist/jquery.validate.js',
-        paths.node + 'jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'
+        paths.bower + 'jquery/dist/**/*',
+        paths.bower + 'moment/min/moment.min.js',
+        paths.bower + 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+        paths.bower + 'jquery-validation/dist/jquery.validate.js',
+        paths.bower + 'jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'
     ]).pipe(gulp.dest(paths.libjs));
 });
 
 gulp.task('lib:bootstrap', function() {
-    return gulp.src(paths.node + 'bootstrap/dist/**/*')
+    return gulp.src(paths.bower + 'bootstrap/dist/**/*')
         .pipe(gulp.dest(paths.lib));
 });
 
-gulp.task('lib', ['lib:js', 'lib:bootstrap']);
+gulp.task('lib:css', function() {
+    return gulp.src([
+        paths.bower + 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
+    ]).pipe(gulp.dest(paths.libcss));
+});
+
+gulp.task('lib', ['lib:js', 'lib:bootstrap', 'lib:css']);
 
 gulp.task('default', ['lib', 'min']);
 

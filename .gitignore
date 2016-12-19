@@ -246,3 +246,4 @@ src/TurnTrackerAspNetCore/wwwroot/css/*.min.*
 src/TurnTrackerAspNetCore/wwwroot/css/*.map
 src/TurnTrackerAspNetCore/wwwroot/js/*.min.*
 src/TurnTrackerAspNetCore/Logs/
+src/TurnTrackerAspNetCore/bower_components/

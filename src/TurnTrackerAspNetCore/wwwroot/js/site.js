@@ -34,3 +34,6 @@ $('.delete-invite button').click(function (event) {
     modal.find('form').attr('action', url);
     modal.modal('show');
 });
+
+// should localize this
+$('.datetimepicker').datetimepicker();

@@ -21,3 +21,7 @@ Users can only view/edit tasks where they are the owner or a participant. Curren
 
 ### Admin Role
 The admin role allows a user to view/edit tasks, turns, and users. They can also change roles for all users except themselves.
+
+## Libraries
+- jQuery
+- Bootstrap

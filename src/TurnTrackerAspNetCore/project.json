@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5.1",
+  "version": "0.0.5.8",
   "userSecretsId": "turntrackeraspnetcore-41968dc5-8a17-4392-9cd3-3ca7d42a1e3d",
   "dependencies": {
     "Microsoft.NETCore.App": {
@@ -65,7 +65,7 @@
   },
 
   "scripts": {
-    "prepublish": [ "npm install", "gulp" ],
+    "prepublish": [ "npm install", "bower install", "gulp" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
