@@ -23,7 +23,7 @@
 <h1>@Model.Task.Name</h1>
 <div class="row">
     <div class="col-sm-6">
-        @*<div>@(Model.Task.TeamBased ? "Team" : "Individual") Based</div>*@
+        <div>@(Model.Task.TeamBased ? "Team" : "Individual") Based</div>
         <div><label>Owner</label><span> @(Model.Task.User.DisplayName ?? Model.Task.User.UserName)</span></div>
         <div>
             @if (Model.Task.Period == 0m)
@@ -108,7 +108,7 @@
                 @{
                     var firstRow = Model.Counts.First();
                 }
-                <tr class="@(Model.Task.Overdue ? "danger" : "info")">
+                <tr class="@(Model.Task.TeamBased ? "" : Model.Task.Overdue ? "danger" : "info")">
                     <td>@firstRow.Name</td>
                     <td>@firstRow.TotalTurns</td>
                     <td>@(Model.MaxTurns - firstRow.TotalTurns)</td>

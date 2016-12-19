@@ -6,9 +6,14 @@
 
 <tr class="task-row @(task.Overdue ? "danger" : "")">
     <td>@task.Name</td>
-    @*<td>@task.TeamBased</td>*@
+    <td>@task.TeamBased</td>
     <td>@(task.Period == 0m ? "Non-Periodic" : $"{task.Period} {task.Unit}")</td>
-    <td>@(count?.DisplayName ?? count?.UserName ?? "")</td>
+    <td>
+        @if (!task.TeamBased)
+        {
+            @(count?.DisplayName ?? count?.UserName ?? "")
+        }
+    </td>
     <td>
         @if (task.Overdue)
         {
