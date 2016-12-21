@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +23,8 @@ namespace TurnTrackerAspNetCore.Services
     public enum EmailCategory
     {
         Confirm,
-        Invite
+        Invite,
+        Reminder
     }
 
     public interface IEmailSender

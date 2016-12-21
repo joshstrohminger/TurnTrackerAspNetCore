@@ -1,0 +1,38 @@
+﻿@model List<TurnTrackerAspNetCore.Controllers.AdminController.NotificationEmail>
+
+<table class="table table-striped table-condensed">
+    <thead>
+    <tr>
+        <th>Addresses</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th></th>
+    </tr>
+    </thead>
+    @foreach (var note in Model)
+    {
+        <tr>
+            <td>
+                @foreach (var email in note.Addresses)
+                {
+                    <div>@email</div>
+                }
+            </td>
+            <td>@note.Subject</td>
+            <td>@Html.Raw(note.Message)</td>
+            <td>
+                @if (note.Sent == true)
+                {
+                    <span class="text-success">Sent</span>
+                }
+                @if (note.Sent == false)
+                {
+                    <span class="text-danger">Failed</span>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<form asp-antiforgery="true" method="post" asp-controller="Admin" asp-action="SendNotifications">
+    <button type="submit" class="btn btn-warning">Send Notifications</button>
+</form>

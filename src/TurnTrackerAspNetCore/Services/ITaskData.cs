@@ -13,7 +13,7 @@ namespace TurnTrackerAspNetCore.Services
         Invite GetInvite(Guid token);
         void Add(SiteSetting setting);
         void Remove(SiteSetting setting);
-        IEnumerable<TrackedTask> GetAllTasks();
+        IEnumerable<TrackedTask> GetAllTasks(bool includeParticipants = false);
         TrackedTask GetTask(long id);
         TrackedTask GetTaskDetails(long id);
         IEnumerable<TrackedTask> GetParticipations(string userId);

@@ -71,7 +71,7 @@ namespace TurnTrackerAspNetCore.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TrackedTask> GetAllTasks()
+        public IEnumerable<TrackedTask> GetAllTasks(bool includeParticipants = false)
         {
             return Tasks;
         }

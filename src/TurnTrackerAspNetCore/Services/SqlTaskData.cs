@@ -52,8 +52,12 @@ namespace TurnTrackerAspNetCore.Services
             _context.Remove(setting);
         }
 
-        public IEnumerable<TrackedTask> GetAllTasks()
+        public IEnumerable<TrackedTask> GetAllTasks(bool includeParticipants = false)
         {
+            if (includeParticipants)
+            {
+                return _context.Tasks.Include(x => x.Participants).ThenInclude(x => x.User);
+            }
             return _context.Tasks;
         }
 
