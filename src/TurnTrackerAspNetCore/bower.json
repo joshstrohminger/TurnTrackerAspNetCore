@@ -16,13 +16,10 @@
     "tests"
   ],
   "dependencies": {
-    "eonasdan-bootstrap-datetimepicker": "4.17.37",
+    "eonasdan-bootstrap-datetimepicker": "4.17.43",
     "jquery": "2.2.3",
     "bootstrap": "3.3.6",
     "jquery-validation": "1.15.0",
-    "jquery-validation-unobtrusive": "^3.2.6"
-  },
-  "resolutions": {
-    "eonasdan-bootstrap-datetimepicker": "~4.17.43"
+    "jquery-validation-unobtrusive": "3.2.6"
   }
 }

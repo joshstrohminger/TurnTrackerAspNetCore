@@ -1,5 +1,20 @@
 ﻿@model Turn
-@{ViewBag.Title = "Edit Turn";}
+@using System.Threading.Tasks
+@using TurnTrackerAspNetCore.Middleware
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewBag.Title = "Edit Turn";
+
+    string cookie;
+    if (!HttpContextAccessor.HttpContext.Request.Cookies.TryGetValue(TimezoneOffsetReader.CookieKey, out cookie))
+    {
+        cookie = "0";
+    }
+    int minutes;
+    int.TryParse(cookie, out minutes);
+    var timezoneOffset = TimeSpan.FromMinutes(-minutes);
+    ViewBag.TimezoneOffset = timezoneOffset;
+}
 <div>
     <h1>Edit Turn</h1>
     <form method="post" asp-action="Edit" asp-antiforgery="true" class="form-horizontal">
@@ -8,7 +23,7 @@
             <label asp-for="Taken" class="control-label col-sm-1"></label>
             <div class="col-sm-4">
                 <div class="input-group date datetimepicker">
-                    <input type="text" name="Taken" class="form-control" value="@Model.Taken"/>
+                    <input type="text" name="Taken" class="form-control" value="@Model.Taken.ToOffset(timezoneOffset).ToString("G")"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -26,3 +41,7 @@
         </div>
     </form>
 </div>
+
+@section footer {
+    <span class="timezone">UTC Offset: @timezoneOffset</span>
+}
