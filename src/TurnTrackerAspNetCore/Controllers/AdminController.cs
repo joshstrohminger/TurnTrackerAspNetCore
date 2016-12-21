@@ -356,7 +356,10 @@ namespace TurnTrackerAspNetCore.Controllers
             foreach (var x in taskCounts.Where(x => x.Key.Overdue))
             {
                 var note = await SendNotificationEmailsAsync(x.Key, x.Value, Url, HttpContext);
-                notifications.Add(note);
+                if (null != note)
+                {
+                    notifications.Add(note);
+                }
             }
 
             return notifications;
@@ -376,13 +379,21 @@ namespace TurnTrackerAspNetCore.Controllers
 
             var sb = new StringBuilder();
             sb.Append(task.TeamBased ? "Someone needs" : "You need");
-            sb.AppendFormat(" to <a href=\"{0}\">{1}</a>. It's overdue by {2}.", callbackUrl, task.Name, GetRoundedTimeSpan(task.DueTimeSpan));
+            sb.AppendFormat(" to <a href=\"{0}\">{1}</a>.", callbackUrl, task.Name);
+            if (task.Turns.Count == 0)
+            {
+                sb.Append(" No turns have been taken.");
+            }
+            else
+            {
+                sb.AppendFormat(" It's overdue by {0}.", GetRoundedTimeSpan(task.DueTimeSpan));
+            }
+            
             var latest = await _userManager.FindByIdAsync(count.UserId);
             if (null == latest)
             {
                 // todo maybe email should be included in TurnCount
                 return null;
-                // return false;
             }
             return new NotificationEmail
             {
@@ -392,14 +403,6 @@ namespace TurnTrackerAspNetCore.Controllers
                         ? task.Participants.Select(x => x.User).Where(x => x.EmailConfirmed).Select(x => x.Email).ToArray()
                         : new [] { latest.Email }
             };
-            //var success = await _emailSender.SendEmailAsync(
-            //    $"{_siteSettings.Settings.General.Name} Reminder",
-            //    sb.ToString(),
-            //    EmailCategory.Reminder,
-            //    task.TeamBased
-            //        ? task.Participants.Select(x => x.User).Where(x => x.EmailConfirmed).Select(x => x.Email).ToArray()
-            //        : new[] { latest.Email });
-            //return success;
         }
 
         private string GetRoundedTimeSpan(TimeSpan time)
