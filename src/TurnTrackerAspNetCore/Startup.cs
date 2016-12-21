@@ -74,12 +74,11 @@ namespace TurnTrackerAspNetCore
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            loggerFactory.AddFile("Logs/turntracker-{Date}.txt");
             db.Database.Migrate();
-            ConfigureRoles(roleManager).Wait();
 
             if (env.IsDevelopment())
             {
+                loggerFactory.AddFile("Logs/turntracker-{Date}.txt");
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
@@ -91,6 +90,8 @@ namespace TurnTrackerAspNetCore
                     ExceptionHandler = context => context.Response.WriteAsync(@"I messed up! ¯\_(ツ)_/¯")
                 });
             }
+
+            ConfigureRoles(roleManager).Wait();
 
             app.UseStaticFiles();
             app.UseStatusCodePagesWithReExecute("/Error/{0}");

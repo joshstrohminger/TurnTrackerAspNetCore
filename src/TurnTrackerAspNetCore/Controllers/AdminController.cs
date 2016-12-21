@@ -380,7 +380,7 @@ namespace TurnTrackerAspNetCore.Controllers
             var sb = new StringBuilder();
             sb.Append(task.TeamBased ? "Someone needs" : "You need");
             sb.AppendFormat(" to <a href=\"{0}\">{1}</a>.", callbackUrl, task.Name);
-            if (task.Turns.Count == 0)
+            if ((task.Turns?.Count ?? 0) == 0)
             {
                 sb.Append(" No turns have been taken.");
             }
