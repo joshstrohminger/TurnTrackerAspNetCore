@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.Dashboard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,10 +41,12 @@ namespace TurnTrackerAspNetCore
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("TurnTracker")));
             services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton<ISiteSettings, SiteSettings>();
             services.AddScoped<ITaskData, SqlTaskData>();
+            services.AddSingleton<Notifier>();
             services.AddDbContext<TurnTrackerDbContext>(
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("TurnTracker")));
@@ -70,7 +74,7 @@ namespace TurnTrackerAspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, Notifier notifier)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -87,16 +91,27 @@ namespace TurnTrackerAspNetCore
             {
                 app.UseExceptionHandler(new ExceptionHandlerOptions
                 {
-                    ExceptionHandler = context => context.Response.WriteAsync(@"I messed up! ¯\_(ツ)_/¯")
+                    ExceptionHandler = context => context.Response.WriteAsync(@"Oops, I messed up! ¯\_(ツ)_/¯")
                 });
             }
 
-            ConfigureRoles(roleManager).Wait();
+            var dashboardOptions = new DashboardOptions
+            {
+                Authorization = new IDashboardAuthorizationFilter[]
+                {
+                    new TestDashboardAuth()
+                }
+            };
 
             app.UseStaticFiles();
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseIdentity();
+            app.UseHangfireDashboard("/admin/hangfire", dashboardOptions);
+            app.UseHangfireServer();
             app.UseMvc(ConfigureRoutes);
+
+            ConfigureRoles(roleManager).Wait();
+            ConfigureJobs(notifier);
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
@@ -115,6 +130,28 @@ namespace TurnTrackerAspNetCore
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
+        }
+
+        private void ConfigureJobs(Notifier notifier)
+        {
+            RecurringJob.AddOrUpdate("My Test Job", () => notifier.TestJob(), Cron.Minutely);
+        }
+    }
+
+    public class TestDashboardAuth : IDashboardAuthorizationFilter
+    {
+        public bool Authorize(DashboardContext context)
+        {
+            return context.GetHttpContext().User.IsInRole(nameof(Roles.Admin));
+        }
+    }
+
+    public class Notifier
+    {
+        public int Count { get; private set; }
+        public void TestJob()
+        {
+            Count++;
         }
     }
 }

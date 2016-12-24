@@ -27,14 +27,16 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly ISiteSettings _siteSettings;
+        private readonly Notifier _notifier;
 
-        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory, ISiteSettings siteSettings)
+        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory, ISiteSettings siteSettings, Notifier notifier)
         {
             _taskData = taskData;
             _roleManager = roleManager;
             _userManager = userManager;
             _emailSender = emailSender;
             _siteSettings = siteSettings;
+            _notifier = notifier;
             _logger = loggerFactory.CreateLogger<AdminController>();
         }
 
@@ -325,6 +327,7 @@ namespace TurnTrackerAspNetCore.Controllers
         public async Task<IActionResult> PreviewNotifications()
         {
             var notes = await GetNotifications();
+            ViewBag.NoteCount = _notifier.Count;
             return View(notes);
         }
 

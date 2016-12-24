@@ -1,0 +1,15 @@
+﻿@model string
+@{
+    ViewBag.Title = "Error " + Model;
+}
+
+@if (Model == "403")
+{
+    @Html.Partial("AccessDenied")
+}
+else
+{
+    <h1>¯\_(ツ)_/¯</h1>
+    <br />
+    <h1>Error @Model</h1>
+}
