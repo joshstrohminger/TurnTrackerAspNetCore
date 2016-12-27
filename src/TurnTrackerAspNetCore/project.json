@@ -1,5 +1,5 @@
 {
-  "version": "0.0.6.51",
+  "version": "0.0.6.80",
   "userSecretsId": "turntrackeraspnetcore-41968dc5-8a17-4392-9cd3-3ca7d42a1e3d",
   "dependencies": {
     "Microsoft.NETCore.App": {
@@ -25,7 +25,8 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
     "SendGrid.NetCore": "1.0.0-rtm-00002",
     "Serilog.Extensions.Logging.File": "1.0.0",
-    "Hangfire": "1.6.8"
+    "Hangfire": "1.6.8",
+    "Microsoft.Data.Edm": "5.7.0"
   },
 
   "tools": {

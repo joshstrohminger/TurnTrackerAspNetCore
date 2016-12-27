@@ -1,0 +1,18 @@
+﻿@using System.Threading.Tasks
+@using TurnTrackerAspNetCore.Controllers
+@model List<AdminController.MethodThing>
+@if (ViewBag.Row != null)
+{
+    AdminController.CronInfo info = ViewBag.Info;
+    Html.RenderPartial("_Method", info ?? new AdminController.CronInfo());
+    <br/>
+}
+<table class="table table-striped table-condensed table-hover">
+    @foreach (var method in Model)
+    {
+        <tr style="cursor: pointer;" onclick="window.location.href = '/admin/test/@method.Id';">
+            <td><strong>@method.Name</strong></td>
+            <td>@string.Join(", ", method.Params.Select(x => $"{x.ParameterType.Name.Replace("Int32","int")} {x.Name}"))</td>
+        </tr>
+    }
+</table>

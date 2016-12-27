@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.Edm;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
@@ -434,6 +437,73 @@ namespace TurnTrackerAspNetCore.Controllers
 
             // shouldn't ever get here
             return time.ToString(@"hh\:mm\:ss");
+        }
+
+        public IActionResult Test(int id = -1)
+        {
+            var model = typeof(Cron)
+                .GetMethods()
+                .Where(x => x.IsStatic && x.IsPublic)
+                .Select((x,i) => new MethodThing
+                {
+                    Name = x.Name,
+                    Params = x.GetParameters(),
+                    Id = i
+                }).ToList();
+            if (id >= 0 && id < model.Count)
+            {
+                ViewBag.Row = model[id];
+                if (null == ViewBag.Info && (ViewBag.Row.Params?.Length ?? 0) == 0)
+                {
+                    return TestCron(id, new CronInfo {Name = ViewBag.Row.Name});
+                }
+            }
+            return View(nameof(Test), model);
+        }
+
+        public IActionResult TestCron(int id, CronInfo info)
+        {
+            var types = new List<Type>();
+            var values = new List<object>();
+
+            if (info.DayOfWeek.HasValue)
+            {
+                types.Add(typeof(DayOfWeek));
+                values.Add(info.DayOfWeek.Value);
+            }
+
+            foreach (var p in typeof(CronInfo).GetProperties().Where(x => x.PropertyType == typeof(int?)))
+            {
+                var i = (int?) p.GetValue(info);
+                if (i.HasValue)
+                {
+                    types.Add(typeof(int));
+                    values.Add(i.Value);
+                }
+            }
+
+            var method = typeof(Cron).GetMethod(info.Name, types.ToArray());
+            ViewBag.Cron = method.Invoke(null, values.ToArray());
+            ViewBag.Info = info;
+            return Test(id);
+        }
+
+        public class MethodThing
+        {
+            public string Name { get; set; }
+            public ParameterInfo[] Params { get; set; }
+            public int Id { get; set; }
+        }
+
+        public class CronInfo
+        {
+            public string Name { get; set; }
+            public DayOfWeek? DayOfWeek { get; set; }
+            public int? Interval { get; set; }
+            public int? Month { get; set; }
+            public int? Day { get; set; }
+            public int? Hour { get; set; }
+            public int? Minute { get; set; }
         }
     }
 }

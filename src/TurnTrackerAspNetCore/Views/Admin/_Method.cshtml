@@ -1,0 +1,56 @@
+﻿@using System.Threading.Tasks
+@using TurnTrackerAspNetCore.Controllers
+@model AdminController.CronInfo
+
+@{
+    AdminController.MethodThing thing = ViewBag.Row;
+    var included = thing.Params.Select(x => x.Name).ToList();
+}
+<form class="form-inline" method="get" asp-antiforgery="true"
+      asp-controller="Admin" asp-action="TestCron" asp-route-id="@thing.Id">
+    <input type="hidden" asp-for="Name" value="@thing.Name"/>
+    <div class="form-group">
+        <label>@thing.Name</label>
+    </div>
+    @if (included.Contains("dayOfWeek"))
+    {
+        <div class="form-group">
+            <select asp-for="DayOfWeek" asp-items="@Html.GetEnumSelectList(typeof(DayOfWeek))" class="form-control"></select>
+        </div>
+    }
+    @if (included.Contains("month"))
+    {
+        <div class="form-group">
+            <input asp-for="Month" title="Month" type="number" placeholder="Month" class="form-control" min="1" step="1" max="12"/>
+        </div>
+    }
+    @if (included.Contains("day"))
+    {
+        <div class="form-group">
+            <input asp-for="Day" title="Day" type="number" placeholder="Day" class="form-control" min="1" step="1" max="31" />
+        </div>
+    }
+    @if (included.Contains("hour"))
+    {
+        <div class="form-group">
+            <input asp-for="Hour" title="Hour" type="number" placeholder="Hour" class="form-control" min="0" step="1" max="23" />
+        </div>
+    }
+    @if (included.Contains("minute"))
+    {
+        <div class="form-group">
+            <input asp-for="Minute" title="Minute" type="number" placeholder="Minute" class="form-control" min="0" step="1" max="59" />
+        </div>
+    }
+    @if (included.Contains("interval"))
+    {
+        <div class="form-group">
+            <input asp-for="Interval" title="Interval" type="number" placeholder="Interval" class="form-control" min="0" step="1" max="@int.MaxValue" />
+        </div>
+    }
+    <button class="btn btn-primary" type="submit">Get CRON</button>
+    @if (ViewBag.Cron != null)
+    {
+        <strong>@ViewBag.Cron</strong>
+    }
+</form>
