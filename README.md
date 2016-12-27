@@ -23,5 +23,14 @@ Users can only view/edit tasks where they are the owner or a participant. Curren
 The admin role allows a user to view/edit tasks, turns, and users. They can also change roles for all users except themselves.
 
 ## Libraries
-- jQuery
-- Bootstrap
+- [jQuery](https://jquery.com/)
+
+  This is required by Bootstrap but since it's there I use it for a few things.
+  
+- [Bootstrap 3](https://getbootstrap.com/)
+
+  I like/know the bootstrap UI system.
+  
+- [Hangfire](http://hangfire.io/)
+
+  This is used to run recurring background jobs.
