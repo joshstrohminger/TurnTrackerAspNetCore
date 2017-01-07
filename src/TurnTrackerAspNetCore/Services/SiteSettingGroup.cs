@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Logging;
@@ -18,8 +19,9 @@ namespace TurnTrackerAspNetCore.Services
 
         public bool Load(ILogger logger, Dictionary<string, SiteSetting> settings, string parentPath = "")
         {
-            return _properties.Aggregate(true,
-                (success, property) => success && LoadProperty(logger, settings, property, parentPath));
+            return _properties
+                .Where(property => null != property.GetCustomAttribute<RequiredAttribute>() )
+                .Aggregate(true, (success, property) => success && LoadProperty(logger, settings, property, parentPath));
         }
 
         private bool LoadProperty(ILogger logger, Dictionary<string, SiteSetting> settings, PropertyInfo property, string parentPath = "")
@@ -82,8 +84,9 @@ namespace TurnTrackerAspNetCore.Services
 
         public bool Save(ILogger logger, Dictionary<string, SiteSetting> settings, string parentPath = "")
         {
-            return _properties.Aggregate(true,
-                (success, property) => success && SaveProperty(logger, settings, property, parentPath));
+            return _properties
+                .Where(property => null != property.GetCustomAttribute<RequiredAttribute>())
+                .Aggregate(true, (success, property) => success && SaveProperty(logger, settings, property, parentPath));
         }
 
         private bool SaveProperty(ILogger logger, Dictionary<string, SiteSetting> settings, PropertyInfo property, string parentPath = "")

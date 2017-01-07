@@ -15,49 +15,84 @@
 <h1>@ViewBag.Title</h1>
 <form method="post" class="form-horizontal" asp-action="SiteSettings" asp-antiforgery="true">
     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-    <h4>@nameof(Model.General)</h4>
-    <div class="form-group">
-        <label asp-for="General.Name" class="col-sm-2 control-label"></label>
-        <div class="col-sm-4">
-            <input asp-for="General.Name" class="form-control"/>
-        </div>
-        <div class="col-sm-6">
-            <span class="text-danger" asp-validation-for="General.Name"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="General.InviteExpirationHours" class="col-sm-2 control-label"></label>
-        <div class="col-sm-4">
-            <input asp-for="General.InviteExpirationHours" class="form-control" />
-        </div>
-        <div class="col-sm-6">
-            <span class="text-danger" asp-validation-for="General.InviteExpirationHours"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-4">
-            <div class="checkbox">
-                <label>
-                    <input asp-for="General.ApiEnabled"><label style="padding-left: 0;" asp-for="General.ApiEnabled"></label>
-                </label>
+    <div class="panel panel-default">
+        <div class="panel-heading"><label asp-for="General"></label></div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label asp-for="General.Name" class="col-sm-2 control-label"></label>
+                <div class="col-sm-4">
+                    <input asp-for="General.Name" class="form-control" />
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-danger" asp-validation-for="General.Name"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="General.InviteExpirationHours" class="col-sm-2 control-label"></label>
+                <div class="col-sm-2">
+                    <input asp-for="General.InviteExpirationHours" class="form-control" />
+                </div>
+                <div class="col-sm-8">
+                    <span class="text-danger" asp-validation-for="General.InviteExpirationHours"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="General.ApiEnabled" class="col-sm-2 control-label"></label>
+                <div class="col-sm-4">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="General.ApiEnabled"><label style="padding-left: 0;" asp-for="General.ApiEnabled"></label>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-danger" asp-validation-for="General.ApiEnabled"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="General.RegistrationMode" class="col-sm-2 control-label"></label>
+                <div class="col-sm-2">
+                    <select asp-for="General.RegistrationMode" asp-items="@Html.GetEnumSelectList(typeof(RegistrationMode))" class="form-control"></select>
+                </div>
+                <div class="col-sm-8">
+                    <span class="text-danger" asp-validation-for="General.RegistrationMode"></span>
+                </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <span class="text-danger" asp-validation-for="General.ApiEnabled"></span>
-        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="General.RegistrationMode" class="col-sm-2 control-label"></label>
-        <div class="col-sm-2">
-            <select asp-for="General.RegistrationMode" asp-items="@Html.GetEnumSelectList(typeof(RegistrationMode))" class="form-control"></select>
-        </div>
-        <div class="col-sm-8">
-            <span class="text-danger" asp-validation-for="General.RegistrationMode"></span>
+    <div class="panel panel-default">
+        <div class="panel-heading"><label asp-for="Jobs"></label></div>
+        <div class="panel-body">
+            @*@Html.Partial("_JobSetting", Model.Jobs.Notifications)*@
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Model.Jobs.Notifications.Id</label>
+                <div class="col-sm-2">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Jobs.Notifications.Enabled"><label style="padding-left: 0;" asp-for="Jobs.Notifications.Enabled"></label>
+                            @if (Model.Jobs.Notifications.CurrentlyEnabled)
+                            {
+                                <span class="label label-success">Running</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Stopped</span>
+                            }
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <input asp-for="Jobs.Notifications.CronSchedule" class="form-control" />
+                </div>
+                <div class="col-sm-6">
+                    <span class="text-danger" asp-validation-for="Jobs.Notifications.CronSchedule"></span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2">
-            <input class="btn btn-primary" type="submit" value="Save"/>
+            <input class="btn btn-primary" type="submit" value="Save" />
             <a class="btn btn-default" asp-action="SiteSettings">Cancel</a>
         </div>
     </div>

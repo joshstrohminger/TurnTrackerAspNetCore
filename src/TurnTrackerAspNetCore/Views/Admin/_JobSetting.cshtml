@@ -1,0 +1,25 @@
+﻿@model TurnTrackerAspNetCore.ViewModels.Admin.JobSetting
+<div class="form-group">
+    <label class="col-sm-2 control-label">@Model.Id</label>
+    <div class="col-sm-2">
+        <div class="checkbox">
+            <label>
+                <input asp-for="Jobs.Notifications.Enabled"><label style="padding-left: 0;" asp-for="Enabled"></label>
+                @if (Model.CurrentlyEnabled)
+                {
+                    <span class="label label-success">Running</span>
+                }
+                else
+                {
+                    <span class="label label-danger">Stopped</span>
+                }
+            </label>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <input asp-for="CronSchedule" class="form-control" />
+    </div>
+    <div class="col-sm-6">
+        <span class="text-danger" asp-validation-for="CronSchedule"></span>
+    </div>
+</div>
