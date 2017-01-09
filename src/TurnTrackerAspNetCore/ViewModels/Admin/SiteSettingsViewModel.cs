@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Hangfire;
+using Hangfire.Storage;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 
@@ -32,23 +35,26 @@ namespace TurnTrackerAspNetCore.ViewModels.Admin
     public class JobsSettingGroup : SiteSettingGroup
     {
         [Required]
-        public JobSetting Notifications { get; } = new JobSetting(nameof(Notifications), true, Cron.Daily(18));
+        public JobSetting Notifications { get; } = new JobSetting(nameof(Notifications), true, Cron.Daily(18), Notifier.Start);
     }
 
     public class JobSetting : SiteSettingGroup
     {
+        private readonly Action<IServiceProvider, JobSetting> _starter;
 
         public string Id { get; }
+        public bool Initialized { get; private set; }
 
         public JobSetting()
         {
         }
 
-        public JobSetting(string id, bool enabled, string cron)
+        public JobSetting(string id, bool enabled, string cron, Action<IServiceProvider,JobSetting> starter)
         {
             Id = id;
             Enabled = enabled;
             CronSchedule = cron;
+            _starter = starter;
         }
 
         [Required, Display(Name = "Enabled")]
@@ -60,6 +66,43 @@ namespace TurnTrackerAspNetCore.ViewModels.Admin
 
         [Required, Display(Name = "Cron Schedule")]
         public string CronSchedule { get; set; }
+
+        public override void Saved(IServiceProvider services)
+        {
+            if (Enabled)
+            {
+                _starter?.Invoke(services, this);
+            }
+            else
+            {
+                RecurringJob.RemoveIfExists(Id);
+            }
+            PopulateCurrentlyEnabled();
+        }
+
+        private void PopulateCurrentlyEnabled()
+        {
+            if (Initialized)
+            {
+                try
+                {
+                    using (var connection = JobStorage.Current.GetConnection())
+                    {
+                        CurrentlyEnabled = connection.GetRecurringJobs().Any(x => x.Id == Id);
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // hangfire not loaded yet
+                }
+            }
+        }
+
+        public override void Loaded()
+        {
+            PopulateCurrentlyEnabled();
+            Initialized = true; // TODO, this is a hack to fix a race condition (hangfire hasn't set JobStorage.Current yet). This prevents us from accessing JobStorage.Current until our second load.
+        }
     }
 
     public enum RegistrationMode

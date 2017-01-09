@@ -61,30 +61,36 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading"><label asp-for="Jobs"></label></div>
+        <div class="panel-heading">
+            <label asp-for="Jobs"></label>
+            <a asp-controller="Admin" asp-action="Hangfire" asp-route-id="recurring" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm pull-right">Hangfire <span class="glyphicon glyphicon-new-window"></span></a>
+        </div>
         <div class="panel-body">
-            @*@Html.Partial("_JobSetting", Model.Jobs.Notifications)*@
             <div class="form-group">
                 <label class="col-sm-2 control-label">@Model.Jobs.Notifications.Id</label>
                 <div class="col-sm-2">
                     <div class="checkbox">
                         <label>
                             <input asp-for="Jobs.Notifications.Enabled"><label style="padding-left: 0;" asp-for="Jobs.Notifications.Enabled"></label>
-                            @if (Model.Jobs.Notifications.CurrentlyEnabled)
-                            {
-                                <span class="label label-success">Running</span>
+                            @{
+                                var labelClass = Model.Jobs.Notifications.CurrentlyEnabled != Model.Jobs.Notifications.Enabled
+                                    ? "label-danger"
+                                    : Model.Jobs.Notifications.CurrentlyEnabled ? "label-success" : "label-warning";
+                                var labelText = Model.Jobs.Notifications.CurrentlyEnabled ? "Running" : "Stopped";
                             }
-                            else
-                            {
-                                <span class="label label-danger">Stopped</span>
-                            }
+                            <span class="label @labelClass">@labelText</span>
                         </label>
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <input asp-for="Jobs.Notifications.CronSchedule" class="form-control" />
+                <div class="col-sm-3">
+                    <div class="input-group">
+                        <input asp-for="Jobs.Notifications.CronSchedule" class="form-control" />
+                        <div class="input-group-btn">
+                            <a asp-controller="Admin" asp-action="Test" target="_blank" rel="noopener noreferrer" class="btn btn-default">Help <span class="glyphicon glyphicon-new-window"></span></a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <span class="text-danger" asp-validation-for="Jobs.Notifications.CronSchedule"></span>
                 </div>
             </div>

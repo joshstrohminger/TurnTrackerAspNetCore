@@ -17,6 +17,8 @@ namespace TurnTrackerAspNetCore.Services
             _properties = GetType().GetProperties();
         }
 
+        public virtual void Loaded() { }
+
         public bool Load(ILogger logger, Dictionary<string, SiteSetting> settings, string parentPath = "")
         {
             return _properties
@@ -29,7 +31,10 @@ namespace TurnTrackerAspNetCore.Services
             var name = $"{parentPath}{property.Name}";
             if (typeof(SiteSettingGroup).IsAssignableFrom(property.PropertyType))
             {
-                return ((SiteSettingGroup) property.GetValue(this)).Load(logger, settings, $"{name}.");
+                var group = (SiteSettingGroup)property.GetValue(this);
+                var result = group.Load(logger, settings, $"{name}.");
+                group.Loaded();
+                return result;
             }
 
             SiteSetting setting;
@@ -82,19 +87,24 @@ namespace TurnTrackerAspNetCore.Services
             return true;
         }
 
-        public bool Save(ILogger logger, Dictionary<string, SiteSetting> settings, string parentPath = "")
+        public virtual void Saved(IServiceProvider services) { }
+
+        public bool Save(ILogger logger, Dictionary<string, SiteSetting> settings, IServiceProvider services, string parentPath = "")
         {
             return _properties
                 .Where(property => null != property.GetCustomAttribute<RequiredAttribute>())
-                .Aggregate(true, (success, property) => success && SaveProperty(logger, settings, property, parentPath));
+                .Aggregate(true, (success, property) => success && SaveProperty(logger, settings, property, services, parentPath));
         }
 
-        private bool SaveProperty(ILogger logger, Dictionary<string, SiteSetting> settings, PropertyInfo property, string parentPath = "")
+        private bool SaveProperty(ILogger logger, Dictionary<string, SiteSetting> settings, PropertyInfo property, IServiceProvider services, string parentPath = "")
         {
             var name = $"{parentPath}{property.Name}";
             if (typeof(SiteSettingGroup).IsAssignableFrom(property.PropertyType))
             {
-                return ((SiteSettingGroup)property.GetValue(this)).Save(logger, settings, $"{name}.");
+                var group = (SiteSettingGroup) property.GetValue(this);
+                var result = group.Save(logger, settings, services, $"{name}.");
+                group.Saved(services);
+                return result;
             }
 
             SiteSetting setting;

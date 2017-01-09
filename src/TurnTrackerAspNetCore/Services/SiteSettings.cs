@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.ViewModels.Admin;
 
@@ -7,7 +8,7 @@ namespace TurnTrackerAspNetCore.Services
     public interface ISiteSettings
     {
         bool Load();
-        bool Save();
+        bool Save(IServiceProvider services);
         SiteSettingsViewModel Settings { get; set; }
     }
 
@@ -44,7 +45,7 @@ namespace TurnTrackerAspNetCore.Services
             return false;
         }
 
-        public bool Save()
+        public bool Save(IServiceProvider services)
         {
             var dbSettings = _db.GetSiteSettings().ToDictionary(x => x.Name, x => x);
             if (null == Settings)
@@ -52,7 +53,7 @@ namespace TurnTrackerAspNetCore.Services
                 _logger.LogError(EventIds.SiteSettingSaveError, "settings are null");
                 return false;
             }
-            if (Settings.Save(_logger, dbSettings))
+            if (Settings.Save(_logger, dbSettings, services))
             {
                 foreach (var s in dbSettings.Values.Where(x => x.NeedToAdd))
                 {

@@ -31,8 +31,9 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly ILogger _logger;
         private readonly ISiteSettings _siteSettings;
         private readonly Notifier _notifier;
+        private readonly IServiceProvider _services;
 
-        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory, ISiteSettings siteSettings, Notifier notifier)
+        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory, ISiteSettings siteSettings, Notifier notifier, IServiceProvider services)
         {
             _taskData = taskData;
             _roleManager = roleManager;
@@ -40,6 +41,7 @@ namespace TurnTrackerAspNetCore.Controllers
             _emailSender = emailSender;
             _siteSettings = siteSettings;
             _notifier = notifier;
+            _services = services;
             _logger = loggerFactory.CreateLogger<AdminController>();
         }
 
@@ -288,7 +290,7 @@ namespace TurnTrackerAspNetCore.Controllers
             }
 
             _siteSettings.Settings = model;
-            if (_siteSettings.Save())
+            if (_siteSettings.Save(_services))
             {
                 return RedirectToAction(nameof(SiteSettings));
             }

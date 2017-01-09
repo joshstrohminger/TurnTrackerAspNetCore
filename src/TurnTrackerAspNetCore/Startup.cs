@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.Dashboard;
@@ -14,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
+using TurnTrackerAspNetCore.ViewModels.Admin;
+using System.Linq;
 
 namespace TurnTrackerAspNetCore
 {
@@ -38,7 +42,6 @@ namespace TurnTrackerAspNetCore
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("TurnTracker")));
@@ -74,7 +77,7 @@ namespace TurnTrackerAspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, Notifier notifier)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, ISiteSettings siteSettings, IServiceProvider services)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -111,7 +114,7 @@ namespace TurnTrackerAspNetCore
             app.UseMvc(ConfigureRoutes);
 
             ConfigureRoles(roleManager).Wait();
-            ConfigureJobs(notifier);
+            ConfigureJobs(siteSettings, services);
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
@@ -132,9 +135,13 @@ namespace TurnTrackerAspNetCore
             }
         }
 
-        private void ConfigureJobs(Notifier notifier)
+        private void ConfigureJobs(ISiteSettings siteSettings, IServiceProvider services)
         {
-            RecurringJob.AddOrUpdate("My Test Job", () => notifier.TestJob(), Cron.Minutely);
+            foreach (var job in siteSettings.Settings.Jobs.GetType().GetProperties()
+                .Where(p => p.PropertyType == typeof(JobSetting)))
+            {
+                ((JobSetting)job.GetValue(siteSettings.Settings.Jobs)).Saved(services);
+            }
         }
     }
 
@@ -152,6 +159,12 @@ namespace TurnTrackerAspNetCore
         public void TestJob()
         {
             Count++;
+        }
+
+        public static void Start(IServiceProvider services, JobSetting setting)
+        {
+            var notifier = services.GetRequiredService<Notifier>();
+            RecurringJob.AddOrUpdate(setting.Id, () => notifier.TestJob(), setting.CronSchedule);
         }
     }
 }
