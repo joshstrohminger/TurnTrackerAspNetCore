@@ -28,6 +28,7 @@ namespace TurnTrackerAspNetCore
     {
         private IConfiguration Configuration { get; }
         private RouterAccessor RouterAccessor { get; } = new RouterAccessor();
+        private UrlAccessor UrlAccessor { get; } = new UrlAccessor();
 
         public Startup(IHostingEnvironment env)
         {
@@ -52,6 +53,7 @@ namespace TurnTrackerAspNetCore
             services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton(RouterAccessor);
+            services.AddSingleton(UrlAccessor);
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<ITaskData, SqlTaskData>();

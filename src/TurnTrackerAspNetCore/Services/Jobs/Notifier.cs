@@ -19,7 +19,9 @@ namespace TurnTrackerAspNetCore.Services.Jobs
     {
         private readonly IEmailSender _emailSender;
         private readonly ITaskData _taskData;
-        private readonly IUrlHelper _url;
+        private IUrlHelper _url;
+        private IUrlHelperFactory _urlHelperFactory;
+        private string _host;
         public static int Count { get; private set; }
         public void TestJob()
         {
@@ -30,14 +32,32 @@ namespace TurnTrackerAspNetCore.Services.Jobs
             }
         }
 
+        //public void TestJob(string )
+
+        public void TestJob(string host)
+        {
+            Count += 5;
+            _host = host;
+        }
+
+        public void TestJob(HttpContext h, RouteData d)
+        {
+            Count += 10;
+            var a = new ActionContext(h, d, new ActionDescriptor());
+            _url = _urlHelperFactory.GetUrlHelper(a);
+        }
+
         // todo, move notification sending into authmessagesender but leave the logic for
         // todo, generating them in it's own class, maybe NotificationManager or something
         // todo, like that which will have more responsibilities later
 
-        public Notifier(IEmailSender emailSender, ITaskData taskData, IUrlHelperFactory urlHelperFactory,
-                   RouterAccessor routerAccessor, IServiceProvider serviceProvider)
+        public Notifier(IEmailSender emailSender, ITaskData taskData,
+            IUrlHelperFactory urlHelperFactory,
+            RouterAccessor routerAccessor,
+            IServiceProvider serviceProvider)
         {
             _emailSender = emailSender;
+            _urlHelperFactory = urlHelperFactory;
             _taskData = taskData;
             var routeData = new RouteData();
             var httpContext = new DefaultHttpContext {RequestServices = serviceProvider};
@@ -51,7 +71,9 @@ namespace TurnTrackerAspNetCore.Services.Jobs
         public static void Start(IServiceProvider services, JobSetting setting)
         {
             var notifier = services.GetRequiredService<Notifier>();
-            RecurringJob.AddOrUpdate(setting.Id, () => notifier.TestJob(), setting.CronSchedule);
+            var url = services.GetRequiredService<UrlAccessor>();
+            notifier._host = url.Host;
+            RecurringJob.AddOrUpdate(setting.Id, () => notifier.TestJob(url.Host), setting.CronSchedule);
         }
 
         public async Task<List<NotificationEmail>> GetNotifications()
@@ -68,7 +90,7 @@ namespace TurnTrackerAspNetCore.Services.Jobs
             var notifications = new List<NotificationEmail>();
             foreach (var x in taskCounts.Where(x => x.Key.Overdue))
             {
-                var note = await _emailSender.CreateNotificationEmailAsync(x.Key, x.Value, _url);
+                var note = await _emailSender.CreateNotificationEmailAsync(x.Key, x.Value, _url, _host);
                 if (null != note)
                 {
                     notifications.Add(note);

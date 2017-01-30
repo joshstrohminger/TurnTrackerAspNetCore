@@ -41,7 +41,7 @@ namespace TurnTrackerAspNetCore.Services
         Task<bool> SendConfirmationEmailAsync(User user, IUrlHelper url, HttpContext context);
         Task<bool> SendInviteEmailAsync(Invite invite, IUrlHelper url, HttpContext context);
 
-        Task<NotificationEmail> CreateNotificationEmailAsync(TrackedTask task, TurnCount count, IUrlHelper url,
+        Task<NotificationEmail> CreateNotificationEmailAsync(TrackedTask task, TurnCount count, IUrlHelper url, string host,
             string protocol = SiteSettings.Protocol);
     }
 
@@ -134,8 +134,13 @@ namespace TurnTrackerAspNetCore.Services
             return success;
         }
 
-        public async Task<NotificationEmail> CreateNotificationEmailAsync(TrackedTask task, TurnCount count, IUrlHelper url, string protocol = SiteSettings.Protocol)
+        public async Task<NotificationEmail> CreateNotificationEmailAsync(TrackedTask task, TurnCount count, IUrlHelper url, string host, string protocol = SiteSettings.Protocol)
         {
+            //var parts = host.Split(':');
+            //if (parts.Length == 2)
+            {
+                url.ActionContext.HttpContext.Request.Host = new HostString(host);
+            }
             var callbackUrl = url.Action(nameof(TaskController.Details), "Task", new { id = task.Id }, protocol);
 
             var sb = new StringBuilder();
