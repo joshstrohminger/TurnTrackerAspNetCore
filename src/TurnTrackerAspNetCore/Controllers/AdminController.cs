@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.Edm;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
+using TurnTrackerAspNetCore.Services.Data;
+using TurnTrackerAspNetCore.Services.Jobs;
+using TurnTrackerAspNetCore.Services.Settings;
 using TurnTrackerAspNetCore.ViewModels.Account;
 using TurnTrackerAspNetCore.ViewModels.Admin;
 using TurnTrackerAspNetCore.ViewModels.Task;
@@ -331,114 +333,21 @@ namespace TurnTrackerAspNetCore.Controllers
 
         public async Task<IActionResult> PreviewNotifications()
         {
-            var notes = await GetNotifications();
-            ViewBag.NoteCount = _notifier.Count;
+            var notes = await _notifier.GetNotifications();
+            ViewBag.NoteCount = Notifier.Count;
             return View(notes);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> SendNotifications()
         {
-            var notes = await GetNotifications();
+            var notes = await _notifier.GetNotifications();
             foreach (var note in notes)
             {
                 note.Sent = await _emailSender.SendEmailAsync(note.Subject, note.Message, EmailCategory.Reminder, note.Addresses);
             }
 
             return View(nameof(PreviewNotifications), notes);
-        }
-
-        private async Task<List<NotificationEmail>> GetNotifications()
-        {
-
-            var counts = _taskData.GetTurnCounts();
-            var tasks = _taskData.GetAllTasks(true).ToList();
-            var latest = _taskData.GetLatestTurns(tasks.Select(x => x.Id).ToArray()).ToList();
-            var taskCounts = new Dictionary<TrackedTask, TurnCount>();
-            foreach (var task in tasks)
-            {
-                task.PopulateLatestTurnInfo(counts, taskCounts, latest);
-            }
-
-            var notifications = new List<NotificationEmail>();
-            foreach (var x in taskCounts.Where(x => x.Key.Overdue))
-            {
-                var note = await SendNotificationEmailsAsync(x.Key, x.Value, Url, HttpContext);
-                if (null != note)
-                {
-                    notifications.Add(note);
-                }
-            }
-
-            return notifications;
-        }
-
-        public class NotificationEmail
-        {
-            public string Subject { get; set; }
-            public string Message { get; set; }
-            public string[] Addresses { get; set; }
-            public bool? Sent { get; set; }
-        }
-
-        private async Task<NotificationEmail> SendNotificationEmailsAsync(TrackedTask task, TurnCount count, IUrlHelper url, HttpContext context)
-        {
-            var callbackUrl = url.Action(nameof(TaskController.Details), "Task", new { id = task.Id }, protocol: context.Request.Scheme);
-
-            var sb = new StringBuilder();
-            sb.Append(task.TeamBased ? "Someone needs" : "You need");
-            sb.AppendFormat(" to <a href=\"{0}\">{1}</a>.", callbackUrl, task.Name);
-            if ((task.Turns?.Count ?? 0) == 0)
-            {
-                sb.Append(" No turns have been taken.");
-            }
-            else
-            {
-                sb.AppendFormat(" It's overdue by {0}.", GetRoundedTimeSpan(task.DueTimeSpan));
-            }
-            
-            var latest = await _userManager.FindByIdAsync(count.UserId);
-            if (null == latest)
-            {
-                // todo maybe email should be included in TurnCount
-                return null;
-            }
-            return new NotificationEmail
-            {
-                Message = sb.ToString(),
-                Subject = $"{_siteSettings.Settings.General.Name} Reminder",
-                Addresses = task.TeamBased
-                        ? task.Participants.Select(x => x.User).Where(x => x.EmailConfirmed).Select(x => x.Email).ToArray()
-                        : new [] { latest.Email }
-            };
-        }
-
-        private string GetRoundedTimeSpan(TimeSpan time)
-        {
-            var months = time.Days / 30;
-            if (months >= 1)
-            {
-                return string.Format("{0} month{1}", months, months > 1 ? "s" : "");
-            }
-            if (time.Days >= 1)
-            {
-                return string.Format("{0} day{1}", time.Days, time.Days > 1 ? "s" : "");
-            }
-            if (time.Hours >= 1)
-            {
-                return string.Format("{0} hour{1}", time.Hours, time.Hours > 1 ? "s" : "");
-            }
-            if (time.Minutes >= 1)
-            {
-                return string.Format("{0} minute{1}", time.Minutes, time.Minutes > 1 ? "s" : "");
-            }
-            if (time.Seconds >= 1)
-            {
-                return string.Format("{0} second{1}", time.Seconds, time.Seconds > 1 ? "s" : "");
-            }
-
-            // shouldn't ever get here
-            return time.ToString(@"hh\:mm\:ss");
         }
 
         public IActionResult Test(int id = -1)

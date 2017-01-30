@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using TurnTrackerAspNetCore.Entities;
 
-namespace TurnTrackerAspNetCore.Services
+namespace TurnTrackerAspNetCore.Services.Data
 {
     public class SqlTaskData : ITaskData
     {

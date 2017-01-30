@@ -4,7 +4,8 @@ using System.Linq;
 using Hangfire;
 using Hangfire.Storage;
 using TurnTrackerAspNetCore.Entities;
-using TurnTrackerAspNetCore.Services;
+using TurnTrackerAspNetCore.Services.Jobs;
+using TurnTrackerAspNetCore.Services.Settings;
 
 namespace TurnTrackerAspNetCore.ViewModels.Admin
 {
@@ -28,8 +29,8 @@ namespace TurnTrackerAspNetCore.ViewModels.Admin
         [Required, Display(Name = "API Enabled")]
         public bool ApiEnabled { get; set; } = true;
 
-        [Required, Display(Name = "Invite Expiration Hours"), Range(1, 168)]
-        public int InviteExpirationHours { get; set; } = 72;
+        [Required, Display(Name = "Invite Expiration Hours"), Range(1, 7 * 24)]
+        public int InviteExpirationHours { get; set; } = 3 * 24;
     }
 
     public class JobsSettingGroup : SiteSettingGroup

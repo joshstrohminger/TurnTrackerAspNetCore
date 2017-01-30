@@ -6,7 +6,7 @@ using System.Reflection;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 
-namespace TurnTrackerAspNetCore.Services
+namespace TurnTrackerAspNetCore.Services.Settings
 {
     public abstract class SiteSettingGroup
     {

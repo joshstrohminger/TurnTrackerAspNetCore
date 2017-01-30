@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TurnTrackerAspNetCore.Entities;
 
-namespace TurnTrackerAspNetCore.Services
+namespace TurnTrackerAspNetCore.Services.Data
 {
     public interface ITaskData
     {

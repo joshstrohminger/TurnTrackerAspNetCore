@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using TurnTrackerAspNetCore.Services.Data;
 using TurnTrackerAspNetCore.ViewModels.Admin;
 
-namespace TurnTrackerAspNetCore.Services
+namespace TurnTrackerAspNetCore.Services.Settings
 {
     public interface ISiteSettings
     {
@@ -16,6 +17,7 @@ namespace TurnTrackerAspNetCore.Services
     {
         private readonly ITaskData _db;
         private readonly ILogger _logger;
+        public const string Protocol = "https";
 
         public SiteSettings(ITaskData db, ILoggerFactory loggerFactory)
         {
