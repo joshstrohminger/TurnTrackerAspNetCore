@@ -24,6 +24,7 @@ namespace TurnTrackerAspNetCore.Services.Jobs
 
             // override the host in case it hasn't been set yet (no request has run before this job)
             _noContextAccessor.UpdateHost(host);
+            //SendNotificationsAsync().Wait();
         }
 
         // todo, move notification sending into authmessagesender but leave the logic for
