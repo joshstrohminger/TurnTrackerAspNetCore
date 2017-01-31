@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
+using TurnTrackerAspNetCore.Services.Data;
+using TurnTrackerAspNetCore.Services.Settings;
 using TurnTrackerAspNetCore.ViewModels.Account;
 using TurnTrackerAspNetCore.ViewModels.Admin;
 

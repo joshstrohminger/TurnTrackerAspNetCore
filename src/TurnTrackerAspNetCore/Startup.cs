@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.Dashboard;
@@ -18,12 +17,17 @@ using TurnTrackerAspNetCore.Entities;
 using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels.Admin;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using TurnTrackerAspNetCore.Middleware;
+using TurnTrackerAspNetCore.Services.Data;
+using TurnTrackerAspNetCore.Services.Jobs;
+using TurnTrackerAspNetCore.Services.Settings;
 
 namespace TurnTrackerAspNetCore
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; set; }
+        private IConfiguration Configuration { get; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -37,7 +41,7 @@ namespace TurnTrackerAspNetCore
                 builder.AddUserSecrets();
             }
 
-            builder.AddEnvironmentVariables();
+            builder.AddEnvironmentVariables(prefix: "ASPNETCORE_");
             Configuration = builder.Build();
         }
 
@@ -47,8 +51,10 @@ namespace TurnTrackerAspNetCore
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("TurnTracker")));
             services.AddMvc();
             services.AddSingleton(Configuration);
-            services.AddSingleton<ISiteSettings, SiteSettings>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<ITaskData, SqlTaskData>();
+            services.AddSingleton<INoContextAccessor, NoContextAccessor>();
+            services.AddSingleton<ISiteSettings, SiteSettings>();
             services.AddSingleton<Notifier>();
             services.AddDbContext<TurnTrackerDbContext>(
                 options => options.UseSqlServer(
@@ -65,7 +71,6 @@ namespace TurnTrackerAspNetCore
             });
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
-            //services.AddTransient<ISmsSender, AuthMessageSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.Configure<IdentityOptions>(options =>
@@ -77,12 +82,11 @@ namespace TurnTrackerAspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, ISiteSettings siteSettings, IServiceProvider services)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, ISiteSettings siteSettings, IServiceProvider services, INoContextAccessor noContextAccessor)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             db.Database.Migrate();
-
             if (env.IsDevelopment())
             {
                 loggerFactory.AddFile("Logs/turntracker-{Date}.txt");
@@ -102,29 +106,31 @@ namespace TurnTrackerAspNetCore
             {
                 Authorization = new IDashboardAuthorizationFilter[]
                 {
-                    new TestDashboardAuth()
+                    new HangfireAdminDashboardAuth()
                 }
             };
 
             app.UseStaticFiles();
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseIdentity();
+            app.UseHostAccessor(noContextAccessor);
             app.UseHangfireDashboard("/admin/hangfire", dashboardOptions);
             app.UseHangfireServer();
-            app.UseMvc(ConfigureRoutes);
+            app.UseMvc(builder => ConfigureRoutes(builder, noContextAccessor));
 
             ConfigureRoles(roleManager).Wait();
             ConfigureJobs(siteSettings, services);
         }
 
-        private void ConfigureRoutes(IRouteBuilder routeBuilder)
+        private static void ConfigureRoutes(IRouteBuilder routeBuilder, INoContextAccessor noContextAccessor)
         {
             routeBuilder.MapRoute("tasks", "tasks", new { controller = "Task", action = "Index" });
             routeBuilder.MapRoute("error", "error/{code}", new { controller = "About", action = "Error" });
             routeBuilder.MapRoute("default", "{controller=task}/{action=Index}/{id?}");
+            noContextAccessor.UpdateRouter(routeBuilder.Build());
         }
 
-        private async Task ConfigureRoles(RoleManager<IdentityRole> roleManager)
+        private static async Task ConfigureRoles(RoleManager<IdentityRole> roleManager)
         {
             foreach (var role in Enum.GetNames(typeof(Roles)))
             {
@@ -135,7 +141,7 @@ namespace TurnTrackerAspNetCore
             }
         }
 
-        private void ConfigureJobs(ISiteSettings siteSettings, IServiceProvider services)
+        private static void ConfigureJobs(ISiteSettings siteSettings, IServiceProvider services)
         {
             foreach (var job in siteSettings.Settings.Jobs.GetType().GetProperties()
                 .Where(p => p.PropertyType == typeof(JobSetting)))
@@ -143,28 +149,13 @@ namespace TurnTrackerAspNetCore
                 ((JobSetting)job.GetValue(siteSettings.Settings.Jobs)).Saved(services);
             }
         }
-    }
 
-    public class TestDashboardAuth : IDashboardAuthorizationFilter
-    {
-        public bool Authorize(DashboardContext context)
+        private class HangfireAdminDashboardAuth : IDashboardAuthorizationFilter
         {
-            return context.GetHttpContext().User.IsInRole(nameof(Roles.Admin));
-        }
-    }
-
-    public class Notifier
-    {
-        public int Count { get; private set; }
-        public void TestJob()
-        {
-            Count++;
-        }
-
-        public static void Start(IServiceProvider services, JobSetting setting)
-        {
-            var notifier = services.GetRequiredService<Notifier>();
-            RecurringJob.AddOrUpdate(setting.Id, () => notifier.TestJob(), setting.CronSchedule);
+            public bool Authorize(DashboardContext context)
+            {
+                return context.GetHttpContext().User.IsInRole(nameof(Roles.Admin));
+            }
         }
     }
 }

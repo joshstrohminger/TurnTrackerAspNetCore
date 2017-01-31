@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TurnTrackerAspNetCore.Entities;
 
-namespace TurnTrackerAspNetCore.Services
+namespace TurnTrackerAspNetCore.Services.Data
 {
     public class InMemoryTaskData : ITaskData
     {
