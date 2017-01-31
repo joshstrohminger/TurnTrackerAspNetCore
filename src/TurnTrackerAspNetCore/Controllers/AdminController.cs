@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -34,9 +32,8 @@ namespace TurnTrackerAspNetCore.Controllers
         private readonly ISiteSettings _siteSettings;
         private readonly Notifier _notifier;
         private readonly IServiceProvider _services;
-        private readonly UrlAccessor _urlAccessor;
 
-        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory, ISiteSettings siteSettings, Notifier notifier, IServiceProvider services, UrlAccessor urlAccessor)
+        public AdminController(ITaskData taskData, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IEmailSender emailSender, ILoggerFactory loggerFactory, ISiteSettings siteSettings, Notifier notifier, IServiceProvider services)
         {
             _taskData = taskData;
             _roleManager = roleManager;
@@ -45,7 +42,6 @@ namespace TurnTrackerAspNetCore.Controllers
             _siteSettings = siteSettings;
             _notifier = notifier;
             _services = services;
-            _urlAccessor = urlAccessor;
             _logger = loggerFactory.CreateLogger<AdminController>();
         }
 
@@ -60,7 +56,7 @@ namespace TurnTrackerAspNetCore.Controllers
                 task.PopulateLatestTurnInfo(counts, taskCounts, latest);
             }
 
-            return View("Tasks", new TasksViewModel { TaskCounts = taskCounts, Error = error });
+            return View(new TasksViewModel { TaskCounts = taskCounts, Error = error });
         }
 
         public IActionResult Users(string errorMessage = null)
@@ -294,11 +290,6 @@ namespace TurnTrackerAspNetCore.Controllers
             }
 
             _siteSettings.Settings = model;
-            _urlAccessor.Url = Url;
-            _urlAccessor.ActionContext = Url.ActionContext;
-            _urlAccessor.HttpContext = Url.ActionContext.HttpContext;
-            _urlAccessor.RouteData = Url.ActionContext.RouteData;
-            _urlAccessor.Host = Request.Host.Value;
             if (_siteSettings.Save(_services))
             {
                 return RedirectToAction(nameof(SiteSettings));
@@ -340,20 +331,15 @@ namespace TurnTrackerAspNetCore.Controllers
 
         public async Task<IActionResult> PreviewNotifications()
         {
-            var notes = await _notifier.GetNotifications();
-            ViewBag.NoteCount = Notifier.Count;
+            var notes = await _notifier.GetNotificationsAsync();
+            ViewBag.NoteCount = Notifier.RunCount;
             return View(notes);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> SendNotifications()
         {
-            var notes = await _notifier.GetNotifications();
-            foreach (var note in notes)
-            {
-                note.Sent = await _emailSender.SendEmailAsync(note.Subject, note.Message, EmailCategory.Reminder, note.Addresses);
-            }
-
+            var notes = await _notifier.SendNotificationsAsync();
             return View(nameof(PreviewNotifications), notes);
         }
 

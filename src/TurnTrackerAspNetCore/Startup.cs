@@ -18,6 +18,7 @@ using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels.Admin;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using TurnTrackerAspNetCore.Middleware;
 using TurnTrackerAspNetCore.Services.Data;
 using TurnTrackerAspNetCore.Services.Jobs;
 using TurnTrackerAspNetCore.Services.Settings;
@@ -27,8 +28,6 @@ namespace TurnTrackerAspNetCore
     public class Startup
     {
         private IConfiguration Configuration { get; }
-        private RouterAccessor RouterAccessor { get; } = new RouterAccessor();
-        private UrlAccessor UrlAccessor { get; } = new UrlAccessor();
 
         public Startup(IHostingEnvironment env)
         {
@@ -42,7 +41,7 @@ namespace TurnTrackerAspNetCore
                 builder.AddUserSecrets();
             }
 
-            builder.AddEnvironmentVariables();
+            builder.AddEnvironmentVariables(prefix: "ASPNETCORE_");
             Configuration = builder.Build();
         }
 
@@ -52,11 +51,9 @@ namespace TurnTrackerAspNetCore
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("TurnTracker")));
             services.AddMvc();
             services.AddSingleton(Configuration);
-            services.AddSingleton(RouterAccessor);
-            services.AddSingleton(UrlAccessor);
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<ITaskData, SqlTaskData>();
+            services.AddSingleton<INoContextAccessor, NoContextAccessor>();
             services.AddSingleton<ISiteSettings, SiteSettings>();
             services.AddSingleton<Notifier>();
             services.AddDbContext<TurnTrackerDbContext>(
@@ -74,7 +71,6 @@ namespace TurnTrackerAspNetCore
             });
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
-            //services.AddTransient<ISmsSender, AuthMessageSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.Configure<IdentityOptions>(options =>
@@ -86,7 +82,7 @@ namespace TurnTrackerAspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, ISiteSettings siteSettings, IServiceProvider services)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, ISiteSettings siteSettings, IServiceProvider services, INoContextAccessor noContextAccessor)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -117,20 +113,21 @@ namespace TurnTrackerAspNetCore
             app.UseStaticFiles();
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseIdentity();
+            app.UseHostAccessor(noContextAccessor);
             app.UseHangfireDashboard("/admin/hangfire", dashboardOptions);
             app.UseHangfireServer();
-            app.UseMvc(ConfigureRoutes);
+            app.UseMvc(builder => ConfigureRoutes(builder, noContextAccessor));
 
             ConfigureRoles(roleManager).Wait();
             ConfigureJobs(siteSettings, services);
         }
 
-        private void ConfigureRoutes(IRouteBuilder routeBuilder)
+        private static void ConfigureRoutes(IRouteBuilder routeBuilder, INoContextAccessor noContextAccessor)
         {
             routeBuilder.MapRoute("tasks", "tasks", new { controller = "Task", action = "Index" });
             routeBuilder.MapRoute("error", "error/{code}", new { controller = "About", action = "Error" });
             routeBuilder.MapRoute("default", "{controller=task}/{action=Index}/{id?}");
-            RouterAccessor.Router = routeBuilder.Build();
+            noContextAccessor.UpdateRouter(routeBuilder.Build());
         }
 
         private static async Task ConfigureRoles(RoleManager<IdentityRole> roleManager)
