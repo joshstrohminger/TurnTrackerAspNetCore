@@ -41,7 +41,8 @@ namespace TurnTrackerAspNetCore
                 builder.AddUserSecrets();
             }
 
-            builder.AddEnvironmentVariables(prefix: "ASPNETCORE_");
+            //builder.AddEnvironmentVariables("ASPNETCORE_");
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
