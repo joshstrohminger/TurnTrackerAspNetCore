@@ -18,6 +18,7 @@ using TurnTrackerAspNetCore.Services;
 using TurnTrackerAspNetCore.ViewModels.Admin;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Options;
 using TurnTrackerAspNetCore.Middleware;
 using TurnTrackerAspNetCore.Services.Data;
 using TurnTrackerAspNetCore.Services.Jobs;
@@ -25,6 +26,12 @@ using TurnTrackerAspNetCore.Services.Settings;
 
 namespace TurnTrackerAspNetCore
 {
+    public class MyOptions
+    {
+        public bool ShowErrors { get; set; }
+        public bool AzureLogging { get; set; }
+    }
+
     public class Startup
     {
         private IConfiguration Configuration { get; }
@@ -34,14 +41,14 @@ namespace TurnTrackerAspNetCore
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
 
             if (env.IsDevelopment())
             {
                 builder.AddUserSecrets();
             }
-
-            //builder.AddEnvironmentVariables("ASPNETCORE_");
+            
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -73,6 +80,7 @@ namespace TurnTrackerAspNetCore
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.Configure<MyOptions>(Configuration);
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -83,11 +91,15 @@ namespace TurnTrackerAspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, ISiteSettings siteSettings, IServiceProvider services, INoContextAccessor noContextAccessor)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TurnTrackerDbContext db, RoleManager<IdentityRole> roleManager, IServiceProvider services, INoContextAccessor noContextAccessor, IOptions<MyOptions> myOptionsAccessor)
         {
+            var myOptions = myOptionsAccessor.Value;
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            db.Database.Migrate();
+            if (myOptions.AzureLogging)
+            {
+                loggerFactory.AddAzureWebAppDiagnostics();
+            }
             if (env.IsDevelopment())
             {
                 loggerFactory.AddFile("Logs/turntracker-{Date}.txt");
@@ -97,11 +109,17 @@ namespace TurnTrackerAspNetCore
             }
             else
             {
+                if (myOptions.ShowErrors)
+                {
+                    app.UseDeveloperExceptionPage();
+                    app.UseDatabaseErrorPage();
+                }
                 app.UseExceptionHandler(new ExceptionHandlerOptions
                 {
                     ExceptionHandler = context => context.Response.WriteAsync(@"Oops, I messed up! ¯\_(ツ)_/¯")
                 });
             }
+            db.Database.Migrate();
 
             var dashboardOptions = new DashboardOptions
             {
@@ -120,7 +138,7 @@ namespace TurnTrackerAspNetCore
             app.UseMvc(builder => ConfigureRoutes(builder, noContextAccessor));
 
             ConfigureRoles(roleManager).Wait();
-            ConfigureJobs(siteSettings, services);
+            ConfigureJobs(services.GetRequiredService<ISiteSettings>(), services);
         }
 
         private static void ConfigureRoutes(IRouteBuilder routeBuilder, INoContextAccessor noContextAccessor)
