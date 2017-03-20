@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='default, bump' Clean='clean' />
+﻿/// <binding BeforeBuild='default' Clean='clean' />
 
 var fs = require('fs');
 var gulp = require('gulp');
@@ -92,7 +92,7 @@ gulp.task('bump', function () {
     var filename = './project.json';
     var file = fs.readFileSync(filename, 'utf8');
     var found = file.match(/("version"\s*:\s*"\d+\.\d+\.\d+\.(\d+)")/);
-    if (found == null || found.length !== 3) {
+    if (found === null || found.length !== 3) {
         console.error('failed to find version');
         return;
     }

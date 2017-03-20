@@ -46,7 +46,7 @@ namespace TurnTrackerAspNetCore
 
             if (env.IsDevelopment())
             {
-                builder.AddUserSecrets();
+                builder.AddUserSecrets<Startup>();
             }
             
             builder.AddEnvironmentVariables();
@@ -98,7 +98,7 @@ namespace TurnTrackerAspNetCore
             loggerFactory.AddDebug();
             if (myOptions.AzureLogging)
             {
-                loggerFactory.AddAzureWebAppDiagnostics();
+                //loggerFactory.AddAzureWebAppDiagnostics();
             }
             if (env.IsDevelopment())
             {
